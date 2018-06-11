@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="data_最惨.js"></script>
+
+    <title>Graph</title>
+    <style>
+        body {
+            margin: 0px;
+        }
+
+        .domain {
+            display: none;
+        }
+
+        .tick line {
+            stroke: #C0C0BB;
+        }
+
+        .tick text {
+            fill: #8E8883;
+            font-size: 12pt;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .label {
+            fill: rgb(92, 92, 92);
+            font-size: 15pt;
+            font-family: "Microsoft YaHei", "宋体";
+            font-weight: bold
+        }
+
+        .dateLabel {
+            fill: rgb(92, 92, 92);
+            font-size: 100pt;
+            font-weight: bold;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+        }
+
+        .days {
+            fill: rgb(92, 92, 92);
+            font-weight: bold;
+            font-size: 55pt;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        .topLabel {
+            fill: rgb(92, 92, 92);
+            font-weight: bold;
+            font-size: 40pt;
+            font-family: 'Gill Sans', 'Gill Sans MT', "Calibri", 'Trebuchet MS', sans-serif;
+        }
+
+        .top {
+            fill: rgb(92, 92, 92);
+            font-weight: bold;
+            font-size: 62pt;
+            font-family: Verdana, Geneva, Tahoma, sans-serif
+        }
+
+
+        .value {
+            fill: rgb(138, 46, 46);
+            font-size: 20pt;
+            font-weight: 400;
+            font-family: "Trebuchet MS";
+        }
+
+        .barInfo {
+            fill: rgb(255, 255, 255);
+            font-size: 22pt;
+            font-weight: 800;
+            font-family: sans-serif;
+        }
+
+
+        .axis-label {
+            fill: #635F5D;
+            font-size: 32pt;
+            font-family: sans-serif;
+        }
+
+        .游戏 {
+            fill: #c40000c9
+        }
+
+        .音乐 {
+            fill: #198a51c9
+        }
+
+        .生活 {
+            fill: #007ec7c9
+        }
+
+        .鬼畜 {
+            fill: #a17c00c9
+        }
+
+        .舞蹈 {
+            fill: #0dafa7c9
+        }
+
+        .娱乐 {
+            fill: #bb2db4c9
+        }
+
+        .时尚 {
+            fill: #ff7b6ac9
+        }
+
+        .动画 {
+            fill: #ff2d7ec9
+        }
+
+        .影视 {
+            fill: #6d3013c9
+        }
+
+        .广告 {
+            fill: #4c6941c9
+        }
+
+        .科技 {
+            fill: #406bafc9
+        }
+
+        .番剧 {
+            fill: #c01733c9
+        }
+
+        .国创 {
+            fill: #ff002bc9
+        }
+
+        .电视剧 {
+            fill: #bb5a00c9
+        }
+
+        .纪录片 {
+            fill: #21a500c9
+        }
+
+        .电影 {
+            fill: #00746ec9
+        }
+
+        .days {
+            fill: rgb(92, 92, 92);
+            font-weight: bold;
+            font-size: 40pt;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        .dayslabel {
+            fill: rgb(92, 92, 92);
+            font-weight: bold;
+            font-size: 25pt;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        .growth {
+            fill: rgb(92, 92, 92);
+            font-weight: bold;
+            font-size: 40pt;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <svg width="1700" height="900"></svg>
+    </center>
+    <script>
+        var speed = 0.2
+        var text_y = 780
+        var typeLabel = "榜首分区"
+        var itemLabel = "榜首子分区"
+        var format = '.0f'
+        var growth = [{}]
+        let range = (start, end) => new Array(end - start).fill(start).map((el, i) => start + i);
+        var time = ['2009-07-15', '2009-07-22', '2009-07-29', '2009-08-05', '2009-08-12', '2009-08-19', '2009-08-26',
+            '2009-09-02', '2009-09-09', '2009-09-16', '2009-09-23', '2009-09-30', '2009-10-07', '2009-10-14',
+            '2009-10-21', '2009-10-28', '2009-11-04', '2009-11-11', '2009-11-18', '2009-11-25', '2009-12-02',
+            '2009-12-09', '2009-12-16', '2010-01-06', '2010-01-20', '2010-01-27', '2010-02-03', '2010-02-10',
+            '2010-02-17', '2010-02-24', '2010-03-03', '2010-03-10', '2010-03-17', '2010-03-24', '2010-03-31',
+            '2010-04-07', '2010-04-14', '2010-04-21', '2010-04-28', '2010-05-05', '2010-05-12', '2010-05-19',
+            '2010-05-26', '2010-06-02', '2010-06-09', '2010-06-16', '2010-06-23', '2010-06-30', '2010-07-07',
+            '2010-07-14', '2010-07-21', '2010-07-28', '2010-08-04', '2010-08-11', '2010-08-18', '2010-08-25',
+            '2010-09-01', '2010-09-08', '2010-09-15', '2010-09-22', '2010-09-29', '2010-10-06', '2010-10-13',
+            '2010-10-20', '2010-10-27', '2010-11-03', '2010-11-10', '2010-11-17', '2010-11-24', '2010-12-01',
+            '2010-12-08', '2010-12-15', '2010-12-22', '2010-12-29', '2011-01-05', '2011-01-12', '2011-01-19',
+            '2011-01-26', '2011-02-02', '2011-02-09', '2011-02-16', '2011-02-23', '2011-03-02', '2011-03-09',
+            '2011-03-16', '2011-03-23', '2011-03-30', '2011-04-06', '2011-04-13', '2011-04-20', '2011-04-27',
+            '2011-05-04', '2011-05-11', '2011-05-18', '2011-05-25', '2011-06-01', '2011-06-08', '2011-06-15',
+            '2011-06-22', '2011-06-29', '2011-07-06', '2011-07-13', '2011-07-20', '2011-07-27', '2011-08-03',
+            '2011-08-10', '2011-08-17', '2011-08-24', '2011-08-31', '2011-09-07', '2011-09-14', '2011-09-21',
+            '2011-09-28', '2011-10-05', '2011-10-12', '2011-10-19', '2011-10-26', '2011-11-02', '2011-11-09',
+            '2011-11-16', '2011-11-23', '2011-11-30', '2011-12-07', '2011-12-14', '2011-12-21', '2011-12-28',
+            '2012-01-04', '2012-01-11', '2012-01-18', '2012-01-25', '2012-02-01', '2012-02-08', '2012-02-15',
+            '2012-02-22', '2012-02-29', '2012-03-07', '2012-03-14', '2012-03-21', '2012-03-28', '2012-04-04',
+            '2012-04-11', '2012-04-18', '2012-04-25', '2012-05-02', '2012-05-09', '2012-05-16', '2012-05-23',
+            '2012-05-30', '2012-06-06', '2012-06-13', '2012-06-20', '2012-06-27', '2012-07-04', '2012-07-11',
+            '2012-07-18', '2012-07-25', '2012-08-01', '2012-08-08', '2012-08-15', '2012-08-22', '2012-08-29',
+            '2012-09-05', '2012-09-12', '2012-09-19', '2012-09-26', '2012-10-03', '2012-10-10', '2012-10-17',
+            '2012-10-24', '2012-10-31', '2012-11-07', '2012-11-14', '2012-11-21', '2012-11-28', '2012-12-05',
+            '2012-12-12', '2012-12-19', '2012-12-26', '2013-01-02', '2013-01-09', '2013-01-16', '2013-01-23',
+            '2013-01-30', '2013-02-06', '2013-02-13', '2013-02-20', '2013-02-27', '2013-03-06', '2013-03-13',
+            '2013-03-20', '2013-03-27', '2013-04-03', '2013-04-10', '2013-04-17', '2013-04-24', '2013-05-01',
+            '2013-05-08', '2013-05-15', '2013-05-22', '2013-05-29', '2013-06-05', '2013-06-12', '2013-06-19',
+            '2013-06-26', '2013-07-03', '2013-07-10', '2013-07-17', '2013-07-24', '2013-07-31', '2013-08-07',
+            '2013-08-14', '2013-08-21', '2013-08-28', '2013-09-04', '2013-09-11', '2013-09-18', '2013-09-25',
+            '2013-10-02', '2013-10-09', '2013-10-16', '2013-10-23', '2013-10-30', '2013-11-06', '2013-11-13',
+            '2013-11-20', '2013-11-27', '2013-12-04', '2013-12-11', '2013-12-18', '2013-12-25', '2014-01-01',
+            '2014-01-08', '2014-01-15', '2014-01-22', '2014-01-29', '2014-02-05', '2014-02-12', '2014-02-19',
+            '2014-02-26', '2014-03-05', '2014-03-12', '2014-03-19', '2014-03-26', '2014-04-02', '2014-04-09',
+            '2014-04-16', '2014-04-23', '2014-04-30', '2014-05-07', '2014-05-14', '2014-05-21', '2014-05-28',
+            '2014-06-04', '2014-06-11', '2014-06-18', '2014-06-25', '2014-07-02', '2014-07-09', '2014-07-16',
+            '2014-07-23', '2014-07-30', '2014-08-06', '2014-08-13', '2014-08-20', '2014-08-27', '2014-09-03',
+            '2014-09-10', '2014-09-17', '2014-09-24', '2014-10-01', '2014-10-08', '2014-10-15', '2014-10-22',
+            '2014-10-29', '2014-11-05', '2014-11-12', '2014-11-19', '2014-11-26', '2014-12-03', '2014-12-10',
+            '2014-12-17', '2014-12-24', '2014-12-31', '2015-01-07', '2015-01-14', '2015-01-21', '2015-01-28',
+            '2015-02-04', '2015-02-11', '2015-02-18', '2015-02-25', '2015-03-04', '2015-03-11', '2015-03-18',
+            '2015-03-25', '2015-04-01', '2015-04-08', '2015-04-15', '2015-04-22', '2015-04-29', '2015-05-06',
+            '2015-05-13', '2015-05-20', '2015-05-27', '2015-06-03', '2015-06-10', '2015-06-17', '2015-06-24',
+            '2015-07-01', '2015-07-08', '2015-07-15', '2015-07-22', '2015-07-29', '2015-08-05', '2015-08-12',
+            '2015-08-19', '2015-08-26', '2015-09-02', '2015-09-09', '2015-09-16', '2015-09-23', '2015-09-30',
+            '2015-10-07', '2015-10-14', '2015-10-21', '2015-10-28', '2015-11-04', '2015-11-11', '2015-11-18',
+            '2015-11-25', '2015-12-02', '2015-12-09', '2015-12-16', '2015-12-23', '2015-12-30', '2016-01-06',
+            '2016-01-13', '2016-01-20', '2016-01-27', '2016-02-03', '2016-02-10', '2016-02-17', '2016-02-24',
+            '2016-03-02', '2016-03-09', '2016-03-16', '2016-03-23', '2016-03-30', '2016-04-06', '2016-04-13',
+            '2016-04-20', '2016-04-27', '2016-05-04', '2016-05-11', '2016-05-18', '2016-05-25', '2016-06-01',
+            '2016-06-08', '2016-06-15', '2016-06-22', '2016-06-29', '2016-07-06', '2016-07-13', '2016-07-20',
+            '2016-07-27', '2016-08-03', '2016-08-10', '2016-08-17', '2016-08-24', '2016-08-31', '2016-09-07',
+            '2016-09-14', '2016-09-21', '2016-09-28', '2016-10-05', '2016-10-12', '2016-10-19', '2016-10-26',
+            '2016-11-02', '2016-11-09', '2016-11-16', '2016-11-23', '2016-11-30', '2016-12-07', '2016-12-14',
+            '2016-12-21', '2016-12-28', '2017-01-04', '2017-01-11', '2017-01-18', '2017-01-25', '2017-02-01',
+            '2017-02-08', '2017-02-15', '2017-02-22', '2017-03-01', '2017-03-08', '2017-03-15', '2017-03-22',
+            '2017-03-29', '2017-04-05', '2017-04-12', '2017-04-19', '2017-04-26', '2017-05-03', '2017-05-10',
+            '2017-05-17', '2017-05-24', '2017-05-31', '2017-06-07', '2017-06-14', '2017-06-21', '2017-06-28',
+            '2017-07-05', '2017-07-12', '2017-07-19', '2017-07-26', '2017-08-02', '2017-08-09', '2017-08-16',
+            '2017-08-23', '2017-08-30', '2017-09-06', '2017-09-13', '2017-09-20', '2017-09-27', '2017-10-04',
+            '2017-10-11', '2017-10-18', '2017-10-25', '2017-11-01', '2017-11-08', '2017-11-15', '2017-11-22',
+            '2017-11-29', '2017-12-06', '2017-12-13', '2017-12-20', '2017-12-27', '2018-01-03', '2018-01-10',
+            '2018-01-17', '2018-01-24', '2018-01-31', '2018-02-07', '2018-02-14', '2018-02-21', '2018-02-28',
+            '2018-03-07', '2018-03-14', '2018-03-21', '2018-03-28', '2018-04-04', '2018-04-11', '2018-04-18',
+            '2018-04-25', '2018-05-02', '2018-05-09', '2018-05-16', '2018-05-23', '2018-05-30'
+        ]
+        var left_margin = 200;
+        var right_margin = 120
+        var top_margin = 100
+        var bottom_margin = 70
+        var dateLabel_x = 900
+        var dateLabel_y = 680
+        var top_x = 400
+        const margin = {
+            left: left_margin,
+            right: right_margin,
+            top: top_margin,
+            bottom: bottom_margin
+        };
+        var currentdate = time[0].toString();
+        var currentData;
+        var GDPFormater = d3.format(".3s");
+        var lastname;
+        const svg = d3.select('svg');
+        const width = svg.attr('width');
+        const height = svg.attr('height');
+        const innerWidth = width - margin.left - margin.right;
+        const innerHeight = height - margin.top - margin.bottom - 50;
+
+        const xValue = d => d.value;
+        const yValue = d => d.name;
+        var currentGrowthData;
+        const name = d => d.type;
+
+        const g = svg.append('g')
+            .attr('transform', `translate(${margin.left},${margin.top})`);
+        const xAxisG = g.append('g')
+            .attr('transform', `translate(0, ${innerHeight})`);
+        const yAxisG = g.append('g');
+
+        xAxisG.append('text')
+            .attr('class', 'axis-label')
+            .attr('x', innerWidth / 2)
+            .attr('y', 100)
+
+
+        // const xScale = d3.scalePow().exponent(.5);
+        const xScale = d3.scaleLinear()
+        const yScale = d3.scaleBand()
+            .paddingInner(0.3)
+            .paddingOuter(0);
+
+        const xTicks = 10;
+        const xAxis = d3.axisBottom()
+            .scale(xScale)
+            .ticks(xTicks)
+            .tickPadding(20)
+            .tickFormat(d => d)
+            .tickSize(-innerHeight);
+
+        const yAxis = d3.axisLeft()
+            .scale(yScale)
+            .tickPadding(5)
+            .tickSize(-innerWidth);
+
+        var dateLabel = g.insert("text")
+            .data(currentdate)
+            .attr("class", "dateLabel")
+            .attr("x", dateLabel_x)
+            .attr("y", dateLabel_y)
+            .text(currentdate);
+
+        var topLabel = g.insert("text")
+            .attr("class", "topLabel")
+            .attr("x", top_x)
+            .attr("y", text_y)
+
+        var growthLabel = g.insert("text")
+            .attr("class", "growth")
+            .attr("x", 350)
+            .attr("y", text_y)
+        var growLabel = g.insert("text")
+            .attr("class", "growth")
+            .attr("x", 0)
+            .attr("y", text_y).text(itemLabel)
+
+        var growLabel = g.insert("text")
+            .attr("class", "growth")
+            .attr("x", 900)
+            .attr("y", text_y).text(typeLabel)
+
+        function getCurrentData(date) {
+            getCurrentGrowthData(date)
+            currentData = [];
+            data.forEach(element => {
+                if (element["date"] == date) {
+                    currentData.push(element);
+                }
+            });
+            var tempSort = []
+
+            var currentSort = currentData.sort(function (a, b) {
+                return parseInt(b.value) - parseInt(a.value);
+            });
+
+
+            a = d3.transition("2")
+                .each(redraw)
+            if (currentSort != tempSort) {
+                a.each(change)
+            }
+            tempSort = currentSort;
+
+            this.currentData = currentData;
+
+        }
+
+        function getCurrentGrowthData(date) {
+            currentGrowthData = [];
+            growth.forEach(element => {
+                if (element["date"] == date) {
+                    currentGrowthData.push(element);
+                }
+            });
+            currentGrowthData.sort(function (a, b) {
+                return parseInt(b.GDP) - parseInt(a.GDP);
+            });
+        }
+
+
+
+        var days = g.insert("text")
+            .attr("class", "days")
+            .attr("x", 1300)
+            .attr("y", text_y)
+
+
+        var growthLabel = g.insert("text")
+            .attr("class", "growth")
+            .attr("x", 450)
+            .attr("y", text_y)
+
+        var lastname
+        var counter
+        var currentGrowth = g.insert("text")
+            .attr("class", "growth")
+            .attr("x", 1100)
+            .attr("y", text_y)
+
+        function redraw() {
+            yScale
+                .domain(currentData.map(yValue).reverse())
+                .range([innerHeight, 0]);
+            xScale
+                .domain([0, d3.max(currentData, xValue)])
+                .range([0, innerWidth])
+
+            dateLabel.text(currentdate.slice(0, 7))
+            xAxisG.transition(g).duration(3000 * speed).ease(d3.easeLinear).call(xAxis);
+            yAxisG.transition(g).duration(3000 * speed).ease(d3.easeLinear).call(yAxis);
+
+            yAxisG.selectAll('.tick').remove();
+
+            growthLabel.data(currentGrowthData).text(function (d) {
+                return d.type;
+            })
+
+
+
+            currentGrowth.data(currentGrowthData).text(function (d) {
+                return d.count
+            })
+
+
+            topLabel.data(currentData).text(function (d) {
+                lastname = d.name
+                return d.name;
+            })
+
+
+            var bar = g.selectAll(".bar")
+                .data(currentData, function (d) {
+                    return d.name;
+                });
+
+
+            days.data(currentData).transition().duration(2990 * speed).text(function (d) {
+                return d.type
+            })
+            days.exit().remove()
+
+            var barEnter = bar.enter().insert("g", ".axis")
+                .attr("class", "bar")
+                .attr("transform", function (d) {
+                    return "translate(0," + yScale(yValue(d)) + ")";
+                })
+
+            barEnter.append("rect").attr("fill-opacity", 0).attr(
+                    "width", d =>
+                    xScale(xValue(d)))
+                .attr("height", 26).attr("y", -50).transition("a").attr("class", d => d.type).delay(500 * speed).duration(
+                    2490 * speed)
+                .attr("y", 0).attr("class", function (d) {
+                    return d.type
+                }).attr("fill-opacity", 1);
+
+            barEnter.append("text").attr("y", -50).attr("fill-opacity", 0).transition("2").delay(500 * speed).duration(
+                    2490 * speed)
+                .attr(
+                    "fill-opacity", 1).attr("y", 0)
+                .attr("class", function (d) {
+                    return "label " + d.type
+                })
+                .attr("x", -5)
+                .attr("y", 20)
+                .attr("text-anchor", "end")
+                .text(function (d) {
+                    return d.name;
+                });
+
+            barEnter.append("text").attr("x", d => xScale(xValue(d)) + 10).attr("y", -50).attr("fill-opacity", 0).transition()
+                .delay(500 * speed).duration(2490 * speed).tween(
+                    "text",
+                    function (d) {
+                        var self = this;
+                        var i = d3.interpolate(self.textContent, d.value),
+                            prec = (d.value + "").split("."),
+                            round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+                        return function (t) {
+                            self.textContent = d3.format(format)(Math.round(i(t) * round) / round);
+                        };
+                    }).attr(
+                    "fill-opacity", 1).attr("y", 0)
+                .attr("class", function (d) {
+                    return "value " + d.type
+                })
+                .attr("y", 22)
+
+            barEnter.append("text").attr("class", function (d) {
+                    return "barInfo"
+                })
+                .attr("x", d => xScale(xValue(d)) - 10).attr("y", 50).attr("stroke-width", "0px").attr("fill-opacity",
+                    0).transition()
+                .delay(500 * speed).duration(2490 * speed).text(
+                    function (d) {
+                        return d.type + "区/" + d.name
+                    }).attr(
+                    "fill-opacity",
+                    function (d) {
+                        if (xScale(xValue(d)) - 10 < 300) {
+                            return 0;
+                        }
+                        return 1;
+                    })
+                .attr("y", 2)
+                .attr("dy", ".5em")
+                .attr("text-anchor", "end")
+                .attr("stroke", function (d) {
+                    return $("." + d.type).css("fill");
+                }).attr("stroke-width", function (d) {
+                    if (xScale(xValue(d)) - 10 < 320) {
+                        return "0px";
+                    }
+                    return "1px";
+                })
+
+
+
+            //.attr("text-anchor", "end").text(d => GDPFormater(d.value));
+            var barUpdate = bar.transition("2").duration(2990 * speed).ease(d3.easeLinear)
+
+            barUpdate.select("rect")
+                .attr("width", d => xScale(xValue(d)))
+            barUpdate.select(".barInfo").attr("x", d => xScale(xValue(d)) - 10).attr(
+                "fill-opacity",
+                function (d) {
+                    if (xScale(xValue(d)) - 10 < 300) {
+                        return 0;
+                    }
+                    return 1;
+                }
+            ).attr("stroke-width", function (d) {
+                if (xScale(xValue(d)) - 10 < 300) {
+                    return "0px";
+                }
+                return "1px";
+            }).attr("stroke", function (d) {
+                return $("." + d.type).css("fill");
+            })
+
+            barUpdate.select(".value").tween("text", function (d) {
+                var self = this;
+                var i = d3.interpolate((self.textContent), d.value),
+                    prec = (d.value + "").split("."),
+                    round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+                return function (t) {
+                    self.textContent = d3.format(format)(Math.round(i(t) * round) / round);
+                };
+            }).duration(2990 * speed).attr("x", d => xScale(xValue(d)) + 10)
+
+
+            var barExit = bar.exit().attr("fill-opacity", 1).transition().duration(2500 * speed)
+
+            barExit.attr("transform", function (d) {
+                temp = parseInt(this.attributes["transform"].value.substr(12,4))
+                    if (temp <300){
+                        y = temp -40;
+                        return "translate(50,"+y+")";
+                    }
+                    y = temp +40;
+                    return "translate(-50,"+y+")";
+                })
+                .remove().attr("fill-opacity", 0);
+            barExit.select("rect").attr("fill-opacity", 0)
+            barExit.select(".value").attr("fill-opacity", 0)
+            barExit.select(".barInfo").attr("fill-opacity", 0).attr("stroke-width", function (d) {
+                return "0px";
+            })
+            barExit.select(".label").attr("fill-opacity", 0)
+
+        }
+
+
+
+        function change() {
+            var bar = g.selectAll(".bar")
+                .data(currentData, function (d) {
+                    return d.name;
+                });
+            var barUpdate = bar.transition("1").delay(500 * speed).duration(2490 * speed)
+            if (barUpdate.attr("transform") != "translate(0," + function (d) {
+                    return "translate(0," + yScale(yValue(d)) + ")";
+                }) {
+                barUpdate.attr("transform", function (d) {
+                    return "translate(0," + yScale(yValue(d)) + ")";
+                })
+            }
+
+        }
+        date = time[0];
+
+            console.log(data);
+            getCurrentData(date);
+    </script>
+
+    <script>
+        var i = 1;
+        inter = setInterval("next()", 3000 * speed);
+
+        function next() {
+            currentdate = time[i];
+            getCurrentData(time[i]);
+            i++;
+            if (i >= time.length) {
+                window.clearInterval(inter);
+            }
+        }
+    </script>
+</body>
+<!doctype html>
+
+
+
+
+</html>
