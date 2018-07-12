@@ -1,7 +1,8 @@
+import * as d3 from 'd3'
 // 选择颜色
 var color = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
     "U", "V", "W", "X", "Y", "Z"
-]
+];
 
 function getClass(d) {
     if (d.name == "江波涛") {
@@ -26,27 +27,30 @@ function getClass(d) {
     else if (d.name == "崩坏学园") return "崩坏学园";
     else if (d.name == "FGO") return "FGO";
     else if (d.name == "CS:GO") return "CS";
-
     else {
         // 随机选色
-        var r = d.name.charCodeAt()
-        r = r % 25
-        r = Math.round(r)
-        return color[r]
+        var r = d.name.charCodeAt();
+        r = r % 25;
+        r = Math.round(r);
+        return color[r];
     }
 }
-showBottomMessage = true
-var dividing_line = 300
-var x_min = 0
-var speed = 1
-speed /= 3
-var text_y = -50
-var itemLabel = "榜首游戏"
-var typeLabel = "持续天数"
+var showBottomMessage = true;
+var dividing_line = 300;
+var x_min = 0;
+var speed = 1;
+speed /= 3;
+var text_y = -50;
+var itemLabel = "榜首游戏";
+var typeLabel = "持续天数";
+
+// 长度小于display_barInfo的bar将不显示barInfo
+var display_barInfo = 200;
+
 // 每个数据的间隔日期
-var step = 7
-var format = '.0f'
-var growth = [{}]
+var step = 7;
+var format = '.0f';
+var growth = [{}];
 let range = (start, end) => new Array(end - start).fill(start).map((el, i) => start + i);
 var left_margin = 150;
 var right_margin = 150
@@ -62,8 +66,7 @@ const margin = {
     bottom: bottom_margin
 };
 var currentdate = time[0].toString();
-var currentData;
-var GDPFormater = d3.format(".3s");
+var currentData = [];
 var lastname;
 const svg = d3.select('svg');
 const width = svg.attr('width');
@@ -73,7 +76,6 @@ const innerHeight = height - margin.top - margin.bottom - 50;
 
 const xValue = d => d.value;
 const yValue = d => d.name;
-var currentGrowthData;
 const name = d => d.name;
 
 const g = svg.append('g')
@@ -130,27 +132,27 @@ var growthLabel = g.insert("text")
 
 
 function getCurrentData(date) {
-    currentData = [];
+    var c = [];
     data.forEach(element => {
         if (element["date"] == date) {
-            currentData.push(element);
+            c.push(element);
         }
     });
     var tempSort = []
 
-    var currentSort = currentData.sort(function (a, b) {
+    var currentSort = c.sort(function (a, b) {
         return parseInt(b.value) - parseInt(a.value);
     });
 
 
-    a = d3.transition("2")
+    var a = d3.transition("2")
         .each(redraw)
     if (currentSort != tempSort) {
         a.each(change)
     }
     tempSort = currentSort;
 
-    this.currentData = currentData;
+    currentData = c;
 
 }
 if (showBottomMessage) {
@@ -305,7 +307,7 @@ function redraw() {
             }).attr("x", d => xScale(xValue(d)) - 10).attr(
             "fill-opacity",
             function (d) {
-                if (xScale(xValue(d)) - 10 < 200) {
+                if (xScale(xValue(d)) - 10 < display_barInfo) {
                     return 0;
                 }
                 return 1;
@@ -314,7 +316,7 @@ function redraw() {
         .attr("dy", ".5em")
         .attr("text-anchor", "end")
         .attr("stroke-width", function (d) {
-            if (xScale(xValue(d)) - 10 < 200) {
+            if (xScale(xValue(d)) - 10 < display_barInfo) {
                 return "0px";
             }
             return "1px";
@@ -330,13 +332,13 @@ function redraw() {
     barUpdate.select(".barInfo").attr("x", d => xScale(xValue(d)) - 10).attr(
         "fill-opacity",
         function (d) {
-            if (xScale(xValue(d)) - 10 < 200) {
+            if (xScale(xValue(d)) - 10 < display_barInfo) {
                 return 0;
             }
             return 1;
         }
     ).attr("stroke-width", function (d) {
-        if (xScale(xValue(d)) - 10 < 200) {
+        if (xScale(xValue(d)) - 10 < display_barInfo) {
             return "0px";
         }
         return "1px";
@@ -392,17 +394,15 @@ function change() {
 }
 
 
-date = time[0];
+var date = time[0];
 getCurrentData(date);
 
 var i = 1;
-inter = setInterval("next()", 3000 * speed);
-
-function next() {
+var inter = setInterval(function next() {
     currentdate = time[i];
     getCurrentData(time[i]);
     i++;
     if (i >= time.length) {
         window.clearInterval(inter);
     }
-}
+}, 3000 * speed);

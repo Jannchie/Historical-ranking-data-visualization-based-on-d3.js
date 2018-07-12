@@ -1,0 +1,27 @@
+{
+  "name": "rank_bar",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "dependencies": {
+    "d3": "^5.5.0",
+    "webpack": "^4.16.0",
+    "webpack-command": "^0.4.1",
+    "webpack-cli": "^3.0.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/issues"
+  },
+  "homepage": "https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js#readme"
+}
