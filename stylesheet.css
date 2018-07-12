@@ -1,0 +1,585 @@
+body {
+    margin: 0px;
+}
+
+.domain {
+    display: none;
+}
+
+.tick line {
+    stroke: #C0C0BB;
+}
+
+.tick text {
+    fill: #8E8883;
+    font-size: 12pt;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.label {
+    fill: rgb(92, 92, 92);
+    font-size: 15pt;
+    font-family: "Microsoft YaHei", "宋体";
+    font-weight: bold
+}
+
+.dateLabel {
+    fill: rgb(92, 92, 92);
+    font-size: 100pt;
+    font-weight: bold;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+}
+
+.days {
+    fill: rgb(92, 92, 92);
+    font-weight: bold;
+    font-size: 55pt;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.topLabel {
+    fill: rgb(92, 92, 92);
+    font-weight: bold;
+    font-size: 40pt;
+    font-family: 'Gill Sans', 'Gill Sans MT', "Calibri", 'Trebuchet MS', sans-serif;
+}
+
+.top {
+    fill: rgb(92, 92, 92);
+    font-weight: bold;
+    font-size: 62pt;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+.value {
+    fill: rgb(138, 46, 46);
+    font-size: 20pt;
+    font-weight: 400;
+    font-family: "Trebuchet MS";
+}
+
+.barInfo {
+    fill: rgb(255, 255, 255);
+    font-size: 22pt;
+    font-weight: 800;
+    font-family: sans-serif;
+}
+
+.axis-label {
+    fill: #635F5D;
+    font-size: 32pt;
+    font-family: sans-serif;
+}
+
+.进击的巨人 {
+    fill: #b64714c9
+}
+
+.黑塔利亚 {
+    fill: #a16203c9
+}
+
+.银魂 {
+    fill: #0367a1c9
+}
+
+.魔法禁书目录 {
+    fill: #3e86d8c9
+}
+
+.某科学的超电磁炮 {
+    fill: #d3991cc9
+}
+
+.K {
+    fill: #8b0000c9
+}
+
+.黑子的篮球 {
+    fill: #c02b11c9
+}
+
+.游戏王 {
+    fill: #da932ac9
+}
+
+.JOJO奇妙冒险 {
+    fill: #a1036cc9
+}
+
+.轻音少女 {
+    fill: #2142b1c9
+}
+
+.中二病也要谈恋爱 {
+    fill: #034da1c9
+}
+
+.Fate系列 {
+    fill: #1967ddc9
+}
+
+.刀剑神域 {
+    fill: #413e3bc9
+}
+
+.神奇宝贝 {
+    fill: #c2623cc9
+}
+
+.幸运星 {
+    fill: #2a46e6c9
+}
+
+.物语系列 {
+    fill: #830741c9
+}
+
+.龙珠 {
+    fill: #a30000c9
+}
+
+.命运石之门 {
+    fill: #af2424c9
+}
+
+.CLANNAD {
+    fill: #a14f03c9
+}
+
+.海贼王 {
+    fill: #a16f03c9
+}
+
+.凉宫春日的忧郁 {
+    fill: #0367a1c9
+}
+
+.新世纪福音战士 {
+    fill: #2c0461c9
+}
+
+.未闻花名 {
+    fill: #366ea1c9
+}
+
+.海猫鸣泣之时 {
+    fill: #057a53c9
+}
+
+.夏目友人帐 {
+    fill: #03a103c9
+}
+
+.数码宝贝 {
+    fill: #034da1c9
+}
+
+.无头骑士异闻录 {
+    fill: #800d0dc9
+}
+
+.机动战士高达 {
+    fill: #274bc0cb
+}
+
+.火影忍者 {
+    fill: #c95e21c9
+}
+
+.日在校园 {
+    fill: #2e1c00c9
+}
+
+.侵略！乌贼娘！ {
+    fill: #15889cc9
+}
+
+.零之使魔 {
+    fill: #ff5479c9
+}
+
+.秒速五厘米 {
+    fill: #ff3668c9
+}
+
+.俺妹 {
+    fill: #9c6d15c9
+}
+
+.罪恶王冠 {
+    fill: #f82b57c9
+}
+
+.魔法少女小圆 {
+    fill: #ff4171c9
+}
+
+.叛逆的鲁鲁修 {
+    fill: #610351c9
+}
+
+.笨蛋测验召唤兽 {
+    fill: #087588c9
+}
+
+.黑岩射手 {
+    fill: #014450c9
+}
+
+.零之使魔 {
+    fill: #15889cc9
+}
+
+.零之使魔 {
+    fill: #15889cc9
+}
+
+.零之使魔 {
+    fill: #15889cc9
+}
+
+.零之使魔 {
+    fill: #15889cc9
+}
+
+.LoveLive！ {
+    fill: #159c15c9
+}
+
+.你的名字 {
+    fill: #2a80e2c9
+}
+
+.四月是你的谎言 {
+    fill: #e29b00c9
+}
+
+.全职高手 {
+    fill: #c52020c9
+}
+
+.名侦探柯南 {
+    fill: #1200b8c9
+}
+
+.超能力女儿 {
+    fill: #00606dc9
+}
+
+.戒律的复活 {
+    fill: #aa740fc9
+}
+
+.Fate_EXTRALastEncore {
+    fill: #b80000c9
+}
+
+.ReLIFE完结篇 {
+    fill: #c92ab4c9
+}
+
+.精灵宝可梦日月 {
+    fill: #392ac9c9
+}
+
+.魔卡少女樱 {
+    fill: #b85300c9
+}
+
+.齐木楠雄的灾难2 {
+    fill: #d11774c9
+}
+
+.刀使巫女 {
+    fill: #b82b00c9
+}
+
+.偶像星愿 {
+    fill: #685be2c9
+}
+
+.黑色五叶草 {
+    fill: #56555ec9
+}
+
+.装刀凯SGA {
+    fill: #3c3a49c9
+}
+
+.樱花忍法帖 {
+    fill: #850000c9
+}
+
+.卫宫家今天的饭 {
+    fill: #b81c00c9
+}
+
+.原书·原书使 {
+    fill: #5789a7c9
+}
+
+.魔法少女俺 {
+    fill: #3a3850c9
+}
+
+.重神机潘多拉（中配） {
+    fill: #00570fc9
+}
+
+.重神机潘多拉 {
+    fill: #00570fc9
+}
+
+.皇帝圣印战记 {
+    fill: #005534c9
+}
+
+.失落的歌谣 {
+    fill: #1e43bec9
+}
+
+.我的英雄学院3 {
+    fill: #157046c9
+}
+
+.卡里古拉 {
+    fill: #263e69c9
+}
+
+.宇宙战舰提拉米斯 {
+    fill: #3246a0c9
+}
+
+.ALICEorALICE {
+    fill: #5b4fc9c9
+}
+
+.宅男腐女恋爱真难 {
+    fill: #d83b5dc9
+}
+
+.Megalo_Box {
+    fill: #b83400c9
+}
+
+.博人传 {
+    fill: #b87800c9
+}
+
+.女神异闻录5 {
+    fill: #b8001fc9
+}
+
+.ComicGirls {
+    fill: #d63492c9
+}
+
+.飙速宅男4 {
+    fill: #b88d00c9
+}
+
+.赛马娘 {
+    fill: #b82b00c9
+}
+
+.高达创形者 {
+    fill: #1f5bb6c9
+}
+
+.鬼灯的冷彻2 {
+    fill: #610000c9
+}
+
+.多田君不谈恋爱 {
+    fill: #1e9700c9
+}
+
+.江波涛 {
+    fill: #1e9700c9
+}
+
+.default {
+    fill: #004e97c9
+}
+
+.L {
+    fill: #004e97c9
+}
+
+.M {
+    fill: #236aacc9
+}
+
+.L {
+    fill: #004e97c9
+}
+
+.N {
+    fill: #009783c9
+}
+
+.O {
+    fill: #009714c9
+}
+
+.P {
+    fill: #b11111c9
+}
+
+.Q {
+    fill: #972b00c9
+}
+
+.R {
+    fill: #970065c9
+}
+
+.S {
+    fill: #008597c9
+}
+
+.T {
+    fill: #8b1f5ec9
+}
+
+.U {
+    fill: #8b1f5ec9
+}
+
+.W {
+    fill: #8b1f5ec9
+}
+
+.V {
+    fill: #559204c9
+}
+
+.X {
+    fill: #5a1f8bc9
+}
+
+.Y {
+    fill: #c0ad00c9
+}
+
+.Z {
+    fill: #88480cc9
+}
+
+.H {
+    fill: #787878
+}
+
+.G {
+    fill: #CB1B45
+}
+
+.K {
+    fill: #9c361f
+}
+
+.J {
+    fill: rgb(180, 157, 51)
+}
+
+.I {
+    fill: #1B813E
+}
+
+.F {
+    fill: #227D51
+}
+
+.E {
+    fill: #00896C
+}
+
+.D {
+    fill: #0F2540
+}
+
+.C {
+    fill: #2EA9DF
+}
+
+.B {
+    fill: #3C2F41
+}
+
+.A {
+    fill: #876633
+}
+
+.英雄联盟 {
+    fill: #876633
+}
+.东方PROJECT {
+    fill: #be0c0c
+}
+.地下城与勇士 {
+    fill: #5c3e11
+}
+.守望先锋 {
+    fill: #da910a
+}
+.剑网三 {
+    fill: #b31f05
+}.怪物猎人 {
+    fill: #e4c640
+}.CS {
+    fill: #995c00
+}.FGO {
+        fill: #0066b9
+}.阴阳师 {
+    fill: #c73655
+}.GTA {
+    fill: #616970
+}.三百英雄 {
+    fill: #7c5815
+}.三国杀 {
+    fill: #917620
+}.求生之路 {
+    fill: #64445c
+}.魔兽世界 {
+    fill: #a57721
+}.魔兽争霸 {
+    fill: #18752c
+}.Dota {
+    fill: #8f0000
+}.求生之路 {
+    fill: #64445c
+}.求生之路 {
+    fill: #64445c
+}.崩坏学园 {
+    fill: #4a7ad3
+}.绝地求生 {
+    fill: #ad5a0d
+}.王者荣耀 {
+    fill: #b83434
+}
+
+.星际争霸 {
+    fill: #003e77
+}
+
+.days {
+    fill: rgb(92, 92, 92);
+    font-weight: bold;
+    font-size: 40pt;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.dayslabel {
+    fill: rgb(92, 92, 92);
+    font-weight: bold;
+    font-size: 25pt;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.growth {
+    fill: rgb(92, 92, 92);
+    font-weight: bold;
+    font-size: 40pt;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
