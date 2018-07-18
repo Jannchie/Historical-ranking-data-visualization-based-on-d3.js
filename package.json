@@ -9,7 +9,10 @@
     "webpack-command": "^0.4.1",
     "webpack-cli": "^3.0.8"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "css-loader": "^1.0.0",
+    "style-loader": "^0.21.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -16,4 +16,7 @@ mB.js
 wB.js
 bangumidata.js
 c_bangumi.js
-/node_modules
+node_modules
+src/data.csv
+dist/data.js
+dist/data_w.js
