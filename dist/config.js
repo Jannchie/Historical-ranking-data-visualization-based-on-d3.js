@@ -2,6 +2,9 @@ const config = {
     // 编码方式,默认为GBK,按需可修改为UTF-8等。
     encoding:"GBK",
 
+    // 每日最多显示的条目数
+    max_number : 20,
+
     // 显示顶部附加信息
     showMessage : true,
 
@@ -19,7 +22,7 @@ const config = {
     // 长度小于display_barInfo的bar将不显示barInfo
     display_barInfo : 200,
 
-    // 显示类型
+    // 类型显示 
     use_type_info : true,
 
     // 使用计数器
@@ -29,7 +32,7 @@ const config = {
 
     // 格式化数值
     format : '.0f',
-    
+
     // 图表左右上下间距
     left_margin : 200,
     right_margin : 150,
@@ -42,4 +45,5 @@ const config = {
     
     // 消失分界线：区分柱子消失时是上浮还是下浮，0为全部下浮
     dividing_line : 0,
+    
 }

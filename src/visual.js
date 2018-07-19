@@ -2,16 +2,16 @@
  * @author Jannchie
  * @email jannchie@gmail.com
  * @create date 2018-05-02 13:17:10
- * @modify date 2018-07-19 01:34:21
+ * @modify date 2018-07-19 08:59:09
  * @desc 可视化核心代码
-*/
+ */
 import * as d3 from 'd3';
 require("./stylesheet.css");
 
 $('#inputfile').change(function () {
     $('#inputfile').attr('hidden', true);
     var r = new FileReader();
-    r.readAsText(this.files[0],config.encoding);
+    r.readAsText(this.files[0], config.encoding);
     r.onload = function () {
         //读取完成后，数据保存在对象的result属性中
         var data = d3.csvParse(this.result);
@@ -34,9 +34,10 @@ function draw(data) {
     // 选择颜色
     function getClass(d) {
         // TODO:不随机选色
-        // if (d.type != undefined) {
-        //     return d.type;
-        // } 
+        if (d.use_custom_color) {
+            return d.type;
+        }
+
         // 随机选色
         var r = d.name.charCodeAt();
         r = r % 25;
@@ -59,12 +60,13 @@ function draw(data) {
     var step = config.step;
     var format = config.format
     var left_margin = config.left_margin;
-    var right_margin = config.right_margin
-    var top_margin = config.top_margin
-    var bottom_margin = config.bottom_margin
-    var dateLabel_x = config.dateLabel_x
-    var dateLabel_y = config.dateLabel_y
-    var item_x = config.item_x
+    var right_margin = config.right_margin;
+    var top_margin = config.top_margin;
+    var bottom_margin = config.bottom_margin;
+    var dateLabel_x = config.dateLabel_x;
+    var dateLabel_y = config.dateLabel_y;
+    var item_x = config.item_x;
+    var max_number = config.max_number;
     const margin = {
         left: left_margin,
         right: right_margin,
@@ -138,9 +140,11 @@ function draw(data) {
         var tempSort = []
 
         var currentSort = currentData.sort(function (a, b) {
-            return parseInt(b.value) - parseInt(a.value);
+            return Number(b.value) - Number(a.value);
         });
+        console.log(currentData);
 
+        currentData = currentData.slice(0, max_number);
 
         var a = d3.transition("2")
             .each(redraw)
@@ -305,8 +309,10 @@ function draw(data) {
                 0).transition()
             .delay(500 * speed).duration(2490 * speed).text(
                 function (d) {
-                    return d.type+"-"+d.name;
-                    //return d.barInfo
+                    if (use_type_info) {
+                        return d.type + "-" + d.name;
+                    }
+                    return d.name;
                 }).attr("x", d => xScale(xValue(d)) - 10).attr(
                 "fill-opacity",
                 function (d) {
