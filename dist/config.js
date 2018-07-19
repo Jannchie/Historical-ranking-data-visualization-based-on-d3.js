@@ -27,7 +27,9 @@ const config = {
     // 每个数据的间隔日期
     step : 7,
 
+    // 格式化数值
     format : '.0f',
+    
     // 图表左右上下间距
     left_margin : 200,
     right_margin : 150,
