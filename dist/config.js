@@ -2,16 +2,13 @@ const config = {
     // 编码方式,默认为GBK,按需可修改为UTF-8等。
     encoding:"GBK",
 
-    // 显示附加信息
+    // 显示顶部附加信息
     showMessage : true,
 
     // 附加信息内容
     itemLabel : "榜首选手",
     typeLabel : "所属协会",
     item_x : 300,
-
-    // 消失分界线：区分退出时是上浮还是下浮
-    dividing_line : 0,
 
     // 播放速度
     speed : 1,
@@ -40,4 +37,7 @@ const config = {
     // 时间标签坐标
     dateLabel_x : 1060,
     dateLabel_y : 750,
+    
+    // 消失分界线：区分柱子消失时是上浮还是下浮，0为全部下浮
+    dividing_line : 0,
 }

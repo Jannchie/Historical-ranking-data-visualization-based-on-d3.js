@@ -3,7 +3,7 @@
  * @email jannchie@gmail.com
  * @create date 2018-05-02 13:17:10
  * @modify date 2018-07-19 01:34:21
- * @desc [description]
+ * @desc 可视化核心代码
 */
 import * as d3 from 'd3';
 require("./stylesheet.css");
