@@ -1,6 +1,6 @@
 const config = {
     // 编码方式,默认为GBK,按需可修改为UTF-8等。
-    encoding:"GBK",
+    encoding:"UTF-8",
 
     // 每日最多显示的条目数
     max_number : 20,
@@ -16,8 +16,8 @@ const config = {
     typeLabel : "所属协会",
     item_x : 300,
 
-    // 播放速度
-    speed : 1,
+    // 时间点间隔时间
+    interval_time : 1,
 
     // 文字水平高度
     text_y : -50,
@@ -26,7 +26,7 @@ const config = {
     display_barInfo : 200,
 
     // 类型显示 
-    use_type_info : true,
+    use_type_info : false,
 
     // 使用计数器
     use_counter : false,
