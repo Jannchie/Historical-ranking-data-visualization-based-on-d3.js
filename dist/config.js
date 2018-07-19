@@ -1,6 +1,6 @@
 const config = {
     // 编码方式,默认为GBK,按需可修改为UTF-8等。
-    encoding:"UTF-8",
+    encoding:"GBK",
 
     // 每日最多显示的条目数
     max_number : 20,
@@ -8,7 +8,8 @@ const config = {
     // 显示顶部附加信息
     showMessage : true,
 
-    // 使用自定义的颜色
+    // 使用自定义的颜色，需要手动填写color.css这个文件
+    // 如果为false，则随机配色
     use_custom_color : true,
 
     // 附加信息内容
@@ -17,7 +18,7 @@ const config = {
     item_x : 300,
 
     // 时间点间隔时间
-    interval_time : 1,
+    interval_time : 0.2,
 
     // 文字水平高度
     text_y : -50,

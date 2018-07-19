@@ -20,3 +20,4 @@ node_modules
 src/data.csv
 dist/data.js
 dist/data_w.js
+dist/data.csv
