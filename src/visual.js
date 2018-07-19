@@ -31,10 +31,12 @@ function draw(data) {
     });
 
     var time = date.sort();
+
+    var use_custom_color = config.use_custom_color
     // 选择颜色
     function getClass(d) {
         // TODO:不随机选色
-        if (d.use_custom_color) {
+        if (use_custom_color) {
             return d.type;
         }
 

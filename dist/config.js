@@ -8,6 +8,9 @@ const config = {
     // 显示顶部附加信息
     showMessage : true,
 
+    // 使用自定义的颜色
+    use_custom_color : true,
+
     // 附加信息内容
     itemLabel : "榜首选手",
     typeLabel : "所属协会",
