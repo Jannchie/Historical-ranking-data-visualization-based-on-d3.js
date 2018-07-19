@@ -2,11 +2,11 @@
  * @author Jannchie
  * @email jannchie@gmail.com
  * @create date 2018-05-02 13:17:10
- * @modify date 2018-07-18 09:27:10
+ * @modify date 2018-07-19 01:34:21
  * @desc [description]
 */
-//import * as d3 from 'd3';
-//require("./stylesheet.css");
+import * as d3 from 'd3';
+require("./stylesheet.css");
 
 $('#inputfile').change(function () {
     $('#inputfile').attr('hidden', true);
@@ -33,45 +33,47 @@ function draw(data) {
     var time = date.sort();
     // 选择颜色
     function getClass(d) {
-        if (d.type != undefined) {
-            return d.type;
-        } 
+        // TODO:不随机选色
+        // if (d.type != undefined) {
+        //     return d.type;
+        // } 
         // 随机选色
         var r = d.name.charCodeAt();
         r = r % 25;
         r = Math.round(r);
         return color[r];
     }
-    var showBottomMessage = true;
-    var dividing_line = 0;
-    var x_min = 0;
-    var speed = 1;
-    speed /= 3;
-    var text_y = -50;
-    var itemLabel = "榜首选手";
-    var typeLabel = "所属协会";
+    var showMessage = config.showMessage;
+    var dividing_line = config.dividing_line;
+    var speed = config.speed;
+    var text_y = config.text_y;
+    var itemLabel = config.itemLabel;
+    var typeLabel = config.typeLabel;
     // 长度小于display_barInfo的bar将不显示barInfo
-    var display_barInfo = 200;
+    var display_barInfo = config.display_barInfo;
     // 显示类型
-    var use_type_info = true;
+    var use_type_info = config.use_type_info;
     // 使用计数器
-    var use_counter = false;
+    var use_counter = config.use_counter;
     // 每个数据的间隔日期
-    var step = 7;
-    var format = '.0f';
-    var left_margin = 200;
-    var right_margin = 150
-    var top_margin = 200
-    var bottom_margin = 0
-    var dateLabel_x = 1060
-    var dateLabel_y = 750
-    var top_x = 300
+    var step = config.step;
+    var format = config.format
+    var left_margin = config.left_margin;
+    var right_margin = config.right_margin
+    var top_margin = config.top_margin
+    var bottom_margin = config.bottom_margin
+    var dateLabel_x = config.dateLabel_x
+    var dateLabel_y = config.dateLabel_y
+    var item_x = config.item_x
     const margin = {
         left: left_margin,
         right: right_margin,
         top: top_margin,
         bottom: bottom_margin
     };
+
+    speed /= 3;
+
     var currentdate = time[0].toString();
     var currentData = [];
     var lastname;
@@ -123,7 +125,7 @@ function draw(data) {
 
     var topLabel = g.insert("text")
         .attr("class", "topLabel")
-        .attr("x", top_x)
+        .attr("x", item_x)
         .attr("y", text_y)
 
     function getCurrentData(date) {
@@ -148,7 +150,7 @@ function draw(data) {
         tempSort = currentSort;
     }
 
-    if (showBottomMessage) {
+    if (showMessage) {
 
         // 左1文字
         g.insert("text")
@@ -204,7 +206,7 @@ function draw(data) {
                 return d.name;
             });
 
-        if (showBottomMessage) {
+        if (showMessage) {
             // 榜首文字
             topLabel.data(currentData).text(function (d) {
                 if (lastname == d.name) {
@@ -303,7 +305,7 @@ function draw(data) {
                 0).transition()
             .delay(500 * speed).duration(2490 * speed).text(
                 function (d) {
-                    return d.type+"-"+d.name
+                    return d.type+"-"+d.name;
                     //return d.barInfo
                 }).attr("x", d => xScale(xValue(d)) - 10).attr(
                 "fill-opacity",
