@@ -2,12 +2,12 @@
  * @author Jannchie
  * @email jannchie@gmail.com
  * @create date 2018-05-02 13:17:10
- * @modify date 2018-07-19 08:59:09
+ * @modify date 2018-07-20 07:29:40
  * @desc 可视化核心代码
  */
 import * as d3 from 'd3';
 require("./stylesheet.css");
-
+require("../dist/color.css");
 $('#inputfile').change(function () {
     $('#inputfile').attr('hidden', true);
     var r = new FileReader();
@@ -29,8 +29,12 @@ function draw(data) {
             date.push(element["date"]);
         }
     });
-
-    var time = date.sort();
+    var auto_sort = config.auto_sort;
+    if(auto_sort){
+        var time = date.sort();
+    }else{
+        var time = date;
+    }
 
     var use_custom_color = config.use_custom_color
     // 选择颜色
@@ -80,6 +84,7 @@ function draw(data) {
         bottom: bottom_margin
     };
 
+    var enter_from_0 = config.enter_from_0;
     interval_time /= 3;
 
     var currentdate = time[0].toString();
@@ -257,7 +262,14 @@ function draw(data) {
             return getClass(d)
         })
 
-        barEnter.append("rect").attr("fill-opacity", 0)
+        barEnter.append("rect").attr("width",
+                function (d) {
+                    if (enter_from_0) {
+                        return 0;
+                    } else {
+                        return xScale(xValue(d));
+                    }
+                }).attr("fill-opacity", 0)
             .attr("height", 26).attr("y", 50)
             .transition("a")
             .attr("class", d => getClass(d))
@@ -282,7 +294,14 @@ function draw(data) {
                 return d.name;
             });
 
-        barEnter.append("text").attr("x", 0).attr("y", 50).attr("fill-opacity", 0).transition()
+        barEnter.append("text").attr("x",
+        function (d) {
+            if (enter_from_0) {
+                return 0;
+            } else {
+                return xScale(xValue(d));
+            }
+        }).attr("y", 50).attr("fill-opacity", 0).transition()
             .delay(500 * interval_time).duration(2490 * interval_time).tween(
                 "text",
                 function (d) {
@@ -300,9 +319,15 @@ function draw(data) {
             }).attr("x", d => xScale(xValue(d)) + 10)
             .attr("y", 22);
 
-
         // bar上文字
-        barEnter.append("text").attr("x", 0)
+        barEnter.append("text").attr("x",
+        function (d) {
+            if (enter_from_0) {
+                return 0;
+            } else {
+                return xScale(xValue(d));
+            }
+        })
             .attr("stroke", function (d) {
                 return $("." + getClass(d)).css("fill");
             })
@@ -334,8 +359,6 @@ function draw(data) {
                 }
                 return "1px";
             });
-
-
 
         //.attr("text-anchor", "end").text(d => GDPFormater(Number(d.value) ));
         var barUpdate = bar.transition("2").duration(2990 * interval_time).ease(d3.easeLinear);
