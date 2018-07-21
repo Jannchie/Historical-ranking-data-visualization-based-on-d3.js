@@ -2,7 +2,7 @@
  * @author Jannchie
  * @email jannchie@gmail.com
  * @create date 2018-05-02 13:17:10
- * @modify date 2018-07-20 07:29:40
+ * @modify date 2018-07-21 09:53:45
  * @desc 可视化核心代码
  */
 import * as d3 from 'd3';
@@ -30,25 +30,42 @@ function draw(data) {
         }
     });
     var auto_sort = config.auto_sort;
-    if(auto_sort){
+    if (auto_sort) {
         var time = date.sort();
-    }else{
+    } else {
         var time = date;
     }
 
-    var use_custom_color = config.use_custom_color
+    var use_custom_color = config.use_custom_color;
+    var divide_by_type = config.divide_by_type;
     // 选择颜色
     function getClass(d) {
-        // TODO:不随机选色
+        // 不随机选色
         if (d.type != '' && d.type != undefined) {
             if (use_custom_color) {
+                if (use_type_info == false) {
+                    return d.name
+                }
                 return d.type;
             }
         }
+
         // 随机选色
         var r = 0;
-        for (let index = 0; index < d.name.length; index++) {
-            r = r + d.name.charCodeAt(index);
+        if (use_type_info) {
+            if (divide_by_type){
+                for (let index = 0; index < d.type.length; index++) {
+                    r = r + d.type.charCodeAt(index);
+                }
+            }else{
+                for (let index = 0; index < d.name.length; index++) {
+                    r = r + d.name.charCodeAt(index);
+                }
+            }
+        } else {
+            for (let index = 0; index < d.name.length; index++) {
+                r = r + d.name.charCodeAt(index);
+            }
         }
         r = r % 25;
         r = Math.round(r);
@@ -182,14 +199,14 @@ function draw(data) {
                 .attr("class", "days")
                 .attr("x", 1300)
                 .attr("y", text_y);
-        }
-
-        // 显示榜首type
-        if (use_type_info == true) {
-            var top_type = g.insert("text")
-                .attr("class", "days")
-                .attr("x", 1300)
-                .attr("y", text_y);
+        } else {
+            // 显示榜首type
+            if (use_type_info == true) {
+                var top_type = g.insert("text")
+                    .attr("class", "days")
+                    .attr("x", 1300)
+                    .attr("y", text_y);
+            }
         }
     }
 
@@ -295,13 +312,13 @@ function draw(data) {
             });
 
         barEnter.append("text").attr("x",
-        function (d) {
-            if (enter_from_0) {
-                return 0;
-            } else {
-                return xScale(xValue(d));
-            }
-        }).attr("y", 50).attr("fill-opacity", 0).transition()
+                function (d) {
+                    if (enter_from_0) {
+                        return 0;
+                    } else {
+                        return xScale(xValue(d));
+                    }
+                }).attr("y", 50).attr("fill-opacity", 0).transition()
             .delay(500 * interval_time).duration(2490 * interval_time).tween(
                 "text",
                 function (d) {
@@ -321,13 +338,13 @@ function draw(data) {
 
         // bar上文字
         barEnter.append("text").attr("x",
-        function (d) {
-            if (enter_from_0) {
-                return 0;
-            } else {
-                return xScale(xValue(d));
-            }
-        })
+                function (d) {
+                    if (enter_from_0) {
+                        return 0;
+                    } else {
+                        return xScale(xValue(d));
+                    }
+                })
             .attr("stroke", function (d) {
                 return $("." + getClass(d)).css("fill");
             })
@@ -398,12 +415,15 @@ function draw(data) {
                 if (temp < dividing_line) {
                     return "translate(0," + temp - 5 + ")";
                 }
-                return "translate(0," + 800 + ")";
+                return "translate(0," + 780 + ")";
             })
             .remove().attr("fill-opacity", 0);
         barExit.select("rect").attr("fill-opacity", 0)
         barExit.select(".value").attr("fill-opacity", 0)
         barExit.select(".barInfo").attr("fill-opacity", 0).attr("stroke-width", function (d) {
+            return "0px";
+        })
+        barExit.select(".barInfo2").attr("fill-opacity", 0).attr("stroke-width", function (d) {
             return "0px";
         })
         barExit.select(".label").attr("fill-opacity", 0)
