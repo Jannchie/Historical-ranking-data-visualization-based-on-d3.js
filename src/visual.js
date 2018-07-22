@@ -2,12 +2,11 @@
  * @author Jannchie
  * @email jannchie@gmail.com
  * @create date 2018-05-02 13:17:10
- * @modify date 2018-07-21 09:53:45
+ * @modify date 2018-07-22 12:45:24
  * @desc 可视化核心代码
  */
 import * as d3 from 'd3';
 require("./stylesheet.css");
-require("../dist/color.css");
 $('#inputfile').change(function () {
     $('#inputfile').attr('hidden', true);
     var r = new FileReader();
@@ -43,8 +42,8 @@ function draw(data) {
         // 不随机选色
         if (d.type != '' && d.type != undefined) {
             if (use_custom_color) {
-                if (use_type_info == false) {
-                    return d.name
+                if (use_type_info == false || divide_by_type == false) {
+                    return d.name;
                 }
                 return d.type;
             }
@@ -56,10 +55,9 @@ function draw(data) {
             if (divide_by_type){
                 for (let index = 0; index < d.type.length; index++) {
                     r = r + d.type.charCodeAt(index);
-                }
-            }else{
-                for (let index = 0; index < d.name.length; index++) {
-                    r = r + d.name.charCodeAt(index);
+                    r = r % 25;
+                    r = Math.round(r);
+                    return color[r];
                 }
             }
         } else {
