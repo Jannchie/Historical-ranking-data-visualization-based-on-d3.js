@@ -2,7 +2,7 @@
  * @author Jannchie
  * @email jannchie@gmail.com
  * @create date 2018-05-02 13:17:10
- * @modify date 2018-07-23 07:59:17
+ * @modify date 2018-07-23 08:36:55
  * @desc 可视化核心代码
  */
 import * as d3 from 'd3';
@@ -30,7 +30,7 @@ function draw(data) {
     });
     var auto_sort = config.auto_sort;
     if (auto_sort) {
-        var time = date.sort();
+        var time = date.sort((x,y)=>new Date(x)-new Date(y));
     } else {
         var time = date;
     }
