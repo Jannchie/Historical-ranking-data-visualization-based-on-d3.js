@@ -68,4 +68,10 @@ const config = {
     
     // 设置动画效果，如果为true，则新进入的条目从0开始。
     enter_from_0: false,
+
+    // 如果所有数字都很大，导致拉不开差距则开启此项使得坐标原点变换为（最小值）*2-（最大值）
+    big_value: false,
+    
+    // 如果要使用半对数坐标，则开启此项
+    use_semilogarithmic_coordinate: false
 }

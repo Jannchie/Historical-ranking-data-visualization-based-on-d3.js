@@ -2,7 +2,7 @@
  * @author Jannchie
  * @email jannchie@gmail.com
  * @create date 2018-05-02 13:17:10
- * @modify date 2018-07-22 12:45:24
+ * @modify date 2018-07-23 07:59:17
  * @desc 可视化核心代码
  */
 import * as d3 from 'd3';
@@ -34,7 +34,8 @@ function draw(data) {
     } else {
         var time = date;
     }
-
+    var use_semilogarithmic_coordinate = config.use_semilogarithmic_coordinate;
+    var big_value = config.big_value;
     var use_custom_color = config.use_custom_color;
     var divide_by_type = config.divide_by_type;
     // 选择颜色
@@ -124,9 +125,13 @@ function draw(data) {
         .attr('class', 'axis-label')
         .attr('x', innerWidth / 2)
         .attr('y', 100);
-
-    // const xScale = d3.scalePow().exponent(.5);
-    const xScale = d3.scaleLinear()
+        
+    var xScale = d3.scaleLinear()
+    if (use_semilogarithmic_coordinate){
+        xScale = d3.scalePow().exponent(.5);
+    }else{
+        xScale = d3.scaleLinear();
+    }
     const yScale = d3.scaleBand()
         .paddingInner(0.3)
         .paddingOuter(0);
@@ -219,8 +224,12 @@ function draw(data) {
             .domain(currentData.map(yValue).reverse())
             .range([innerHeight, 0]);
         // x轴范围
-        // xScale.domain([2 * d3.min(currentData, xValue) - d3.max(currentData, xValue), d3.max(currentData, xValue) + 100]).range([0, innerWidth]);
-        xScale.domain([0, d3.max(currentData, xValue) + 100]).range([0, innerWidth]);
+        // 如果所有数字很大导致拉不开差距
+        if(big_value){
+            xScale.domain([2 * d3.min(currentData, xValue) - d3.max(currentData, xValue), d3.max(currentData, xValue) + 100]).range([0, innerWidth]);
+        }else{
+            xScale.domain([0, d3.max(currentData, xValue)]).range([0, innerWidth]);
+        }
 
         dateLabel.text(currentdate);
 
