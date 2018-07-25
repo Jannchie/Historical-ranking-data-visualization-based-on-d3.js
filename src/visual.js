@@ -2,7 +2,7 @@
  * @author Jannchie
  * @email jannchie@gmail.com
  * @create date 2018-05-02 13:17:10
- * @modify date 2018-07-23 08:36:55
+ * @modify date 2018-07-25 10:33:55
  * @desc 可视化核心代码
  */
 import * as d3 from 'd3';
@@ -93,6 +93,7 @@ function draw(data) {
     var dateLabel_y = config.dateLabel_y;
     var item_x = config.item_x;
     var max_number = config.max_number;
+    var reverse = config.reverse;
     const margin = {
         left: left_margin,
         right: right_margin,
@@ -170,9 +171,16 @@ function draw(data) {
         });
         var tempSort = []
 
-        var currentSort = currentData.sort(function (a, b) {
-            return Number(b.value) - Number(a.value);
-        });
+        if (reverse){
+            var currentSort = currentData.sort(function (a, b) {
+                return Number(a.value) - Number(b.value);
+            });
+        }else{
+            var currentSort = currentData.sort(function (a, b) {
+                return Number(b.value) - Number(a.value);
+            });
+        }
+
         currentData = currentData.slice(0, max_number);
 
         var a = d3.transition("2")

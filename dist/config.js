@@ -16,6 +16,9 @@ const config = {
     // 如果你的日期格式为标准的日期格式，则可以开启自动排序功能达到自动按照日期顺序排序的效果。
     auto_sort : true,
 
+    // 倒序，使得最短的条位于最上方
+    reverse: false,
+
     // 使用自定义的颜色，需要手动填写color.css这个文件。
     // 如果为false，则随机配色。
     use_custom_color : true,
@@ -74,4 +77,5 @@ const config = {
     
     // 如果要使用半对数坐标，则开启此项
     use_semilogarithmic_coordinate: false
+
 }
