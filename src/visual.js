@@ -56,19 +56,19 @@ function draw(data) {
             if (divide_by_type){
                 for (let index = 0; index < d.type.length; index++) {
                     r = r + d.type.charCodeAt(index);
-                    r = r % 25;
-                    r = Math.round(r);
-                    return color[r];
                 }
+                r = r % 25;
+                r = Math.round(r);
+                return color[r];
+            }else {
+                for (let index = 0; index < d.name.length; index++) {
+                    r = r + d.name.charCodeAt(index);
+                }
+                r = r % 25;
+                r = Math.round(r);
+                return color[r];
             }
-        } else {
-            for (let index = 0; index < d.name.length; index++) {
-                r = r + d.name.charCodeAt(index);
-            }
-        }
-        r = r % 25;
-        r = Math.round(r);
-        return color[r];
+        } 
     }
     var showMessage = config.showMessage;
     var dividing_line = config.dividing_line;
