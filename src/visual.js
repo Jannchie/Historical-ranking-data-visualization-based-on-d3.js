@@ -30,7 +30,7 @@ function draw(data) {
     });
     var auto_sort = config.auto_sort;
     if (auto_sort) {
-        var time = date.sort((x,y)=>new Date(x)-new Date(y));
+        var time = date.sort((x, y) => new Date(x) - new Date(y));
     } else {
         var time = date;
     }
@@ -41,34 +41,30 @@ function draw(data) {
     // 选择颜色
     function getClass(d) {
         // 不随机选色
-        if (d.type != '' && d.type != undefined) {
-            if (use_custom_color) {
-                if (use_type_info == false || divide_by_type == false) {
-                    return d.name;
-                }
-                return d.type;
+        if (use_custom_color) {
+            if (use_type_info == false || divide_by_type == false) {
+                return d.name;
             }
+            return d.type;
         }
 
         // 随机选色
         var r = 0;
-        if (use_type_info) {
-            if (divide_by_type){
-                for (let index = 0; index < d.type.length; index++) {
-                    r = r + d.type.charCodeAt(index);
-                }
-                r = r % 25;
-                r = Math.round(r);
-                return color[r];
-            }else {
-                for (let index = 0; index < d.name.length; index++) {
-                    r = r + d.name.charCodeAt(index);
-                }
-                r = r % 25;
-                r = Math.round(r);
-                return color[r];
+        if (use_type_info && divide_by_type) {
+            for (let index = 0; index < d.type.length; index++) {
+                r = r + d.type.charCodeAt(index);
             }
-        } 
+            r = r % 25;
+            r = Math.round(r);
+            return color[r];
+        } else {
+            for (let index = 0; index < d.name.length; index++) {
+                r = r + d.name.charCodeAt(index);
+            }
+            r = r % 25;
+            r = Math.round(r);
+            return color[r];
+        }
     }
     var showMessage = config.showMessage;
     var dividing_line = config.dividing_line;
@@ -126,11 +122,11 @@ function draw(data) {
         .attr('class', 'axis-label')
         .attr('x', innerWidth / 2)
         .attr('y', 100);
-        
+
     var xScale = d3.scaleLinear()
-    if (use_semilogarithmic_coordinate){
+    if (use_semilogarithmic_coordinate) {
         xScale = d3.scalePow().exponent(.5);
-    }else{
+    } else {
         xScale = d3.scaleLinear();
     }
     const yScale = d3.scaleBand()
@@ -171,11 +167,11 @@ function draw(data) {
         });
         var tempSort = []
 
-        if (reverse){
+        if (reverse) {
             var currentSort = currentData.sort(function (a, b) {
                 return Number(a.value) - Number(b.value);
             });
-        }else{
+        } else {
             var currentSort = currentData.sort(function (a, b) {
                 return Number(b.value) - Number(a.value);
             });
@@ -233,10 +229,10 @@ function draw(data) {
             .range([innerHeight, 0]);
         // x轴范围
         // 如果所有数字很大导致拉不开差距
-        if(big_value){
+        if (big_value) {
             xScale.domain([2 * d3.min(currentData, xValue) - d3.max(currentData, xValue), d3.max(currentData, xValue) + 100]).range([0, innerWidth]);
-        }else{
-            xScale.domain([0, d3.max(currentData, xValue)]).range([0, innerWidth]);
+        } else {
+            xScale.domain([0, d3.max(currentData, xValue) + 16]).range([0, innerWidth]);
         }
 
         dateLabel.text(currentdate);

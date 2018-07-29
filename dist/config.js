@@ -21,7 +21,7 @@ const config = {
 
     // 使用自定义的颜色，需要手动填写color.css这个文件。
     // 如果为false，则随机配色。
-    use_custom_color : true,
+    use_custom_color : false,
 
     // 附加信息内容。
     itemLabel : "左边信息",
@@ -39,7 +39,7 @@ const config = {
     display_barInfo : 100,
 
     // 使用类型
-    use_type_info : true,
+    use_type_info : false,
     // 默认配色与name绑定，如果需要与类型绑定，即相同类型使用同种颜色，那么将divide_by_type属性置为true。
     // 如果不使用type（use_type_info : false），则divide_by_type无效。
     divide_by_type: false,
