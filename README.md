@@ -69,6 +69,7 @@ name|type|value|date
 ## 2018-07-31
 
 - 修复了中途修改type不会改变类型的问题。
+- 删除了运行不正常的dividing_line，改为使用allow_up属性，该属性使得高于平均值的条目能够上浮退出。
 
 ---
 

@@ -69,7 +69,7 @@ function draw(data) {
         }
     }
     var showMessage = config.showMessage;
-    var dividing_line = config.dividing_line;
+    var allow_up = config.allow_up;
     var interval_time = config.interval_time;
     var text_y = config.text_y;
     var itemLabel = config.itemLabel;
@@ -227,7 +227,7 @@ function draw(data) {
         "value": 1
     };
 
-
+    var avg = 0;
     function redraw() {
         yScale
             .domain(currentData.map(yValue).reverse())
@@ -235,9 +235,9 @@ function draw(data) {
         // x轴范围
         // 如果所有数字很大导致拉不开差距
         if (big_value) {
-            xScale.domain([2 * d3.min(currentData, xValue) - d3.max(currentData, xValue), d3.max(currentData, xValue) + 100]).range([0, innerWidth]);
+            xScale.domain([2 * d3.min(currentData, xValue) - d3.max(currentData, xValue), d3.max(currentData, xValue) + 10]).range([0, innerWidth]);
         } else {
-            xScale.domain([0, d3.max(currentData, xValue) + 16]).range([0, innerWidth]);
+            xScale.domain([0, d3.max(currentData, xValue) + 1]).range([0, innerWidth]);
         }
 
         dateLabel.text(currentdate);
@@ -458,16 +458,18 @@ function draw(data) {
                 self.textContent = d3.format(format)(Math.round(i(t) * round) / round);
             };
         }).duration(2990 * interval_time).attr("x", d => xScale(xValue(d)) + 10)
-
+        
+        avg = (Number(currentData[0]["value"])+Number(currentData[currentData.length-1]["value"]))/2
 
         var barExit = bar.exit().attr("fill-opacity", 1).transition().duration(2500 * interval_time)
 
         barExit.attr("transform", function (d) {
-            var temp = parseInt(this.attributes["transform"].value.substr(12, 4))
-            if (temp < dividing_line) {
-                return "translate(0," + temp - 5 + ")";
+            if (Number(d.value) > avg && allow_up) {
+                
+                return "translate(0," + "-100" + ")";
             }
-            return "translate(0," + 780 + ")";
+            return "translate(0," + "900" + ")";
+
         })
             .remove().attr("fill-opacity", 0);
         barExit.select("rect").attr("fill-opacity", 0)

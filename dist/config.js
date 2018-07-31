@@ -39,10 +39,10 @@ const config = {
     display_barInfo : 100,
 
     // 使用类型
-    use_type_info : false,
+    use_type_info : true,
     // 默认配色与name绑定，如果需要与类型绑定，即相同类型使用同种颜色，那么将divide_by_type属性置为true。
     // 如果不使用type（use_type_info : false），则divide_by_type无效。
-    divide_by_type: false,
+    divide_by_type: true,
 
     // 使用计数器
     // 计数器会出现在右上角，记录着当前榜首的持续时间。
@@ -66,8 +66,8 @@ const config = {
     dateLabel_x : 800,
     dateLabel_y : 750,
     
-    // 消失分界线：区分柱子消失时是上浮还是下浮，0为全部下浮。
-    dividing_line : 0,
+    // 允许大于平均值的条消失时上浮。
+    allow_up : true,
     
     // 设置动画效果，如果为true，则新进入的条目从0开始。
     enter_from_0: false,
