@@ -28,6 +28,8 @@ function draw(data) {
             date.push(element["date"]);
         }
     });
+
+
     var auto_sort = config.auto_sort;
     if (auto_sort) {
         var time = date.sort((x, y) => new Date(x) - new Date(y));
@@ -104,6 +106,9 @@ function draw(data) {
     var currentData = [];
     var lastname;
     const svg = d3.select('svg');
+
+
+
     const width = svg.attr('width');
     const height = svg.attr('height');
     const innerWidth = width - margin.left - margin.right;
@@ -286,18 +291,19 @@ function draw(data) {
             .attr("transform", function (d) {
                 return "translate(0," + yScale(yValue(d)) + ")";
             });
-        barEnter.append("g").attr("class", function (d) {
+
+        barEnter.append("c").attr("class", function (d) {
             return getClass(d)
         })
 
         barEnter.append("rect").attr("width",
-                function (d) {
-                    if (enter_from_0) {
-                        return 0;
-                    } else {
-                        return xScale(xValue(d));
-                    }
-                }).attr("fill-opacity", 0)
+            function (d) {
+                if (enter_from_0) {
+                    return 0;
+                } else {
+                    return xScale(xValue(d));
+                }
+            }).attr("fill-opacity", 0)
             .attr("height", 26).attr("y", 50)
             .transition("a")
             .attr("class", d => getClass(d))
@@ -305,11 +311,11 @@ function draw(data) {
             .duration(2490 * interval_time)
             .attr("y", 0).attr(
                 "width", d =>
-                xScale(xValue(d)))
+                    xScale(xValue(d)))
             .attr("fill-opacity", 1);
 
         barEnter.append("text").attr("y", 50).attr("fill-opacity", 0).transition("2").delay(500 * interval_time).duration(
-                2490 * interval_time)
+            2490 * interval_time)
             .attr(
                 "fill-opacity", 1).attr("y", 0)
             .attr("class", function (d) {
@@ -323,13 +329,13 @@ function draw(data) {
             });
 
         barEnter.append("text").attr("x",
-                function (d) {
-                    if (enter_from_0) {
-                        return 0;
-                    } else {
-                        return xScale(xValue(d));
-                    }
-                }).attr("y", 50).attr("fill-opacity", 0).transition()
+            function (d) {
+                if (enter_from_0) {
+                    return 0;
+                } else {
+                    return xScale(xValue(d));
+                }
+            }).attr("y", 50).attr("fill-opacity", 0).transition()
             .delay(500 * interval_time).duration(2490 * interval_time).tween(
                 "text",
                 function (d) {
@@ -341,7 +347,7 @@ function draw(data) {
                         self.textContent = d3.format(format)(Math.round(i(t) * round) / round);
                     };
                 }).attr(
-                "fill-opacity", 1).attr("y", 0)
+                    "fill-opacity", 1).attr("y", 0)
             .attr("class", function (d) {
                 return "value " + getClass(d)
             }).attr("x", d => xScale(xValue(d)) + 10)
@@ -349,13 +355,13 @@ function draw(data) {
 
         // bar上文字
         barEnter.append("text").attr("x",
-                function (d) {
-                    if (enter_from_0) {
-                        return 0;
-                    } else {
-                        return xScale(xValue(d));
-                    }
-                })
+            function (d) {
+                if (enter_from_0) {
+                    return 0;
+                } else {
+                    return xScale(xValue(d));
+                }
+            })
             .attr("stroke", function (d) {
                 return $("." + getClass(d)).css("fill");
             })
@@ -371,13 +377,13 @@ function draw(data) {
                     }
                     return d.name;
                 }).attr("x", d => xScale(xValue(d)) - 10).attr(
-                "fill-opacity",
-                function (d) {
-                    if (xScale(xValue(d)) - 10 < display_barInfo) {
-                        return 0;
-                    }
-                    return 1;
-                })
+                    "fill-opacity",
+                    function (d) {
+                        if (xScale(xValue(d)) - 10 < display_barInfo) {
+                            return 0;
+                        }
+                        return 1;
+                    })
             .attr("y", 2)
             .attr("dy", ".5em")
             .attr("text-anchor", "end")
@@ -391,22 +397,57 @@ function draw(data) {
         //.attr("text-anchor", "end").text(d => GDPFormater(Number(d.value) ));
         var barUpdate = bar.transition("2").duration(2990 * interval_time).ease(d3.easeLinear);
 
-        barUpdate.select("rect")
-            .attr("width", d => xScale(xValue(d)))
-        barUpdate.select(".barInfo").attr("x", d => xScale(xValue(d)) - 10).attr(
-            "fill-opacity",
-            function (d) {
-                if (xScale(xValue(d)) - 10 < display_barInfo) {
-                    return 0;
-                }
-                return 1;
-            }
-        ).attr("stroke-width", function (d) {
-            if (xScale(xValue(d)) - 10 < display_barInfo) {
-                return "0px";
-            }
-            return "1px";
+        barUpdate.select("rect").attr("class", function (d) {
+            return getClass(d);
         })
+            .attr("width", d => xScale(xValue(d)))
+
+        barUpdate.select("c").attr("class", function (d) {
+            return getClass(d)
+        });
+
+        barUpdate.select(".label").attr("class", function (d) {
+            return "label " + getClass(d);
+        })
+            .attr("width", d => xScale(xValue(d)))
+        barUpdate.select(".value").attr("class", function (d) {
+            return "value " + getClass(d);
+        })
+            .attr("width", d => xScale(xValue(d)))
+
+        barUpdate.select(".barInfo").attr("stroke", function (d) {
+            if ($("." + getClass(d)).css("fill") == undefined) {
+                svg.append("c").attr("class", getClass(d));
+            }
+            return $("." + getClass(d)).css("fill");
+        })
+
+        barUpdate.select(".barInfo")
+            .text(
+                function (d) {
+                    if (use_type_info) {
+                        return d.type + "-" + d.name;
+                    }
+                    return d.name;
+                })
+            .attr("x", d => xScale(xValue(d)) - 10)
+            .attr(
+                "fill-opacity",
+                function (d) {
+                    if (xScale(xValue(d)) - 10 < display_barInfo) {
+                        return 0;
+                    }
+                    return 1;
+                }
+            )
+
+
+            .attr("stroke-width", function (d) {
+                if (xScale(xValue(d)) - 10 < display_barInfo) {
+                    return "0px";
+                }
+                return "1px";
+            })
 
         barUpdate.select(".value").tween("text", function (d) {
             var self = this;
@@ -422,12 +463,12 @@ function draw(data) {
         var barExit = bar.exit().attr("fill-opacity", 1).transition().duration(2500 * interval_time)
 
         barExit.attr("transform", function (d) {
-                var temp = parseInt(this.attributes["transform"].value.substr(12, 4))
-                if (temp < dividing_line) {
-                    return "translate(0," + temp - 5 + ")";
-                }
-                return "translate(0," + 780 + ")";
-            })
+            var temp = parseInt(this.attributes["transform"].value.substr(12, 4))
+            if (temp < dividing_line) {
+                return "translate(0," + temp - 5 + ")";
+            }
+            return "translate(0," + 780 + ")";
+        })
             .remove().attr("fill-opacity", 0);
         barExit.select("rect").attr("fill-opacity", 0)
         barExit.select(".value").attr("fill-opacity", 0)
@@ -449,8 +490,8 @@ function draw(data) {
             });
         var barUpdate = bar.transition("1").delay(500 * interval_time).duration(2490 * interval_time)
         if (barUpdate.attr("transform") != "translate(0," + function (d) {
-                return "translate(0," + yScale(yValue(d)) + ")";
-            }) {
+            return "translate(0," + yScale(yValue(d)) + ")";
+        }) {
             barUpdate.attr("transform", function (d) {
                 return "translate(0," + yScale(yValue(d)) + ")";
             })
