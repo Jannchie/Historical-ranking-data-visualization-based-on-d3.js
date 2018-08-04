@@ -6,15 +6,16 @@ const config = {
     encoding:"GBK",
 
     // 每个时间节点最多显示的条目数。
-    max_number : 20,
+    max_number : 16,
 
     // 控制是否显示顶部附加信息文字。
     showMessage : true,
 
-    // 时间自动排序（基于字符串）。
+    // !!请确保打开此项时，使用的是标准日期格式！!
+    // 时间自动排序。
     // 如果关闭，排序顺序为csv表格的时间字段自上而下的出现顺序。
-    // 如果你的日期格式为标准的日期格式，则可以开启自动排序功能达到自动按照日期顺序排序的效果。
-    auto_sort : true,
+    // 如果你的日期格式为标准的日期格式，则可以无视数据排序，达到自动按照日期顺序排序的效果。
+    auto_sort : false,
 
     // 倒序，使得最短的条位于最上方
     reverse: false,
@@ -24,29 +25,29 @@ const config = {
     use_custom_color : false,
 
     // 附加信息内容。
-    itemLabel : "左边信息",
-    typeLabel : "右边信息",
+    itemLabel : "30日内投稿最多",
+    typeLabel : "持续天数",
     // 榜首项目信息的水平位置 。
     item_x : 400,
 
     // 时间点间隔时间。
-    interval_time : 1,
+    interval_time : 2,
 
     // 上方文字水平高度。
     text_y : -50,
 
     // 长度小于display_barInfo的bar将不显示barInfo。
-    display_barInfo : 100,
+    display_barInfo : 250,
 
     // 使用类型
-    use_type_info : true,
+    use_type_info : false,
     // 默认配色与name绑定，如果需要与类型绑定，即相同类型使用同种颜色，那么将divide_by_type属性置为true。
     // 如果不使用type（use_type_info : false），则divide_by_type无效。
-    divide_by_type: true,
+    divide_by_type: false,
 
     // 使用计数器
     // 计数器会出现在右上角，记录着当前榜首的持续时间。
-    use_counter : false,
+    use_counter : true,
     // 每个时间节点对于计数器的步长。
     // 比如时间节点日期的间隔可能为1周（七天），那么step的值就应该为7。
     step : 7,
@@ -63,11 +64,11 @@ const config = {
     bottom_margin : 0,
 
     // 时间标签坐标。
-    dateLabel_x : 800,
+    dateLabel_x : 1100,
     dateLabel_y : 750,
     
     // 允许大于平均值的条消失时上浮。
-    allow_up : true,
+    allow_up : false,
     
     // 设置动画效果，如果为true，则新进入的条目从0开始。
     enter_from_0: false,

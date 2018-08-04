@@ -301,7 +301,7 @@ function draw(data) {
                 if (enter_from_0) {
                     return 0;
                 } else {
-                    return xScale(xValue(d));
+                    return xScale(currentData[currentData.length-1]['value']);
                 }
             }).attr("fill-opacity", 0)
             .attr("height", 26).attr("y", 50)
@@ -333,7 +333,7 @@ function draw(data) {
                 if (enter_from_0) {
                     return 0;
                 } else {
-                    return xScale(xValue(d));
+                    return xScale(currentData[currentData.length-1]['value']);
                 }
             }).attr("y", 50).attr("fill-opacity", 0).transition()
             .delay(500 * interval_time).duration(2490 * interval_time).tween(
@@ -359,7 +359,7 @@ function draw(data) {
                 if (enter_from_0) {
                     return 0;
                 } else {
-                    return xScale(xValue(d));
+                    return xScale(currentData[currentData.length-1]['value']);
                 }
             })
             .attr("stroke", function (d) {
@@ -472,16 +472,15 @@ function draw(data) {
 
         })
             .remove().attr("fill-opacity", 0);
-        barExit.select("rect").attr("fill-opacity", 0)
-        barExit.select(".value").attr("fill-opacity", 0)
+        barExit.select("rect").attr("fill-opacity", 0).attr("width",xScale(currentData[currentData.length-1]["value"]))
+        barExit.select(".value").attr("fill-opacity", 0).attr("x",xScale(currentData[currentData.length-1]["value"]))
         barExit.select(".barInfo").attr("fill-opacity", 0).attr("stroke-width", function (d) {
             return "0px";
-        })
+        }).attr("x",xScale(currentData[currentData.length-1]["value"]))
         barExit.select(".barInfo2").attr("fill-opacity", 0).attr("stroke-width", function (d) {
             return "0px";
-        })
+        }).attr("x",xScale(currentData[currentData.length-1]["value"]))
         barExit.select(".label").attr("fill-opacity", 0)
-
     }
 
 

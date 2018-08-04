@@ -109,69 +109,70 @@ body {
     font-size: 40pt;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
-
+/* MIKU色 */
 .L {
-    fill: #004e97c9
+    fill: #39C5BB
 }
 
+/* 龙牙绿 */
 .M {
-    fill: #236aacc9
+    fill: #006666
 }
 
 .L {
-    fill: #004e97c9
+    fill: #66CCFF
 }
 
 .N {
-    fill: #009783c9
+    fill: rgb(235, 0, 0)
 }
 
 .O {
-    fill: #009714c9
+    fill: #009714
 }
 
 .P {
-    fill: #b11111c9
+    fill: #b11111
 }
 
 .Q {
-    fill: #972b00c9
+    fill: #e24000
 }
 
 .R {
-    fill: #970065c9
+    fill: #8605d1
 }
 
 .S {
-    fill: #008597c9
+    fill: #00a5bb
 }
 
 .T {
-    fill: #8b1f5ec9
+    fill: #c21178
 }
 
 .U {
-    fill: #8b1f5ec9
+    fill: #00a048
 }
 
 .W {
-    fill: #8b1f5ec9
+    fill: #ffc012
 }
 
 .V {
-    fill: #559204c9
+    fill: #f39303
 }
 
 .X {
-    fill: #5a1f8bc9
+    fill: #933dda
 }
 
 .Y {
-    fill: #c0ad00c9
+    fill: #ee5677
 }
 
 .Z {
-    fill: #88480cc9
+    fill: #c0620b
 }
 
 .H {
@@ -183,7 +184,7 @@ body {
 }
 
 .K {
-    fill: #9c361f
+    fill: #07bebe
 }
 
 .J {
@@ -195,11 +196,11 @@ body {
 }
 
 .F {
-    fill: #227D51
+    fill: rgb(221, 50, 135)
 }
 
 .E {
-    fill: #00896C
+    fill: rgb(0, 175, 137)
 }
 
 .D {
@@ -211,10 +212,10 @@ body {
 }
 
 .B {
-    fill: #3C2F41
+    fill: rgb(10, 131, 230)
 }
 
 .A {
-    fill: #876633
+    fill: #cf9237
 }
 
