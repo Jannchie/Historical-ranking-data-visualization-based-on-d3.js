@@ -1,4 +1,4 @@
-const config = {
+﻿const config = {
     
     // 数据源的编码方式。
     // 默认为GBK,按需可修改为UTF-8等。
@@ -25,8 +25,8 @@ const config = {
     use_custom_color : false,
 
     // 附加信息内容。
-    itemLabel : "30日内投稿最多",
-    typeLabel : "持续天数",
+    itemLabel : "左边信息",
+    typeLabel : "右边信息",
     // 榜首项目信息的水平位置 。
     item_x : 400,
 
@@ -37,17 +37,20 @@ const config = {
     text_y : -50,
 
     // 长度小于display_barInfo的bar将不显示barInfo。
-    display_barInfo : 250,
+    display_barInfo : 150,
 
     // 使用类型
-    use_type_info : false,
+    // 注意！使用计时器和使用类型目前不能兼容，即不能同时开启！
+    use_type_info : true,
     // 默认配色与name绑定，如果需要与类型绑定，即相同类型使用同种颜色，那么将divide_by_type属性置为true。
     // 如果不使用type（use_type_info : false），则divide_by_type无效。
     divide_by_type: false,
 
+
     // 使用计数器
+    // 注意！使用计时器和使用类型目前不能兼容，即不能同时开启！
     // 计数器会出现在右上角，记录着当前榜首的持续时间。
-    use_counter : true,
+    use_counter : false,
     // 每个时间节点对于计数器的步长。
     // 比如时间节点日期的间隔可能为1周（七天），那么step的值就应该为7。
     step : 7,
@@ -58,13 +61,13 @@ const config = {
     format : '.0f',
 
     // 图表左右上下间距。
-    left_margin : 230,
+    left_margin : 260,
     right_margin : 150,
     top_margin : 200,
     bottom_margin : 0,
 
     // 时间标签坐标。
-    dateLabel_x : 1100,
+    dateLabel_x : 1070,
     dateLabel_y : 750,
     
     // 允许大于平均值的条消失时上浮。
