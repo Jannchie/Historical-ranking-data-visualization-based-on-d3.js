@@ -74,6 +74,7 @@ function draw(data) {
     var text_y = config.text_y;
     var itemLabel = config.itemLabel;
     var typeLabel = config.typeLabel;
+    var timeLavel = config.timeLabel;
     // 长度小于display_barInfo的bar将不显示barInfo
     var display_barInfo = config.display_barInfo;
     // 显示类型
@@ -194,31 +195,38 @@ function draw(data) {
 
     if (showMessage) {
 
-        // 左1文字
+        // 左文字
         g.insert("text")
             .attr("class", "growth")
             .attr("x", 0)
             .attr("y", text_y).text(itemLabel);
 
-        // 右1文字
+        // 中文字
         g.insert("text")
             .attr("class", "growth")
             .attr("x", 1000)
             .attr("y", text_y).text(typeLabel);
+
+        // 右文字
+        g.insert("text")
+            .attr("class", "growth")
+            .attr("x", 1200)
+            .attr("y", text_y).text(timeLabel);
+
         // 榜首日期计数
         if (use_counter == true) {
             var days = g.insert("text")
                 .attr("class", "days")
                 .attr("x", 1300)
                 .attr("y", text_y);
-        } else {
-            // 显示榜首type
-            if (use_type_info == true) {
-                var top_type = g.insert("text")
-                    .attr("class", "days")
-                    .attr("x", 1300)
-                    .attr("y", text_y);
-            }
+        }
+
+        // 显示榜首type
+        if (use_type_info == true) {
+            var top_type = g.insert("text")
+                .attr("class", "days")
+                .attr("x", 1300)
+                .attr("y", text_y);
         }
     }
 
