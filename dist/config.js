@@ -26,9 +26,11 @@
 
     // 附加信息内容。
     itemLabel : "左边信息",
-    typeLabel : "右边信息",
+    typeLabel : "中间信息",
+    timeLabel : "右边信息",
+
     // 榜首项目信息的水平位置 。
-    item_x : 400,
+    item_x : 300,
 
     // 时间点间隔时间。
     interval_time : 2,
@@ -40,20 +42,17 @@
     display_barInfo : 150,
 
     // 使用类型
-    // 注意！使用计时器和使用类型目前不能兼容，即不能同时开启！
     use_type_info : true,
     // 默认配色与name绑定，如果需要与类型绑定，即相同类型使用同种颜色，那么将divide_by_type属性置为true。
     // 如果不使用type（use_type_info : false），则divide_by_type无效。
     divide_by_type: false,
 
-
     // 使用计数器
-    // 注意！使用计时器和使用类型目前不能兼容，即不能同时开启！
     // 计数器会出现在右上角，记录着当前榜首的持续时间。
-    use_counter : false,
+    use_counter : true,
     // 每个时间节点对于计数器的步长。
     // 比如时间节点日期的间隔可能为1周（七天），那么step的值就应该为7。
-    step : 7,
+    step : 1,
 
     
     // 格式化数值
@@ -67,7 +66,7 @@
     bottom_margin : 0,
 
     // 时间标签坐标。
-    dateLabel_x : 1070,
+    dateLabel_x : 750,
     dateLabel_y : 750,
     
     // 允许大于平均值的条消失时上浮。

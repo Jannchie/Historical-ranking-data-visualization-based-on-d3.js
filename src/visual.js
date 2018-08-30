@@ -29,7 +29,6 @@ function draw(data) {
         }
     });
 
-
     var auto_sort = config.auto_sort;
     if (auto_sort) {
         var time = date.sort((x, y) => new Date(x) - new Date(y));
@@ -74,6 +73,7 @@ function draw(data) {
     var text_y = config.text_y;
     var itemLabel = config.itemLabel;
     var typeLabel = config.typeLabel;
+    var timeLabel = config.timeLabel;
     // 长度小于display_barInfo的bar将不显示barInfo
     var display_barInfo = config.display_barInfo;
     // 显示类型
@@ -106,8 +106,6 @@ function draw(data) {
     var currentData = [];
     var lastname;
     const svg = d3.select('svg');
-
-
 
     const width = svg.attr('width');
     const height = svg.attr('height');
@@ -194,31 +192,38 @@ function draw(data) {
 
     if (showMessage) {
 
-        // 左1文字
+        // 左文字
         g.insert("text")
             .attr("class", "growth")
             .attr("x", 0)
             .attr("y", text_y).text(itemLabel);
 
-        // 右1文字
+        // 中文字
         g.insert("text")
             .attr("class", "growth")
-            .attr("x", 1000)
+            .attr("x", 700)
             .attr("y", text_y).text(typeLabel);
+
+        // 右文字
+        g.insert("text")
+            .attr("class", "growth")
+            .attr("x", 1250)
+            .attr("y", text_y).text(timeLabel);
+
         // 榜首日期计数
         if (use_counter == true) {
             var days = g.insert("text")
                 .attr("class", "days")
-                .attr("x", 1300)
+                .attr("x", 1500)
                 .attr("y", text_y);
-        } else {
-            // 显示榜首type
-            if (use_type_info == true) {
-                var top_type = g.insert("text")
-                    .attr("class", "days")
-                    .attr("x", 1300)
-                    .attr("y", text_y);
-            }
+        }
+
+        // 显示榜首type
+        if (use_type_info == true) {
+            var top_type = g.insert("text")
+                .attr("class", "days")
+                .attr("x", 1000)
+                .attr("y", text_y);
         }
     }
 
@@ -497,7 +502,6 @@ function draw(data) {
                 return "translate(0," + yScale(yValue(d)) + ")";
             })
         }
-
     }
 
     getCurrentData(time[0]);
