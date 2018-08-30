@@ -30,7 +30,12 @@
     timeLabel : "右边信息",
 
     // 榜首项目信息的水平位置 。
+    itemLabel_x : 0,
     item_x : 300,
+    typeLabel_x : 700,
+    type_x : 1000,
+    timeLabel_x : 1250,
+    time_x : 1500,
 
     // 时间点间隔时间。
     interval_time : 2,

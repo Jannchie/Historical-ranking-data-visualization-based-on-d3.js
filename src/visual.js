@@ -89,7 +89,12 @@ function draw(data) {
     var bottom_margin = config.bottom_margin;
     var dateLabel_x = config.dateLabel_x;
     var dateLabel_y = config.dateLabel_y;
+    var itemLabel_x = config.itemLabel_x;
     var item_x = config.item_x;
+    var typeLabel_x =config.typeLabel_x;
+    var type_x = config.type_x;
+    var timeLabel_x = config.timeLabel_x;
+    var time_x = config.time_x;
     var max_number = config.max_number;
     var reverse = config.reverse;
     const margin = {
@@ -195,26 +200,26 @@ function draw(data) {
         // 左文字
         g.insert("text")
             .attr("class", "growth")
-            .attr("x", 0)
+            .attr("x", itemLabel_x)
             .attr("y", text_y).text(itemLabel);
 
         // 中文字
         g.insert("text")
             .attr("class", "growth")
-            .attr("x", 700)
+            .attr("x", typeLabel_x)
             .attr("y", text_y).text(typeLabel);
 
         // 右文字
         g.insert("text")
             .attr("class", "growth")
-            .attr("x", 1250)
+            .attr("x", timeLabel_x)
             .attr("y", text_y).text(timeLabel);
 
         // 榜首日期计数
         if (use_counter == true) {
             var days = g.insert("text")
                 .attr("class", "days")
-                .attr("x", 1500)
+                .attr("x", time_x)
                 .attr("y", text_y);
         }
 
@@ -222,7 +227,7 @@ function draw(data) {
         if (use_type_info == true) {
             var top_type = g.insert("text")
                 .attr("class", "days")
-                .attr("x", 1000)
+                .attr("x", type_x)
                 .attr("y", text_y);
         }
     }
