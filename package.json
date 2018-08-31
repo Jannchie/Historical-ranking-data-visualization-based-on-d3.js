@@ -5,13 +5,11 @@
   "scripts": {
     "build": "webpack"
   },
-  "dependencies": {
-    "d3": "^5.5.0",
-    "webpack": "^4.16.0",
-    "webpack-cli": "^3.0.8"
-  },
   "devDependencies": {
     "css-loader": "^1.0.0",
-    "style-loader": "^0.21.0"
+    "d3": "^5.5.0",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.16.0",
+    "webpack-cli": "^3.0.8"
   }
 }
