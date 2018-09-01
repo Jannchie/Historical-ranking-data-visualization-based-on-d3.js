@@ -45,6 +45,20 @@ name|type|value|date
 使用记事本或者其他文本编辑器，打开config.js的文件即可进行一些参数的修改。
 
 ---
+
+# 开发指南
+
+```
+# 克隆项目仓库
+git clone https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.git
+# 切换到项目根目录
+cd Historical-ranking-data-visualization-based-on-d3.js
+# 安装依赖
+npm install
+# 修改src内文件后，执行打包
+npm run build
+```
+
 # 更新日志
 
 ## 2018-07-19
