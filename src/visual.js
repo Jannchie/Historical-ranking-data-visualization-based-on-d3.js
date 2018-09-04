@@ -52,21 +52,18 @@ function draw(data) {
 
         // 随机选色
         var r = 0;
+        var s;
         if (use_type_info && divide_by_type) {
-            for (let index = 0; index < d.type.length; index++) {
-                r = r + d.type.charCodeAt(index);
-            }
-            r = r % 25;
-            r = Math.round(r);
-            return color[r];
+            s = d.type;
         } else {
-            for (let index = 0; index < d.name.length; index++) {
-                r = r + d.name.charCodeAt(index);
-            }
-            r = r % 25;
-            r = Math.round(r);
-            return color[r];
+            s = d.name;
         }
+        for (let index = 0; index < s.length; index++) {
+            r = r + s.charCodeAt(index);
+        }
+        r = r % 25;
+        r = Math.round(r);
+        return color[r];        
     }
     var showMessage = config.showMessage;
     var allow_up = config.allow_up;
