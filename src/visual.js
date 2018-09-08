@@ -51,7 +51,7 @@ function draw(data) {
         }
 
         // 随机选色
-        var r = 0;
+        var r = 2;
         var s;
         if (use_type_info && divide_by_type) {
             s = d.type;
@@ -59,11 +59,11 @@ function draw(data) {
             s = d.name;
         }
         for (let index = 0; index < s.length; index++) {
-            r = r + s.charCodeAt(index);
+            r = r+ s.charCodeAt(index);
         }
         r = r % 25;
         r = Math.round(r);
-        return color[r];        
+        return color[r-1];
     }
     var showMessage = config.showMessage;
     var allow_up = config.allow_up;
@@ -79,7 +79,7 @@ function draw(data) {
     var use_counter = config.use_counter;
     // 每个数据的间隔日期
     var step = config.step;
-    var format = config.format
+    var format = config.format;
     var left_margin = config.left_margin;
     var right_margin = config.right_margin;
     var top_margin = config.top_margin;
