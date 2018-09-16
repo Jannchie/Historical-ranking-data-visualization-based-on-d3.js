@@ -8,7 +8,11 @@
 body {
     margin: 0px;
 }
-
+center{
+        position: absolute;   
+        top: 40%;   
+        left: 50%;   
+}
 .domain {
     display: none;
 }
