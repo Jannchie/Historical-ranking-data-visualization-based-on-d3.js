@@ -2,11 +2,11 @@
  * @author Jannchie
  * @email jannchie@gmail.com
  * @create date 2018-05-02 13:17:10
- * @modify date 2018-07-25 10:33:55
+ * @modify date 2018-09-22 21:04:24
  * @desc 可视化核心代码
  */
-import * as d3 from 'd3';
-require("./stylesheet.css");
+// import * as d3 from 'd3';
+// require("./stylesheet.css");
 $('#inputfile').change(function () {
     $('#inputfile').attr('hidden', true);
     var r = new FileReader();
@@ -19,17 +19,14 @@ $('#inputfile').change(function () {
 });
 
 function draw(data) {
-    var color = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
-        "U", "V", "W", "X", "Y", "Z"
-    ];
+
     var date = [];
     data.forEach(element => {
         if (date.indexOf(element["date"]) == -1) {
             date.push(element["date"]);
         }
     });
-
-
+    let rate = [];
     var auto_sort = config.auto_sort;
     if (auto_sort) {
         var time = date.sort((x, y) => new Date(x) - new Date(y));
@@ -40,34 +37,49 @@ function draw(data) {
     var big_value = config.big_value;
     var use_custom_color = config.use_custom_color;
     var divide_by_type = config.divide_by_type;
+    var name_list = []
+    var changeable_color = config.changeable_color;
+    data.sort((a, b) => Number(b.value) - Number(a.value)).forEach(e => {
+        if (name_list.indexOf(e.name) == -1) {
+            name_list.push(e.name)
+        }
+    })
+
     // 选择颜色
-    function getClass(d) {
+    function getColor(d) {
         // 不随机选色
-        if (use_custom_color) {
-            if (use_type_info == false || divide_by_type == false) {
-                return d.name;
+        // if (use_custom_color) {
+        //     if (use_type_info == false || divide_by_type == false) {
+        //         return d.name;
+        //     }
+        //     return d.type;
+        // }
+        // 随机选色
+        var r = 0.00;
+        if (changeable_color) {
+            var v = Math.abs(rate[d.name] - rate['MIN_RATE']) / (rate['MAX_RATE'] - rate['MIN_RATE'])
+            if(d.name=='拂菻坊' && d.date>'2018-01-15') return '#000000'
+            if (isNaN(v) || v == -1) {
+                return d3.interpolatePlasma(0.6)
             }
-            return d.type;
+            return d3.interpolatePlasma(Math.pow(v, 0.6) * 0.85)
         }
 
-        // 随机选色
-        var r = 0;
         if (use_type_info && divide_by_type) {
-            for (let index = 0; index < d.type.length; index++) {
-                r = r + d.type.charCodeAt(index);
-            }
-            r = r % 25;
-            r = Math.round(r);
-            return color[r];
+
+            if(d.type === 'LCK') return '#7c4b34';
+            if(d.type === 'LPL') return '#b90000';
+            if(d.type === 'LMS') return '#e07800';
+            if(d.type === 'NA.LCS') return '#2e7bdf';
+            if(d.type === 'EU.LCS') return '#650c88';
+            return '#008d2f';
+
         } else {
-            for (let index = 0; index < d.name.length; index++) {
-                r = r + d.name.charCodeAt(index);
-            }
-            r = r % 25;
-            r = Math.round(r);
-            return color[r];
+            r = name_list.indexOf(d.name)
+            return d3.interpolatePlasma(r % 20 / 20);
         }
     }
+
     var showMessage = config.showMessage;
     var allow_up = config.allow_up;
     var interval_time = config.interval_time;
@@ -101,7 +113,7 @@ function draw(data) {
 
     var enter_from_0 = config.enter_from_0;
     interval_time /= 3;
-
+    var lastData = [];
     var currentdate = time[0].toString();
     var currentData = [];
     var lastname;
@@ -164,32 +176,74 @@ function draw(data) {
         .attr("y", text_y)
 
     function getCurrentData(date) {
+        rate = [];
         currentData = [];
         data.forEach(element => {
-            if (element["date"] == date) {
+            if (element["date"] == date && parseInt(element['value']) != 0) {
                 currentData.push(element);
             }
         });
-        var tempSort = []
 
         if (reverse) {
             var currentSort = currentData.sort(function (a, b) {
-                return Number(a.value) - Number(b.value);
+                if (Number(a.value) == Number(b.value)) {
+                    var r1 = 0;
+                    var r2 = 0;
+                    for (let index = 0; index < a.name.length; index++) {
+                        r1 = r1 + a.name.charCodeAt(index);
+                    }
+                    for (let index = 0; index < b.name.length; index++) {
+                        r2 = r2 + b.name.charCodeAt(index);
+                    }
+                    return r2 - r1;
+                } else {
+                    return Number(a.value) - Number(b.value);
+                }
             });
         } else {
             var currentSort = currentData.sort(function (a, b) {
-                return Number(b.value) - Number(a.value);
+                if (Number(a.value) == Number(b.value)) {
+                    var r1 = 0;
+                    var r2 = 0;
+                    for (let index = 0; index < a.name.length; index++) {
+                        r1 = r1 + a.name.charCodeAt(index);
+                    }
+                    for (let index = 0; index < b.name.length; index++) {
+                        r2 = r2 + b.name.charCodeAt(index);
+                    }
+                    return r2 - r1;
+                } else {
+                    return Number(b.value) - Number(a.value);
+                }
             });
         }
 
+        rate['MAX_RATE'] = 0;
+        rate['MIN_RATE'] = 1;
+        currentData.forEach(e => {
+
+            _cName = e.name
+            lastData.forEach(el => {
+                if (el.name == e.name) {
+                    rate[e.name] = Number(Number(e.value) - Number(el.value));
+                }
+            });
+            if (rate[e.name] == undefined) {
+                rate[e.name] = rate['MIN_RATE'];
+            }
+            if (rate[e.name] > rate['MAX_RATE']) {
+                rate['MAX_RATE'] = rate[e.name]
+            } else if (rate[e.name] < rate['MIN_RATE']) {
+                rate['MIN_RATE'] = rate[e.name]
+            }
+        })
         currentData = currentData.slice(0, max_number);
 
         var a = d3.transition("2")
-            .each(redraw)
-        if (currentSort != tempSort) {
-            a.each(change)
-        }
+            .each(redraw).each(change)
         tempSort = currentSort;
+        lastData = currentData;
+
     }
 
     if (showMessage) {
@@ -228,7 +282,9 @@ function draw(data) {
     };
 
     var avg = 0;
+
     function redraw() {
+        if (currentData.length == 0) return;
         yScale
             .domain(currentData.map(yValue).reverse())
             .range([innerHeight, 0]);
@@ -292,50 +348,48 @@ function draw(data) {
                 return "translate(0," + yScale(yValue(d)) + ")";
             });
 
-        barEnter.append("c").attr("class", function (d) {
-            return getClass(d)
-        })
+        barEnter.append("c").st
 
         barEnter.append("rect").attr("width",
-            function (d) {
-                if (enter_from_0) {
-                    return 0;
-                } else {
-                    return xScale(currentData[currentData.length-1]['value']);
-                }
-            }).attr("fill-opacity", 0)
+                function (d) {
+                    if (enter_from_0) {
+                        return 0;
+                    } else {
+                        return xScale(currentData[currentData.length - 1]['value']);
+                    }
+                }).attr("fill-opacity", 0)
             .attr("height", 26).attr("y", 50)
+            .style("fill", d => getColor(d))
             .transition("a")
-            .attr("class", d => getClass(d))
             .delay(500 * interval_time)
             .duration(2490 * interval_time)
             .attr("y", 0).attr(
                 "width", d =>
-                    xScale(xValue(d)))
+                xScale(xValue(d)))
             .attr("fill-opacity", 1);
 
-        barEnter.append("text").attr("y", 50).attr("fill-opacity", 0).transition("2").delay(500 * interval_time).duration(
-            2490 * interval_time)
+        barEnter.append("text").attr("y", 50).attr("fill-opacity", 0).style('fill', d => getColor(d)).transition("2").delay(500 * interval_time).duration(
+                2490 * interval_time)
             .attr(
                 "fill-opacity", 1).attr("y", 0)
             .attr("class", function (d) {
-                return "label " + getClass(d)
+                return "label "
             })
             .attr("x", -5)
             .attr("y", 20)
             .attr("text-anchor", "end")
             .text(function (d) {
                 return d.name;
-            });
+            })
 
         barEnter.append("text").attr("x",
-            function (d) {
-                if (enter_from_0) {
-                    return 0;
-                } else {
-                    return xScale(currentData[currentData.length-1]['value']);
-                }
-            }).attr("y", 50).attr("fill-opacity", 0).transition()
+                function () {
+                    if (enter_from_0) {
+                        return 0;
+                    } else {
+                        return xScale(currentData[currentData.length - 1]['value']);
+                    }
+                }).attr("y", 50).attr("fill-opacity", 0).style('fill', d => getColor(d)).transition()
             .delay(500 * interval_time).duration(2490 * interval_time).tween(
                 "text",
                 function (d) {
@@ -347,25 +401,23 @@ function draw(data) {
                         self.textContent = d3.format(format)(Math.round(i(t) * round) / round);
                     };
                 }).attr(
-                    "fill-opacity", 1).attr("y", 0)
+                "fill-opacity", 1).attr("y", 0)
             .attr("class", function (d) {
-                return "value " + getClass(d)
+                return "value"
             }).attr("x", d => xScale(xValue(d)) + 10)
-            .attr("y", 22);
+            .attr("y", 22)
 
         // bar上文字
         barEnter.append("text").attr("x",
-            function (d) {
-                if (enter_from_0) {
-                    return 0;
-                } else {
-                    return xScale(currentData[currentData.length-1]['value']);
-                }
-            })
-            .attr("stroke", function (d) {
-                return $("." + getClass(d)).css("fill");
-            })
-            .attr("class", function (d) {
+                function (d) {
+                    if (enter_from_0) {
+                        return 0;
+                    } else {
+                        return xScale(currentData[currentData.length - 1]['value']);
+                    }
+                })
+            .attr("stroke", d => getColor(d))
+            .attr("class", function () {
                 return "barInfo"
             })
             .attr("y", 50).attr("stroke-width", "0px").attr("fill-opacity",
@@ -377,13 +429,13 @@ function draw(data) {
                     }
                     return d.name;
                 }).attr("x", d => xScale(xValue(d)) - 10).attr(
-                    "fill-opacity",
-                    function (d) {
-                        if (xScale(xValue(d)) - 10 < display_barInfo) {
-                            return 0;
-                        }
-                        return 1;
-                    })
+                "fill-opacity",
+                function (d) {
+                    if (xScale(xValue(d)) - 10 < display_barInfo) {
+                        return 0;
+                    }
+                    return 1;
+                })
             .attr("y", 2)
             .attr("dy", ".5em")
             .attr("text-anchor", "end")
@@ -397,29 +449,22 @@ function draw(data) {
         //.attr("text-anchor", "end").text(d => GDPFormater(Number(d.value) ));
         var barUpdate = bar.transition("2").duration(2990 * interval_time).ease(d3.easeLinear);
 
-        barUpdate.select("rect").attr("class", function (d) {
-            return getClass(d);
-        })
+        barUpdate.select("rect").style('fill', d => getColor(d))
             .attr("width", d => xScale(xValue(d)))
 
-        barUpdate.select("c").attr("class", function (d) {
-            return getClass(d)
-        });
+        barUpdate.select("c").style('fill', d => getColor(d))
 
         barUpdate.select(".label").attr("class", function (d) {
-            return "label " + getClass(d);
-        })
+                return "label ";
+            }).style('fill', d => getColor(d))
             .attr("width", d => xScale(xValue(d)))
         barUpdate.select(".value").attr("class", function (d) {
-            return "value " + getClass(d);
-        })
+                return "value"
+            }).style('fill', d => getColor(d))
             .attr("width", d => xScale(xValue(d)))
 
         barUpdate.select(".barInfo").attr("stroke", function (d) {
-            if ($("." + getClass(d)).css("fill") == undefined) {
-                svg.append("c").attr("class", getClass(d));
-            }
-            return $("." + getClass(d)).css("fill");
+            return getColor(d);
         })
 
         barUpdate.select(".barInfo")
@@ -458,28 +503,28 @@ function draw(data) {
                 self.textContent = d3.format(format)(Math.round(i(t) * round) / round);
             };
         }).duration(2990 * interval_time).attr("x", d => xScale(xValue(d)) + 10)
-        
-        avg = (Number(currentData[0]["value"])+Number(currentData[currentData.length-1]["value"]))/2
+
+        avg = (Number(currentData[0]["value"]) + Number(currentData[currentData.length - 1]["value"])) / 2
 
         var barExit = bar.exit().attr("fill-opacity", 1).transition().duration(2500 * interval_time)
 
         barExit.attr("transform", function (d) {
-            if (Number(d.value) > avg && allow_up) {
-                
-                return "translate(0," + "-100" + ")";
-            }
-            return "translate(0," + "900" + ")";
+                if (Number(d.value) > avg && allow_up) {
 
-        })
+                    return "translate(0," + "-100" + ")";
+                }
+                return "translate(0," + "800" + ")";
+
+            })
             .remove().attr("fill-opacity", 0);
-        barExit.select("rect").attr("fill-opacity", 0).attr("width",xScale(currentData[currentData.length-1]["value"]))
-        barExit.select(".value").attr("fill-opacity", 0).attr("x",xScale(currentData[currentData.length-1]["value"]))
+        barExit.select("rect").attr("fill-opacity", 0).attr("width", xScale(currentData[currentData.length - 1]["value"]))
+        barExit.select(".value").attr("fill-opacity", 0).attr("x", xScale(currentData[currentData.length - 1]["value"]))
         barExit.select(".barInfo").attr("fill-opacity", 0).attr("stroke-width", function (d) {
             return "0px";
-        }).attr("x",xScale(currentData[currentData.length-1]["value"]))
+        }).attr("x", xScale(currentData[currentData.length - 1]["value"]))
         barExit.select(".barInfo2").attr("fill-opacity", 0).attr("stroke-width", function (d) {
             return "0px";
-        }).attr("x",xScale(currentData[currentData.length-1]["value"]))
+        }).attr("x", xScale(currentData[currentData.length - 1]["value"]))
         barExit.select(".label").attr("fill-opacity", 0)
     }
 
@@ -489,21 +534,24 @@ function draw(data) {
             .data(currentData, function (d) {
                 return d.name;
             });
-        var barUpdate = bar.transition("1").delay(500 * interval_time).duration(2490 * interval_time)
-        if (barUpdate.attr("transform") != "translate(0," + function (d) {
-            return "translate(0," + yScale(yValue(d)) + ")";
-        }) {
-            barUpdate.attr("transform", function (d) {
-                return "translate(0," + yScale(yValue(d)) + ")";
-            })
-        }
+        var barUpdate = bar.transition("1").duration(3000 * interval_time)
 
+        barUpdate.attr("transform", function (d) {
+            return "translate(0," + yScale(yValue(d)) + ")";
+        })
     }
 
     getCurrentData(time[0]);
 
     var i = 1;
+    var p = 7;
     var inter = setInterval(function next() {
+
+        // 空过p回合
+        while (p) {
+            p -= 1;
+            return;
+        }
         currentdate = time[i];
         getCurrentData(time[i]);
         i++;
