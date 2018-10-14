@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "name": "rank_bar",
+  "author": "Jannchie",
+  "scripts": {
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "css-loader": "^1.0.0",
+    "d3": "^5.5.0",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.16.0",
+    "webpack-cli": "^3.0.8"
+  }
+}

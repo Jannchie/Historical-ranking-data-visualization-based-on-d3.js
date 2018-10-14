@@ -78,6 +78,9 @@ function draw(data) {
                 // return d3.schemeCategory10[Math.floor((d.name.charCodeAt() % 10))]
             }
         }
+        r = r % 25;
+        r = Math.round(r);
+        return color[r];        
     }
 
     var showMessage = config.showMessage;
