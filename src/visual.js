@@ -1,5 +1,5 @@
 /**
- * @author Jannchie
+ * @type Jannchie
  * @email jannchie@gmail.com
  * @create date 2018-05-02 13:17:10
  * @modify date 2018-09-22 21:04:24
@@ -58,7 +58,7 @@ function draw(data) {
         var r = 0.00;
         if (changeable_color) {
             var v = Math.abs(rate[d.name] - rate['MIN_RATE']) / (rate['MAX_RATE'] - rate['MIN_RATE'])
-            if(d.name=='拂菻坊' && d.date>'2018-01-15') return '#000000'
+            if (d.name == '拂菻坊' && d.date > '2018-01-15') return '#000000'
             if (isNaN(v) || v == -1) {
                 return d3.interpolatePlasma(0.6)
             }
@@ -66,17 +66,17 @@ function draw(data) {
         }
 
         if (use_type_info && divide_by_type) {
-
-            if(d.type === 'LCK') return '#7c4b34';
-            if(d.type === 'LPL') return '#b90000';
-            if(d.type === 'LMS') return '#e07800';
-            if(d.type === 'NA.LCS') return '#2e7bdf';
-            if(d.type === 'EU.LCS') return '#650c88';
-            return '#008d2f';
-
+            if (d.type in config.color)
+                return config.color[d.type]
+            else {
+                return d3.schemeCategory10[Math.floor((d.type.charCodeAt() % 10))]
+            }
         } else {
-            r = name_list.indexOf(d.name)
-            return d3.interpolatePlasma(r % 20 / 20);
+            if (d.name in config.color)
+                return config.color[d.name]
+            else {
+                // return d3.schemeCategory10[Math.floor((d.name.charCodeAt() % 10))]
+            }
         }
     }
 
@@ -94,6 +94,7 @@ function draw(data) {
     var use_counter = config.use_counter;
     // 每个数据的间隔日期
     var step = config.step;
+    var long = config.long;
     var format = config.format
     var left_margin = config.left_margin;
     var right_margin = config.right_margin;
@@ -124,8 +125,8 @@ function draw(data) {
     const width = svg.attr('width');
     const height = svg.attr('height');
     const innerWidth = width - margin.left - margin.right;
-    const innerHeight = height - margin.top - margin.bottom - 50;
-
+    const innerHeight = height - margin.top - margin.bottom - 32;
+    var dateLabel_y = height - margin.top - margin.bottom - 32;;
     const xValue = d => Number(d.value);
     const yValue = d => d.name;
 
@@ -155,7 +156,12 @@ function draw(data) {
         .scale(xScale)
         .ticks(xTicks)
         .tickPadding(20)
-        .tickFormat(d => d)
+        .tickFormat(d => {
+            if (d == 0) {
+                return '';
+            }
+            return d;
+        })
         .tickSize(-innerHeight);
 
     const yAxis = d3.axisLeft()
@@ -296,10 +302,23 @@ function draw(data) {
             xScale.domain([0, d3.max(currentData, xValue) + 1]).range([0, innerWidth]);
         }
 
-        dateLabel.text(currentdate);
+        dateLabel.data(currentData).transition().duration(3000 * interval_time).ease(d3.easeLinear).tween(
+            "text",
+            function (d) {
+                var self = this;
+                var i = d3.interpolateDate(new Date(self.textContent), new Date(d.date))
+                // var prec = (new Date(d.date) + "").split(".");
+                // var round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+                return function (t) {
+                    var dateformat = d3.timeFormat("%Y-%m-%d %H:%M")
+                    self.textContent = dateformat(i(t));
+                };
+            });
 
-        xAxisG.transition(g).duration(3000 * interval_time).ease(d3.easeLinear).call(xAxis);
-        yAxisG.transition(g).duration(3000 * interval_time).ease(d3.easeLinear).call(yAxis);
+        // .text(currentdate);
+
+        xAxisG.transition().duration(3000 * interval_time).ease(d3.easeLinear).call(xAxis);
+        yAxisG.transition().duration(3000 * interval_time).ease(d3.easeLinear).call(yAxis);
 
         yAxisG.selectAll('.tick').remove();
 
@@ -348,8 +367,6 @@ function draw(data) {
                 return "translate(0," + yScale(yValue(d)) + ")";
             });
 
-        barEnter.append("c").st
-
         barEnter.append("rect").attr("width",
                 function (d) {
                     if (enter_from_0) {
@@ -375,41 +392,19 @@ function draw(data) {
             .attr("class", function (d) {
                 return "label "
             })
-            .attr("x", -5)
+            .attr("x", -15)
             .attr("y", 20)
             .attr("text-anchor", "end")
             .text(function (d) {
+                if (long) {
+                    return ""
+                }
                 return d.name;
             })
-
-        barEnter.append("text").attr("x",
-                function () {
-                    if (enter_from_0) {
-                        return 0;
-                    } else {
-                        return xScale(currentData[currentData.length - 1]['value']);
-                    }
-                }).attr("y", 50).attr("fill-opacity", 0).style('fill', d => getColor(d)).transition()
-            .delay(500 * interval_time).duration(2490 * interval_time).tween(
-                "text",
-                function (d) {
-                    var self = this;
-                    var i = d3.interpolate(self.textContent, Number(d.value)),
-                        prec = (Number(d.value) + "").split("."),
-                        round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
-                    return function (t) {
-                        self.textContent = d3.format(format)(Math.round(i(t) * round) / round);
-                    };
-                }).attr(
-                "fill-opacity", 1).attr("y", 0)
-            .attr("class", function (d) {
-                return "value"
-            }).attr("x", d => xScale(xValue(d)) + 10)
-            .attr("y", 22)
-
         // bar上文字
-        barEnter.append("text").attr("x",
+        var barInfo = barEnter.append("text").attr("x",
                 function (d) {
+                    if (long) return 10;
                     if (enter_from_0) {
                         return 0;
                     } else {
@@ -428,7 +423,11 @@ function draw(data) {
                         return d.type + "-" + d.name;
                     }
                     return d.name;
-                }).attr("x", d => xScale(xValue(d)) - 10).attr(
+                })
+            .attr("x", d => {
+                if (long) return 10;
+                return xScale(xValue(d)) - 10
+            }).attr(
                 "fill-opacity",
                 function (d) {
                     if (xScale(xValue(d)) - 10 < display_barInfo) {
@@ -438,13 +437,63 @@ function draw(data) {
                 })
             .attr("y", 2)
             .attr("dy", ".5em")
-            .attr("text-anchor", "end")
+            .attr("text-anchor", function () {
+                if (long) return 'start';
+                return 'end';
+            })
             .attr("stroke-width", function (d) {
                 if (xScale(xValue(d)) - 10 < display_barInfo) {
                     return "0px";
                 }
                 return "1px";
             });
+        if (long) {
+            barInfo.tween(
+                "text",
+                function (d) {
+                    var self = this;
+
+                    var i = d3.interpolate(self.textContent, Number(d.value)),
+                        prec = (Number(d.value) + "").split("."),
+                        round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+                    return function (t) {
+                        self.textContent = d.type + "-" + d.name + '  在线人数:' + d3.format(format)(Math.round(i(t) * round) / round);
+                    };
+                })
+        }
+        if (!long) {
+
+            barEnter.append("text").attr("x",
+                    function () {
+                        if (long) {
+                            return 10;
+                        }
+                        if (enter_from_0) {
+                            return 0;
+                        } else {
+                            return xScale(currentData[currentData.length - 1]['value']);
+                        }
+                    }).attr("y", 50).attr("fill-opacity", 0).style('fill', d => getColor(d)).transition()
+                .duration(2990 * interval_time).tween(
+                    "text",
+                    function (d) {
+                        var self = this;
+                        var i = d3.interpolate(self.textContent, Number(d.value)),
+                            prec = (Number(d.value) + "").split("."),
+                            round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+                        return function (t) {
+                            self.textContent = d3.format(format)(Math.round(i(t) * round) / round);
+                        };
+                    }).attr(
+                    "fill-opacity", 1).attr("y", 0)
+                .attr("class", function (d) {
+                    return "value"
+                }).attr("x", d => {
+                    return xScale(xValue(d)) + 10
+                })
+                .attr("y", 22)
+        }
+
 
         //.attr("text-anchor", "end").text(d => GDPFormater(Number(d.value) ));
         var barUpdate = bar.transition("2").duration(2990 * interval_time).ease(d3.easeLinear);
@@ -458,16 +507,19 @@ function draw(data) {
                 return "label ";
             }).style('fill', d => getColor(d))
             .attr("width", d => xScale(xValue(d)))
-        barUpdate.select(".value").attr("class", function (d) {
-                return "value"
-            }).style('fill', d => getColor(d))
-            .attr("width", d => xScale(xValue(d)))
+        if (!long) {
 
+            barUpdate.select(".value").attr("class", function (d) {
+                    return "value"
+                }).style('fill', d => getColor(d))
+                .attr("width", d => xScale(xValue(d)))
+
+        }
         barUpdate.select(".barInfo").attr("stroke", function (d) {
             return getColor(d);
         })
 
-        barUpdate.select(".barInfo")
+        var barInfo = barUpdate.select(".barInfo")
             .text(
                 function (d) {
                     if (use_type_info) {
@@ -475,7 +527,10 @@ function draw(data) {
                     }
                     return d.name;
                 })
-            .attr("x", d => xScale(xValue(d)) - 10)
+            .attr("x", d => {
+                if (long) return 10;
+                return xScale(xValue(d)) - 10
+            })
             .attr(
                 "fill-opacity",
                 function (d) {
@@ -494,16 +549,34 @@ function draw(data) {
                 return "1px";
             })
 
-        barUpdate.select(".value").tween("text", function (d) {
-            var self = this;
-            var i = d3.interpolate((self.textContent), Number(d.value)),
-                prec = (Number(d.value) + "").split("."),
-                round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
-            return function (t) {
-                self.textContent = d3.format(format)(Math.round(i(t) * round) / round);
-            };
-        }).duration(2990 * interval_time).attr("x", d => xScale(xValue(d)) + 10)
+        if (long) {
+            barInfo.tween(
+                "text",
+                function (d) {
+                    var self = this;
+                    var str = d.type + "-" + d.name + '  在线人数:'
 
+                    var i = d3.interpolate(self.textContent.slice(str.length, 99), Number(d.value)),
+                        prec = (Number(d.value) + "").split("."),
+                        round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+                    return function (t) {
+                        self.textContent = d.type + "-" + d.name + '  在线人数:' + d3.format(format)(Math.round(i(t) * round) / round);
+                    };
+                })
+        }
+        if (!long) {
+
+            barUpdate.select(".value").tween("text", function (d) {
+                var self = this;
+                var i = d3.interpolate((self.textContent), Number(d.value)),
+                    prec = (Number(d.value) + "").split("."),
+                    round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+                return function (t) {
+                    self.textContent = d3.format(format)(Math.round(i(t) * round) / round);
+                };
+            }).duration(2990 * interval_time).attr("x", d => xScale(xValue(d)) + 10)
+
+        }
         avg = (Number(currentData[0]["value"]) + Number(currentData[currentData.length - 1]["value"])) / 2
 
         var barExit = bar.exit().attr("fill-opacity", 1).transition().duration(2500 * interval_time)
@@ -513,18 +586,35 @@ function draw(data) {
 
                     return "translate(0," + "-100" + ")";
                 }
-                return "translate(0," + "800" + ")";
+                return "translate(0," + "880" + ")";
 
             })
             .remove().attr("fill-opacity", 0);
         barExit.select("rect").attr("fill-opacity", 0).attr("width", xScale(currentData[currentData.length - 1]["value"]))
-        barExit.select(".value").attr("fill-opacity", 0).attr("x", xScale(currentData[currentData.length - 1]["value"]))
+        if (!long) {
+
+            barExit.select(".value").attr("fill-opacity", 0).attr("x", () => {
+                return xScale(currentData[currentData.length - 1]["value"]
+
+                )
+            })
+        }
         barExit.select(".barInfo").attr("fill-opacity", 0).attr("stroke-width", function (d) {
             return "0px";
-        }).attr("x", xScale(currentData[currentData.length - 1]["value"]))
+        }).attr("x", () => {
+            if (long) return 10;
+            return (xScale(currentData[currentData.length - 1]["value"] - 10)
+
+            )
+        })
         barExit.select(".barInfo2").attr("fill-opacity", 0).attr("stroke-width", function (d) {
             return "0px";
-        }).attr("x", xScale(currentData[currentData.length - 1]["value"]))
+        }).attr("x", () => {
+            if (long) return 10;
+            return (xScale(currentData[currentData.length - 1]["value"] - 10)
+
+            )
+        })
         barExit.select(".label").attr("fill-opacity", 0)
     }
 
@@ -541,9 +631,7 @@ function draw(data) {
         })
     }
 
-    getCurrentData(time[0]);
-
-    var i = 1;
+    var i = 0;
     var p = 7;
     var inter = setInterval(function next() {
 

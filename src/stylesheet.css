@@ -34,7 +34,7 @@ body {
     
     fill: rgb(92, 92, 92);
     display:table-cell;
-    font-size: 90pt;
+    font-size: 60pt;
     font-weight: bold;
     font-family: 'Segoe UI', 'console', Calibri, sans-serif;
 }
@@ -78,8 +78,8 @@ body {
 
 .barInfo {
     fill: rgb(255, 255, 255);
-    font-size: 22pt;
     font-weight: 800;
+    font-size: 1.2vw;
     font-family: sans-serif;
 }
 
