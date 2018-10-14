@@ -80,7 +80,7 @@ function draw(data) {
         }
         r = r % 25;
         r = Math.round(r);
-        return color[r];        
+        return color[r];
     }
 
     var showMessage = config.showMessage;
@@ -304,21 +304,24 @@ function draw(data) {
         } else {
             xScale.domain([0, d3.max(currentData, xValue) + 1]).range([0, innerWidth]);
         }
+        if (auto_sort) {
 
-        dateLabel.data(currentData).transition().duration(3000 * interval_time).ease(d3.easeLinear).tween(
-            "text",
-            function (d) {
-                var self = this;
-                var i = d3.interpolateDate(new Date(self.textContent), new Date(d.date))
-                // var prec = (new Date(d.date) + "").split(".");
-                // var round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
-                return function (t) {
-                    var dateformat = d3.timeFormat("%Y-%m-%d %H:%M")
-                    self.textContent = dateformat(i(t));
-                };
-            });
+            dateLabel.data(currentData).transition().duration(3000 * interval_time).ease(d3.easeLinear).tween(
+                "text",
+                function (d) {
+                    var self = this;
+                    var i = d3.interpolateDate(new Date(self.textContent), new Date(d.date))
+                    // var prec = (new Date(d.date) + "").split(".");
+                    // var round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+                    return function (t) {
+                        var dateformat = d3.timeFormat("%Y-%m-%d %H:%M")
+                        self.textContent = dateformat(i(t));
+                    };
+                });
 
-        // .text(currentdate);
+        } else {
+            dateLabel.text(currentdate);
+        }
 
         xAxisG.transition().duration(3000 * interval_time).ease(d3.easeLinear).call(xAxis);
         yAxisG.transition().duration(3000 * interval_time).ease(d3.easeLinear).call(yAxis);
