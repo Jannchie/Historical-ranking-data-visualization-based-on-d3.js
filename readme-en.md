@@ -7,7 +7,7 @@ This project aims to help video creators without programming experience produce 
 
 # How to Use
 
-Open `dist/bargraph.html` in any browser and click `choose file` button. Choose your `.csv` formated data source then you can see the visualzied result. 
+Open `src/bargraph.html` in any browser and click `choose file` button. Choose your `.csv` formated data source then you can see the visualzied result. 
 
 # Data Format
 
