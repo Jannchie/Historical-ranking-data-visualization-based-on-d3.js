@@ -29,4 +29,4 @@ Name2|Type2|Value2|Date2
 
 # Configurations
 
-You can customize this project by editing parameters in [`dist/config.js`](/dist/config.js) with any text editor. Please check [`dist/config.js`](/dist/config.js) comments for parameter details.
+You can customize this project by editing parameters in [`src/config.js`](/src/config.js) with any text editor. Please check [`src/config.js`](/dist/config.js) comments for parameter details.

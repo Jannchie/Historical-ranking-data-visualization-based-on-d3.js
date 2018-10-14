@@ -457,7 +457,7 @@ function draw(data) {
                         prec = (Number(d.value) + "").split("."),
                         round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
                     return function (t) {
-                        self.textContent = d.type + "-" + d.name + '  在线人数:' + d3.format(format)(Math.round(i(t) * round) / round);
+                        self.textContent = d.type + "-" + d.name + '  数值:' + d3.format(format)(Math.round(i(t) * round) / round);
                     };
                 })
         }
@@ -554,13 +554,13 @@ function draw(data) {
                 "text",
                 function (d) {
                     var self = this;
-                    var str = d.type + "-" + d.name + '  在线人数:'
+                    var str = d.type + "-" + d.name + '  数值:'
 
                     var i = d3.interpolate(self.textContent.slice(str.length, 99), Number(d.value)),
                         prec = (Number(d.value) + "").split("."),
                         round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
                     return function (t) {
-                        self.textContent = d.type + "-" + d.name + '  在线人数:' + d3.format(format)(Math.round(i(t) * round) / round);
+                        self.textContent = d.type + "-" + d.name + '  数值:' + d3.format(format)(Math.round(i(t) * round) / round);
                     };
                 })
         }
