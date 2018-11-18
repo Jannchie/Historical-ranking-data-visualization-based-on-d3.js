@@ -16,26 +16,25 @@
   // 如果你的日期格式为标准的日期格式，则可以无视数据排序，达到自动按照日期顺序排序的效果。
   // 开启auto_sort可以实现时间的自动补间。
   auto_sort: false,
+  timeFormat : "%Y-%m-%d",
 
   // 倒序，使得最短的条位于最上方
   reverse: false,
 
-  // 使用自定义的颜色，需要配置下面的color。
-  // 如果为false，则随机配色。
-  use_custom_color: true,
+  
+  divide_by: 'type',
 
   // 颜色定义
   color: {
-    '名称或类型': '#000000',
-    '名称或类型2': '#000000',
+    '关键词':'#00318b',
   },
 
   // 颜色绑定增长率
   changeable_color: false,
 
   // 附加信息内容。
-  itemLabel: "左边文字",
-  typeLabel: "右边文字",
+  itemLabel: "左侧文字",
+  typeLabel: "右侧文字",
   // 榜首项目信息的水平位置 。
   item_x: 400,
 
@@ -46,19 +45,16 @@
   text_y: -50,
 
   // 长度小于display_barInfo的bar将不显示barInfo。
-  display_barInfo: 0,
+  display_barInfo: 99999,
 
   // 使用类型
   // 注意！使用计时器和使用类型目前不能兼容，即不能同时开启！
   use_type_info: true,
-  // 默认配色与name绑定，如果需要与类型绑定，即相同类型使用同种颜色，那么将divide_by_type属性置为true。
-  // 如果不使用type（use_type_info : false），则divide_by_type无效。
-  divide_by_type: true,
 
   // 使用计数器
   // 注意！使用计时器和使用类型目前不能兼容，即不能同时开启！
   // 计数器会出现在右上角，记录着当前榜首的持续时间。
-  use_counter: false,
+  use_counter: true,
   // 每个时间节点对于计数器的步长。
   // 比如时间节点日期的间隔可能为1周（七天），那么step的值就应该为7。
   step: 7,
@@ -68,13 +64,13 @@
   format: ".0f",
 
   // 图表左右上下间距。
-  left_margin: 300,
+  left_margin: 0,
   right_margin: 150,
-  top_margin: 150,
+  top_margin: 180,
   bottom_margin: 0,
 
   // 时间标签坐标。
-  dateLabel_x: 1200,
+  dateLabel_x: 1440,
   dateLabel_y: 750,
 
   // 允许大于平均值的条消失时上浮。
@@ -87,9 +83,11 @@
   big_value: false,
 
   // 如果要使用半对数坐标，则开启此项
-  use_semilogarithmic_coordinate: false,
+  use_semilogarithmic_coordinate: true,
 
   // barinfo太长？也许可以试试这个
   long: false,
+
+  wait:10
 
 };

@@ -2,7 +2,7 @@
  * @type Jannchie
  * @email jannchie@gmail.com
  * @create date 2018-05-02 13:17:10
- * @modify date 2018-10-14 20:24:30
+ * @modify date 2018-11-18 16:12:46
  * @desc 可视化核心代码
  */
 // import * as d3 from 'd3';
@@ -19,7 +19,6 @@ $('#inputfile').change(function () {
 });
 
 function draw(data) {
-
     var date = [];
     data.forEach(element => {
         if (date.indexOf(element["date"]) == -1) {
@@ -35,8 +34,7 @@ function draw(data) {
     }
     var use_semilogarithmic_coordinate = config.use_semilogarithmic_coordinate;
     var big_value = config.big_value;
-    var use_custom_color = config.use_custom_color;
-    var divide_by_type = config.divide_by_type;
+    var divide_by = config.divide_by;
     var name_list = []
     var changeable_color = config.changeable_color;
     data.sort((a, b) => Number(b.value) - Number(a.value)).forEach(e => {
@@ -45,38 +43,22 @@ function draw(data) {
         }
     })
 
+    var colorRange = d3.interpolateCubehelix("#003AAB", "#01ADFF")
     // 选择颜色
     function getColor(d) {
-        // 不随机选色
-        // if (use_custom_color) {
-        //     if (use_type_info == false || divide_by_type == false) {
-        //         return d.name;
-        //     }
-        //     return d.type;
-        // }
-        // 随机选色
         var r = 0.00;
         if (changeable_color) {
             var v = Math.abs(rate[d.name] - rate['MIN_RATE']) / (rate['MAX_RATE'] - rate['MIN_RATE'])
-            if (d.name == '拂菻坊' && d.date > '2018-01-15') return '#000000'
             if (isNaN(v) || v == -1) {
-                return d3.interpolatePlasma(0.6)
+                return colorRange(0.6)
             }
-            return d3.interpolatePlasma(Math.pow(v, 0.6) * 0.85)
+            return colorRange(v)
         }
 
-        if (use_type_info && divide_by_type) {
-            if (d.type in config.color)
-                return config.color[d.type]
-            else {
-                return d3.schemeCategory10[Math.floor((d.type.charCodeAt() % 10))]
-            }
-        } else {
-            if (d.name in config.color)
-                return config.color[d.name]
-            else {
-                return d3.schemeCategory10[Math.floor((d.name.charCodeAt() % 10))]
-            }
+        if (d[divide_by] in config.color)
+            return config.color[d[divide_by]]
+        else {
+            return d3.schemeCategory10[Math.floor((d[divide_by].charCodeAt() % 10))]
         }
     }
 
@@ -102,6 +84,7 @@ function draw(data) {
     var bottom_margin = config.bottom_margin;
     var dateLabel_x = config.dateLabel_x;
     var dateLabel_y = config.dateLabel_y;
+    var timeFormat = config.timeFormat
     var item_x = config.item_x;
     var max_number = config.max_number;
     var reverse = config.reverse;
@@ -172,8 +155,11 @@ function draw(data) {
     var dateLabel = g.insert("text")
         .data(currentdate)
         .attr("class", "dateLabel")
-        .attr("x", dateLabel_x)
-        .attr("y", dateLabel_y)
+        .attr("x", innerWidth)
+        .attr("y", innerHeight).attr("text-anchor", function () {
+            return 'end';
+        })
+
         .text(currentdate);
 
     var topLabel = g.insert("text")
@@ -185,7 +171,7 @@ function draw(data) {
         rate = [];
         currentData = [];
         data.forEach(element => {
-            if (element["date"] == date && parseInt(element['value']) != 0) {
+            if (element["date"] == date && parseFloat(element['value']) != 0) {
                 currentData.push(element);
             }
         });
@@ -255,7 +241,7 @@ function draw(data) {
     if (showMessage) {
 
         // 左1文字
-        g.insert("text")
+        var topInfo = g.insert("text")
             .attr("class", "growth")
             .attr("x", 0)
             .attr("y", text_y).text(itemLabel);
@@ -263,20 +249,21 @@ function draw(data) {
         // 右1文字
         g.insert("text")
             .attr("class", "growth")
-            .attr("x", 1000)
+            .attr("x", 1300)
             .attr("y", text_y).text(typeLabel);
+
         // 榜首日期计数
         if (use_counter == true) {
             var days = g.insert("text")
                 .attr("class", "days")
-                .attr("x", 1300)
+                .attr("x", 1600)
                 .attr("y", text_y);
         } else {
             // 显示榜首type
             if (use_type_info == true) {
                 var top_type = g.insert("text")
                     .attr("class", "days")
-                    .attr("x", 1300)
+                    .attr("x", 1600)
                     .attr("y", text_y);
             }
         }
@@ -311,7 +298,7 @@ function draw(data) {
                     // var prec = (new Date(d.date) + "").split(".");
                     // var round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
                     return function (t) {
-                        var dateformat = d3.timeFormat("%Y-%m-%d %H:%M")
+                        var dateformat = d3.timeFormat(timeFormat)
                         self.textContent = dateformat(i(t));
                     };
                 });
@@ -341,6 +328,8 @@ function draw(data) {
                 lastname = d.name
                 return d.name;
             });
+
+
             if (use_counter == true) {
                 // 榜首持续时间更新
                 days.data(currentData).transition().duration(3000 * interval_time).ease(d3.easeLinear).tween(
@@ -354,11 +343,10 @@ function draw(data) {
                             self.textContent = d3.format(format)(Math.round(i(t) * round) / round);
                         };
                     });
-            }
-            if (use_type_info == true) {
+            } else if (use_type_info == true) {
                 // 榜首type更新
                 top_type.data(currentData).text(function (d) {
-                    return d.type
+                    return d[divide_by]
                 });
             }
         }
@@ -423,7 +411,7 @@ function draw(data) {
             .delay(500 * interval_time).duration(2490 * interval_time).text(
                 function (d) {
                     if (use_type_info) {
-                        return d.type + "-" + d.name;
+                        return d[divide_by] + "-" + d.name;
                     }
                     return d.name;
                 })
@@ -460,7 +448,7 @@ function draw(data) {
                         prec = (Number(d.value) + "").split("."),
                         round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
                     return function (t) {
-                        self.textContent = d.type + "-" + d.name + '  数值:' + d3.format(format)(Math.round(i(t) * round) / round);
+                        self.textContent = d[divide_by] + "-" + d.name + '  数值:' + d3.format(format)(Math.round(i(t) * round) / round);
                     };
                 })
         }
@@ -526,7 +514,7 @@ function draw(data) {
             .text(
                 function (d) {
                     if (use_type_info) {
-                        return d.type + "-" + d.name;
+                        return d[divide_by] + "-" + d.name;
                     }
                     return d.name;
                 })
@@ -557,18 +545,17 @@ function draw(data) {
                 "text",
                 function (d) {
                     var self = this;
-                    var str = d.type + "-" + d.name + '  数值:'
+                    var str = d[divide_by] + "-" + d.name + '  数值:'
 
                     var i = d3.interpolate(self.textContent.slice(str.length, 99), Number(d.value)),
                         prec = (Number(d.value) + "").split("."),
                         round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
                     return function (t) {
-                        self.textContent = d.type + "-" + d.name + '  数值:' + d3.format(format)(Math.round(i(t) * round) / round);
+                        self.textContent = d[divide_by] + "-" + d.name + '  数值:' + d3.format(format)(Math.round(i(t) * round) / round);
                     };
                 })
         }
         if (!long) {
-
             barUpdate.select(".value").tween("text", function (d) {
                 var self = this;
                 var i = d3.interpolate((self.textContent), Number(d.value)),
@@ -635,7 +622,7 @@ function draw(data) {
     }
 
     var i = 0;
-    var p = 7;
+    var p = config.wait;
     var inter = setInterval(function next() {
 
         // 空过p回合
