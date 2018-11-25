@@ -21,12 +21,13 @@
   // 倒序，使得最短的条位于最上方
   reverse: false,
 
-  
-  divide_by: 'type',
+  // 颜色根据什么字段区分？
+  divide_by: 'name',
 
-  // 颜色定义
+  // 字段的值与其对应的颜色值
   color: {
-    '关键词':'#00318b',
+    '张三':'#00318b',
+    '李四':'#007123',
   },
 
   // 颜色绑定增长率
@@ -37,24 +38,25 @@
   typeLabel: "右侧文字",
   // 榜首项目信息的水平位置 。
   item_x: 400,
-
+  
   // 时间点间隔时间。
   interval_time: 1,
-
+  
   // 上方文字水平高度。
   text_y: -50,
 
-  // 长度小于display_barInfo的bar将不显示barInfo。
-  display_barInfo: 99999,
+  // 右侧文字横坐标
+  text_x: 1000,
+  // 偏移量
+  offset: 300,
 
-  // 使用类型
-  // 注意！使用计时器和使用类型目前不能兼容，即不能同时开启！
-  use_type_info: true,
+  // 长度小于display_barInfo的bar将不显示barInfo。
+  display_barInfo: 200,
 
   // 使用计数器
   // 注意！使用计时器和使用类型目前不能兼容，即不能同时开启！
   // 计数器会出现在右上角，记录着当前榜首的持续时间。
-  use_counter: true,
+  use_counter: false,
   // 每个时间节点对于计数器的步长。
   // 比如时间节点日期的间隔可能为1周（七天），那么step的值就应该为7。
   step: 7,
@@ -64,7 +66,7 @@
   format: ".0f",
 
   // 图表左右上下间距。
-  left_margin: 0,
+  left_margin: 200,
   right_margin: 150,
   top_margin: 180,
   bottom_margin: 0,
@@ -83,11 +85,12 @@
   big_value: false,
 
   // 如果要使用半对数坐标，则开启此项
-  use_semilogarithmic_coordinate: true,
+  use_semilogarithmic_coordinate: false,
 
   // barinfo太长？也许可以试试这个
   long: false,
 
-  wait:10
+  // 延迟多少个时间节点开始
+  wait:0
 
 };

@@ -71,7 +71,11 @@ function draw(data) {
     // 长度小于display_barInfo的bar将不显示barInfo
     var display_barInfo = config.display_barInfo;
     // 显示类型
-    var use_type_info = config.use_type_info;
+    if (divide_by != 'name'){
+        var use_type_info = true;
+    }else{
+        var use_type_info = false;
+    }
     // 使用计数器
     var use_counter = config.use_counter;
     // 每个数据的间隔日期
@@ -82,12 +86,12 @@ function draw(data) {
     var right_margin = config.right_margin;
     var top_margin = config.top_margin;
     var bottom_margin = config.bottom_margin;
-    var dateLabel_x = config.dateLabel_x;
-    var dateLabel_y = config.dateLabel_y;
     var timeFormat = config.timeFormat
     var item_x = config.item_x;
     var max_number = config.max_number;
     var reverse = config.reverse;
+    var text_x = config.text_x;
+    var offset = config.offset;
     const margin = {
         left: left_margin,
         right: right_margin,
@@ -249,21 +253,21 @@ function draw(data) {
         // 右1文字
         g.insert("text")
             .attr("class", "growth")
-            .attr("x", 1300)
+            .attr("x", text_x)
             .attr("y", text_y).text(typeLabel);
 
         // 榜首日期计数
         if (use_counter == true) {
             var days = g.insert("text")
                 .attr("class", "days")
-                .attr("x", 1600)
+                .attr("x", text_x+offset)
                 .attr("y", text_y);
         } else {
             // 显示榜首type
             if (use_type_info == true) {
                 var top_type = g.insert("text")
                     .attr("class", "days")
-                    .attr("x", 1600)
+                    .attr("x", text_x+offset)
                     .attr("y", text_y);
             }
         }
@@ -346,7 +350,7 @@ function draw(data) {
             } else if (use_type_info == true) {
                 // 榜首type更新
                 top_type.data(currentData).text(function (d) {
-                    return d[divide_by]
+                    return d['type']
                 });
             }
         }
