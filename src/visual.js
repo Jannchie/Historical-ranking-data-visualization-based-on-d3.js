@@ -92,6 +92,7 @@ function draw(data) {
     var reverse = config.reverse;
     var text_x = config.text_x;
     var offset = config.offset;
+    var animation = config.animation;
     const margin = {
         left: left_margin,
         right: right_margin,
@@ -114,7 +115,7 @@ function draw(data) {
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom - 32;
     var dateLabel_y = height - margin.top - margin.bottom - 32;;
-    const xValue = d => Number(d.v);
+    const xValue = d => Number(d.value);
     const yValue = d => d.name;
 
     const g = svg.append('g')
@@ -171,17 +172,50 @@ function draw(data) {
         .attr("x", item_x)
         .attr("y", text_y)
 
+    function dataSort() {
+        if (reverse) {
+            currentData.sort(function (a, b) {
+                if (Number(a.value) == Number(b.value)) {
+                    var r1 = 0;
+                    var r2 = 0;
+                    for (let index = 0; index < a.name.length; index++) {
+                        r1 = r1 + a.name.charCodeAt(index);
+                    }
+                    for (let index = 0; index < b.name.length; index++) {
+                        r2 = r2 + b.name.charCodeAt(index);
+                    }
+                    return r2 - r1;
+                } else {
+                    return Number(a.value) - Number(b.value);
+                }
+            });
+        } else {
+            currentData.sort(function (a, b) {
+                if (Number(a.value) == Number(b.value)) {
+                    var r1 = 0;
+                    var r2 = 0;
+                    for (let index = 0; index < a.name.length; index++) {
+                        r1 = r1 + a.name.charCodeAt(index);
+                    }
+                    for (let index = 0; index < b.name.length; index++) {
+                        r2 = r2 + b.name.charCodeAt(index);
+                    }
+                    return r2 - r1;
+                } else {
+                    return Number(b.value) - Number(a.value);
+                }
+            });
+        }
+    }
 
     function getCurrentData(date) {
         rate = [];
         currentData = [];
         data.forEach(element => {
             if (element["date"] == date && parseFloat(element['value']) != 0) {
-                element['v'] = element['value']
                 currentData.push(element);
             }
         });
-
 
         rate['MAX_RATE'] = 0;
         rate['MIN_RATE'] = 1;
@@ -248,12 +282,14 @@ function draw(data) {
     var avg = 0;
 
     function redraw() {
+
         if (currentData.length == 0) return;
         yScale
-            .domain(currentData.map(yValue).reverse())
+            .domain(currentData.map(d => d.name).reverse())
             .range([innerHeight, 0]);
         // x轴范围
         // 如果所有数字很大导致拉不开差距
+
         if (big_value) {
             xScale.domain([2 * d3.min(currentData, xValue) - d3.max(currentData, xValue), d3.max(currentData, xValue) + 10]).range([0, innerWidth]);
         } else {
@@ -334,7 +370,7 @@ function draw(data) {
                     if (enter_from_0) {
                         return 0;
                     } else {
-                        return xScale(currentData[currentData.length - 1]['v']);
+                        return xScale(currentData[currentData.length - 1].value);
                     }
                 }).attr("fill-opacity", 0)
             .attr("height", 26).attr("y", 50)
@@ -370,7 +406,7 @@ function draw(data) {
                     if (enter_from_0) {
                         return 0;
                     } else {
-                        return xScale(currentData[currentData.length - 1]['v']);
+                        return xScale(currentData[currentData.length - 1].value);
                     }
                 })
             .attr("stroke", d => getColor(d))
@@ -433,7 +469,7 @@ function draw(data) {
                         if (enter_from_0) {
                             return 0;
                         } else {
-                            return xScale(currentData[currentData.length - 1]['v']);
+                            return xScale(currentData[currentData.length - 1].value);
                         }
                     }).attr("y", 50).attr("fill-opacity", 0).style('fill', d => getColor(d)).transition()
                 .duration(2990 * interval_time).tween(
@@ -445,6 +481,7 @@ function draw(data) {
                             round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
                         return function (t) {
                             self.textContent = d3.format(format)(Math.round(i(t) * round) / round);
+                            value = self.textContent
                         };
                     }).attr(
                     "fill-opacity", 1).attr("y", 0)
@@ -461,8 +498,6 @@ function draw(data) {
 
         barUpdate.select("rect").style('fill', d => getColor(d))
             .attr("width", d => xScale(xValue(d)))
-
-        barUpdate.select("c").style('fill', d => getColor(d))
 
         barUpdate.select(".label").attr("class", function (d) {
                 return "label ";
@@ -533,7 +568,7 @@ function draw(data) {
                     round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
                 return function (t) {
                     self.textContent = d3.format(format)(Math.round(i(t) * round) / round);
-                    d.v = self.textContent;
+                    d.value = self.textContent;
                 };
             }).duration(2990 * interval_time).attr("x", d => xScale(xValue(d)) + 10)
 
@@ -551,11 +586,11 @@ function draw(data) {
 
             })
             .remove().attr("fill-opacity", 0);
-        barExit.select("rect").attr("fill-opacity", 0).attr("width", xScale(currentData[currentData.length - 1]["v"]))
+        barExit.select("rect").attr("fill-opacity", 0).attr("width", xScale(currentData[currentData.length - 1]["value"]))
         if (!long) {
 
             barExit.select(".value").attr("fill-opacity", 0).attr("x", () => {
-                return xScale(currentData[currentData.length - 1]["v"]
+                return xScale(currentData[currentData.length - 1]["value"]
 
                 )
             })
@@ -564,15 +599,7 @@ function draw(data) {
             return "0px";
         }).attr("x", () => {
             if (long) return 10;
-            return (xScale(currentData[currentData.length - 1]["v"] - 10)
-
-            )
-        })
-        barExit.select(".barInfo2").attr("fill-opacity", 0).attr("stroke-width", function (d) {
-            return "0px";
-        }).attr("x", () => {
-            if (long) return 10;
-            return (xScale(currentData[currentData.length - 1]["v"] - 10)
+            return (xScale(currentData[currentData.length - 1]["value"] - 10)
 
             )
         })
@@ -581,19 +608,30 @@ function draw(data) {
 
 
     function change() {
-        var bar = g.selectAll(".bar")
-            .data(currentData, function (d) {
-                return d.name;
-            });
-        var barUpdate = bar.transition("1").duration(update_rate * interval_time)
-        barUpdate.attr("transform", function (d) {
-            return "translate(0," + yScale(yValue(d)) + ")";
-        })
+        dataSort()
+        yScale
+            .domain(currentData.map(d => d.name).reverse())
+            .range([innerHeight, 0]);
+        if (animation == 'linear') {
+            g.selectAll(".bar")
+                .data(currentData, function (d) {
+                    return d.name;
+                }).transition("1").ease(d3.easeLinear).duration(3000 * update_rate * interval_time).attr("transform", function (d) {
+                    return "translate(0," + yScale(yValue(d)) + ")";
+                })
+        } else {
+            g.selectAll(".bar")
+                .data(currentData, function (d) {
+                    return d.name;
+                }).transition("1").duration(3000 * update_rate * interval_time).attr("transform", function (d) {
+                    return "translate(0," + yScale(yValue(d)) + ")";
+                })
+        }
     }
 
     var i = 0;
     var p = config.wait;
-    var update_rate = 1
+    var update_rate = config.update_rate
     var inter = setInterval(function next() {
 
         // 空过p回合
@@ -611,40 +649,9 @@ function draw(data) {
 
     }, 3000 * interval_time);
     setInterval(() => {
-        if (reverse) {
-            currentData.sort(function (a, b) {
-                if (Number(a.v) == Number(b.v)) {
-                    var r1 = 0;
-                    var r2 = 0;
-                    for (let index = 0; index < a.name.length; index++) {
-                        r1 = r1 + a.name.charCodeAt(index);
-                    }
-                    for (let index = 0; index < b.name.length; index++) {
-                        r2 = r2 + b.name.charCodeAt(index);
-                    }
-                    return r2 - r1;
-                } else {
-                    return Number(a.v) - Number(b.v);
-                }
-            });
-        } else {
-            currentData.sort(function (a, b) {
-                if (Number(a.v) == Number(b.v)) {
-                    var r1 = 0;
-                    var r2 = 0;
-                    for (let index = 0; index < a.name.length; index++) {
-                        r1 = r1 + a.name.charCodeAt(index);
-                    }
-                    for (let index = 0; index < b.name.length; index++) {
-                        r2 = r2 + b.name.charCodeAt(index);
-                    }
-                    return r2 - r1;
-                } else {
-                    return Number(b.v) - Number(a.v);
-                }
-            });
-        }
-        d3.transition("2")
+
+        console.log(currentData);
+        d3.transition()
             .each(change)
-    }, update_rate * interval_time)
+    }, 3000 * update_rate * interval_time)
 }
