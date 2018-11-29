@@ -2,7 +2,7 @@
  * @type Jannchie
  * @email jannchie@gmail.com
  * @create date 2018-05-02 13:17:10
- * @modify date 2018-11-18 16:12:46
+ * @modify date 2018-11-29 13:03:59
  * @desc 可视化核心代码
  */
 // import * as d3 from 'd3';
@@ -14,7 +14,11 @@ $('#inputfile').change(function () {
     r.onload = function () {
         //读取完成后，数据保存在对象的result属性中
         var data = d3.csvParse(this.result);
-        draw(data);
+        try {
+            draw(data);
+        } catch (error) {
+            alert(error)            
+        }
     }
 });
 
@@ -555,7 +559,7 @@ function draw(data) {
                     var i = d3.interpolate(self.textContent.slice(str.length, 99), Number(d.value)),
                         prec = (Number(d.value) + "").split("."),
                         round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
-                    return function (t) {
+                    return function (t) { 
                         self.textContent = d[divide_by] + "-" + d.name + '  数值:' + d3.format(format)(Math.round(i(t) * round) / round);
                     };
                 })
