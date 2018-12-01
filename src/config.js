@@ -71,9 +71,11 @@
   top_margin: 180,
   bottom_margin: 0,
 
-  // 时间标签坐标。
-  dateLabel_x: 1440,
-  dateLabel_y: 750,
+  // 是否开启时间标签。
+  dateLabel_switch: true,
+  // 时间标签坐标。建议x：1000 y：-50开始尝试，默认位置为x:null,y:null
+  dateLabel_x: null,
+  dateLabel_y: null,
 
   // 允许大于平均值的条消失时上浮。
   allow_up: false,
