@@ -39,6 +39,7 @@ function draw(data) {
     var use_semilogarithmic_coordinate = config.use_semilogarithmic_coordinate;
     var big_value = config.big_value;
     var divide_by = config.divide_by;
+    var divide_color_by = config.divide_color_by;
     var name_list = []
     var changeable_color = config.changeable_color;
     data.sort((a, b) => Number(b.value) - Number(a.value)).forEach(e => {
@@ -59,10 +60,10 @@ function draw(data) {
             return colorRange(v)
         }
 
-        if (d[divide_by] in config.color)
-            return config.color[d[divide_by]]
+        if (d[divide_color_by] in config.color)
+            return config.color[d[divide_color_by]]
         else {
-            return d3.schemeCategory10[Math.floor((d[divide_by].charCodeAt() % 10))]
+            return d3.schemeCategory10[Math.floor((d[divide_color_by].charCodeAt() % 10))]
         }
     }
 
@@ -240,9 +241,10 @@ function draw(data) {
             }
         })
         currentData = currentData.slice(0, max_number);
+        dataSort()
 
         d3.transition("2")
-            .each(redraw)
+            .each(redraw).each(change)
         lastData = currentData;
 
     }
@@ -284,13 +286,13 @@ function draw(data) {
     };
 
     var avg = 0;
-
+    var enter_from_now = true
     function redraw() {
 
         if (currentData.length == 0) return;
-        yScale
-            .domain(currentData.map(d => d.name).reverse())
-            .range([innerHeight, 0]);
+        // yScale
+        //     .domain(currentData.map(d => d.name).reverse())
+        //     .range([innerHeight, 0]);
         // x轴范围
         // 如果所有数字很大导致拉不开差距
 
@@ -323,6 +325,10 @@ function draw(data) {
 
         yAxisG.selectAll('.tick').remove();
 
+        yScale
+            .domain(currentData.map(d => d.name).reverse())
+            .range([innerHeight, 0]);
+
         var bar = g.selectAll(".bar")
             .data(currentData, function (d) {
                 return d.name;
@@ -350,6 +356,7 @@ function draw(data) {
                         var i = d3.interpolate(self.textContent, counter.value),
                             prec = (counter.value + "").split("."),
                             round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+                        
                         return function (t) {
                             self.textContent = d3.format(format)(Math.round(i(t) * round) / round);
                         };
@@ -361,7 +368,6 @@ function draw(data) {
                 });
             }
         }
-
 
         var barEnter = bar.enter().insert("g", ".axis")
             .attr("class", "bar")
@@ -454,7 +460,7 @@ function draw(data) {
                 "text",
                 function (d) {
                     var self = this;
-
+                    self.textContent = d.value
                     var i = d3.interpolate(self.textContent, Number(d.value)),
                         prec = (Number(d.value) + "").split("."),
                         round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
@@ -480,12 +486,14 @@ function draw(data) {
                     "text",
                     function (d) {
                         var self = this;
+                        self.textContent = d.value*0.9
                         var i = d3.interpolate(self.textContent, Number(d.value)),
                             prec = (Number(d.value) + "").split("."),
                             round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+                        // d.value = self.textContent
                         return function (t) {
                             self.textContent = d3.format(format)(Math.round(i(t) * round) / round);
-                            value = self.textContent
+                            // d.value = self.textContent
                         };
                     }).attr(
                     "fill-opacity", 1).attr("y", 0)
@@ -570,9 +578,10 @@ function draw(data) {
                 var i = d3.interpolate((self.textContent), Number(d.value)),
                     prec = (Number(d.value) + "").split("."),
                     round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+                // d.value = self.textContent
                 return function (t) {
                     self.textContent = d3.format(format)(Math.round(i(t) * round) / round);
-                    d.value = self.textContent;
+                    // d.value = self.textContent
                 };
             }).duration(2990 * interval_time).attr("x", d => xScale(xValue(d)) + 10)
 
@@ -612,7 +621,6 @@ function draw(data) {
 
 
     function change() {
-        dataSort()
         yScale
             .domain(currentData.map(d => d.name).reverse())
             .range([innerHeight, 0]);
@@ -628,6 +636,7 @@ function draw(data) {
                 .data(currentData, function (d) {
                     return d.name;
                 }).transition("1").duration(3000 * update_rate * interval_time).attr("transform", function (d) {
+                    console.log(self.transform);
                     return "translate(0," + yScale(yValue(d)) + ")";
                 })
         }
@@ -652,10 +661,8 @@ function draw(data) {
         }
 
     }, 3000 * interval_time);
-    setInterval(() => {
-
-        console.log(currentData);
-        d3.transition()
-            .each(change)
-    }, 3000 * update_rate * interval_time)
+    // setInterval(() => {
+    //     d3.transition()
+    //         .each(change)
+    // }, 3000 * update_rate * interval_time)
 }

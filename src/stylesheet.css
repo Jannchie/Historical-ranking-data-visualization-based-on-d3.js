@@ -24,13 +24,13 @@ input {
 .tick text {
     fill: #8E8883;
     font-size: 12pt;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
 }
 
 .label {
     fill: rgb(92, 92, 92);
     font-size: 15pt;
-    font-family: "Microsoft YaHei", "宋体";
+    font-family:"Noto Sans CJK SC", "Source Han Sans CN";
     font-weight: bold
 }
 
@@ -40,7 +40,7 @@ input {
     display:table-cell;
     font-size: 60pt;
     font-weight: bold;
-    font-family: 'Segoe UI', 'console', Calibri, sans-serif;
+    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
 }
 .dateLabelRed {
     
@@ -48,7 +48,7 @@ input {
     display:table-cell;
     font-size: 90pt;
     font-weight: bold;
-    font-family: 'Segoe UI', 'console', Calibri, sans-serif;
+    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
 }
 
 
@@ -56,62 +56,62 @@ input {
     fill: rgb(92, 92, 92);
     font-weight: bold;
     font-size: 55pt;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
 }
 
 .topLabel {
     fill: rgb(92, 92, 92);
     font-weight: bold;
     font-size: 40pt;
-    font-family: 'Gill Sans', 'Gill Sans MT', "Calibri", 'Trebuchet MS', sans-serif;
+    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
 }
 
 .top {
     fill: rgb(92, 92, 92);
     font-weight: bold;
     font-size: 62pt;
-    font-family: Verdana, Geneva, Tahoma, sans-serif
+    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
 }
 
 .value {
     fill: rgb(138, 46, 46);
     font-size: 20pt;
     font-weight: 400;
-    font-family: "Trebuchet MS";
+    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
 }
 
 .barInfo {
     fill: rgb(255, 255, 255);
     font-weight: 800;
     font-size: 24pt;
-    font-family: '微软雅黑';
+    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
 }
 
 .axis-label {
     fill: #635F5D;
     font-size: 32pt;
-    font-family: sans-serif;
+    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
 }
 
 .days {
     fill: rgb(92, 92, 92);
     font-weight: bold;
     font-size: 40pt;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
 }
 
 .dayslabel {
     fill: rgb(92, 92, 92);
     font-weight: bold;
     font-size: 25pt;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
 }
 
 .growth {
     fill: rgb(92, 92, 92);
     font-weight: bold;
     font-size: 40pt;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
 }
 /* MIKU色 */
 .L {

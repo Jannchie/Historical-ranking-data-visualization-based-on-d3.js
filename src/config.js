@@ -15,27 +15,29 @@
   // 如果关闭，排序顺序为csv表格的时间字段自上而下的出现顺序。
   // 如果你的日期格式为标准的日期格式，则可以无视数据排序，达到自动按照日期顺序排序的效果。
   // 开启auto_sort可以实现时间的自动补间。
-  auto_sort: false,
+  auto_sort: true,
   timeFormat : "%Y-%m-%d",
 
   // 倒序，使得最短的条位于最上方
   reverse: false,
 
+  // 类型根据什么字段区分？如果是name，则关闭类型显示
+  divide_by: 'type',
+
   // 颜色根据什么字段区分？
-  divide_by: 'name',
+  divide_color_by: 'type',
 
   // 字段的值与其对应的颜色值
   color: {
-    '张三':'#00318b',
-    '李四':'#007123',
+    '魔法师':'#4F2CC8',
   },
 
   // 颜色绑定增长率
   changeable_color: false,
 
   // 附加信息内容。
-  itemLabel: "左侧文字",
-  typeLabel: "右侧文字",
+  itemLabel: "左边文字",
+  typeLabel: "右边文字",
   // 榜首项目信息的水平位置 。
   item_x: 400,
   
@@ -51,14 +53,14 @@
   offset: 300,
 
   // 长度小于display_barInfo的bar将不显示barInfo。
-  display_barInfo: 200,
+  display_barInfo: 300,
 
   // 使用计数器
   // 注意！使用计时器和使用类型目前不能兼容，即不能同时开启！
   // 计数器会出现在右上角，记录着当前榜首的持续时间。
   use_counter: false,
   // 每个时间节点对于计数器的步长。
-  // 比如时间节点日期的间隔可能为1周（七天），那么step的值就应该为7。
+  // 比如时间节点日期的间隔可能为1周（七天），那么step的值就应该为7。     
   step: 7,
 
   // 格式化数值
@@ -66,7 +68,7 @@
   format: ".0f",
 
   // 图表左右上下间距。
-  left_margin: 200,
+  left_margin: 235,
   right_margin: 150,
   top_margin: 180,
   bottom_margin: 0,
@@ -91,7 +93,7 @@
   long: false,
 
   // 延迟多少个时间节点开始
-  wait:0,
+  wait:5,
 
   // 单独控制交换动画速度倍率
   update_rate:1,
