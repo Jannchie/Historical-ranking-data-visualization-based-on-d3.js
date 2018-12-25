@@ -9,12 +9,11 @@
 
 <p align="center">
   <a href="readme-en.md">English</a>
+  [![GitHub issues](https://img.shields.io/github/issues/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square)](https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/issues)
+  [![GitHub stars](https://img.shields.io/github/stars/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square)](https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/stargazers)
+  [![GitHub forks](https://img.shields.io/github/forks/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square)](https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/network)
+  [![GitHub license](https://img.shields.io/github/license/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square)](https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/blob/master/LICENSE)
 </p>
-
-[![GitHub issues](https://img.shields.io/github/issues/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square)](https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/issues)
-[![GitHub stars](https://img.shields.io/github/stars/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square)](https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square)](https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/network)
-[![GitHub license](https://img.shields.io/github/license/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square)](https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/blob/master/LICENSE)
 
 这是一个数据可视化项目，基于D3.js。能够将历史数据排名转化为动态柱状图图表。
 
@@ -56,47 +55,23 @@ name|type|value|date
 ---
 
 # 更新日志
+## 2018-12-25
 
-## 2018-07-19
+- 为了规避字体版权问题，默认采用思源黑体。
 
-- 现在可以在配置文件里控制每日最大的显示条目数了。
-- 现在在配置文件里配置成不显示type能够移除柱状图上的类型了。
-- 现在能够在配置文件中选择自定义颜色了。
-- 使用更加合理的随机颜色。
-- speed属性更名为interval_time。
+## 2018-11-29
 
-## 2018-07-20
+- 现在发生错误会弹出对话框，便于定位并描述错误了。
+  
+## 2018-11-26
 
-- 现在可以关闭自动排序了。
-- 现在能选择条状图进入时是从零开始还是从当前的数值开始了。
+- 史诗级更新，更新了动画算法。
+- 现在可以通过选项指定匀速运动。
 
-## 2018-07-21
+## 2018-11-18
 
-- 修复了上色机制，并且现在可以选择按照类型还是按照名称上色了。
-
-## 2018-07-22
-
-- 修复了自定义颜色时，无法按照名称来上色的BUG。
-- 修复了自定义颜色时，名称和数值没有正确上色的BUG。
-
-## 2018-07-23
-
-- 添加了数据都很大时的坐标轴策略，如果所有数字都很大，导致拉不开差距则开启此项使得坐标原点变换为（最小值）*2-（最大值）。
-- 添加了当数字量级差距巨大时的坐标轴策略（开启半对数坐标）。
-- 修复了时间的排序方式。
-- 添加了reverse配置，使得使得最短的bar位于最上方。
-
-## 2018-07-31
-
-- 修复了中途修改type不会改变类型的问题。
-- 删除了运行不正常的dividing_line，改为使用allow_up属性，该属性使得高于平均值的条目能够上浮退出。
-
-## 2018-08-04
-
-
-- 美化随机配色。
-- 修改了配置说明。
-- 美化进入退出效果。
+- 修复一些bug
+- 现在使用计数器会自动覆盖掉type标签，而不是直接报错。
 
 ## 2018-10-14
 
@@ -106,17 +81,44 @@ name|type|value|date
 - 添加了颜色绑定增长率的选项，开启后颜色与增长率有关。越黄越快，越蓝越慢。
 - 添加了barinfo过长时的另一种显示方法，在config.js中用long参数控制。
 
-## 2018-11-18
+## 2018-08-04
 
-- 修复一些bug
-- 现在使用计数器会自动覆盖掉type标签，而不是直接报错。
+- 美化随机配色。
+- 修改了配置说明。
+- 美化进入退出效果。
 
-## 2018-11-26
+## 2018-07-31
 
-- 史诗级更新，更新了动画算法。
-- 现在可以通过选项指定匀速运动。
+- 修复了中途修改type不会改变类型的问题。
+- 删除了运行不正常的dividing_line，改为使用allow_up属性，该属性使得高于平均值的条目能够上浮退出。
+
+## 2018-07-23
+
+- 添加了数据都很大时的坐标轴策略，如果所有数字都很大，导致拉不开差距则开启此项使得坐标原点变换为（最小值）*2-（最大值）。
+- 添加了当数字量级差距巨大时的坐标轴策略（开启半对数坐标）。
+- 修复了时间的排序方式。
+- 添加了reverse配置，使得使得最短的bar位于最上方。
+  
+## 2018-07-22
+
+- 修复了自定义颜色时，无法按照名称来上色的BUG。
+- 修复了自定义颜色时，名称和数值没有正确上色的BUG。
+
+## 2018-07-21
+
+- 修复了上色机制，并且现在可以选择按照类型还是按照名称上色了。
+
+## 2018-07-20
+
+- 现在可以关闭自动排序了。
+- 现在能选择条状图进入时是从零开始还是从当前的数值开始了。
+
+## 2018-07-19
+
+- 现在可以在配置文件里控制每日最大的显示条目数了。
+- 现在在配置文件里配置成不显示type能够移除柱状图上的类型了。
+- 现在能够在配置文件中选择自定义颜色了。
+- 使用更加合理的随机颜色。
+- speed属性更名为interval_time。
 
 
-## 2018-11-29
-
-- 现在发生错误会弹出对话框，便于定位并描述错误了。
