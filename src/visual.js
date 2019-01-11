@@ -77,7 +77,9 @@ function draw(data) {
     // 长度小于display_barInfo的bar将不显示barInfo
     var display_barInfo = config.display_barInfo;
     // 显示类型
-    if (divide_by != 'name') {
+	if(config.use_type_info){
+		var use_type_info = config.use_type_info;
+	}else if (divide_by != 'name') {
         var use_type_info = true;
     } else {
         var use_type_info = false;
@@ -121,7 +123,7 @@ function draw(data) {
     const height = svg.attr('height');
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom - 32;
-    var dateLabel_y = height - margin.top - margin.bottom - 32;;
+    //var dateLabel_y = height - margin.top - margin.bottom - 32;;
     const xValue = d => Number(d.value);
     const yValue = d => d.name;
 
@@ -164,15 +166,31 @@ function draw(data) {
         .tickPadding(5)
         .tickSize(-innerWidth);
 
+    
+    var dateLabel_switch=config.dateLabel_switch;    
+    var dateLabel_x = config.dateLabel_x;
+    var dateLabel_y = config.dateLabel_y;
+    //dateLabel位置
+    if(dateLabel_x == null|| dateLabel_y== null){
+        dateLabel_x=innerWidth;  //默认
+        dateLabel_y=innerHeight  //默认
+    }//是否隐藏
+    if(dateLabel_switch==false){
+        dateLabel_switch="hidden";
+    }else{
+        dateLabel_switch="visible";
+    }
+
     var dateLabel = g.insert("text")
         .data(currentdate)
         .attr("class", "dateLabel")
-        .attr("x", innerWidth)
-        .attr("y", innerHeight).attr("text-anchor", function () {
+        .attr("style:visibility",dateLabel_switch)
+        .attr("x", dateLabel_x)
+        .attr("y", dateLabel_y).attr("text-anchor", function () {
             return 'end';
         })
-
-        .text(currentdate);
+        .text(currentdate);   
+        
 
     var topLabel = g.insert("text")
         .attr("class", "topLabel")
