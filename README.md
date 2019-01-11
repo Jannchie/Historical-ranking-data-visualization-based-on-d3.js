@@ -10,10 +10,15 @@
 <p align="center">
   <a href="readme-en.md">English</a>
   
+  <center>
+
   [![GitHub issues](https://img.shields.io/github/issues/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square)](https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/issues)
   [![GitHub stars](https://img.shields.io/github/stars/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square)](https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/stargazers)
   [![GitHub forks](https://img.shields.io/github/forks/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square)](https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/network)
   [![GitHub license](https://img.shields.io/github/license/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square)](https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/blob/master/LICENSE)
+
+  </center>
+
 </p>
 
 这是一个数据可视化项目，基于D3.js。能够将历史数据排名转化为动态柱状图图表。
@@ -56,6 +61,13 @@ name|type|value|date
 ---
 
 # 更新日志
+## 2019-01-11
+
+- 现在柱状图可以设置为圆角矩形。
+- 现在可以添加图片Logo。
+- 现在可以调整左侧label的显示与位置。
+- 现在可以在config中调整全局背景色。
+  
 ## 2018-12-25
 
 - 为了规避字体版权问题，默认采用思源黑体。
