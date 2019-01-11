@@ -8,11 +8,13 @@
 body {
     margin: 0px;
 }
+
 input {
-        position: absolute;   
-        top: 50%;   
-        left: 45%;   
+    position: absolute;
+    top: 50%;
+    left: 45%;
 }
+
 .domain {
     display: none;
 }
@@ -24,31 +26,32 @@ input {
 .tick text {
     fill: #8E8883;
     font-size: 12pt;
-    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
+    font-family: "Noto Sans CJK SC", "Source Han Sans CN"
 }
 
 .label {
     fill: rgb(92, 92, 92);
     font-size: 15pt;
-    font-family:"Noto Sans CJK SC", "Source Han Sans CN";
+    font-family: "Noto Sans CJK SC", "Source Han Sans CN";
     font-weight: bold
 }
 
 .dateLabel {
-    
+
     fill: rgb(92, 92, 92);
-    display:table-cell;
+    display: table-cell;
     font-size: 60pt;
     font-weight: bold;
-    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
+    font-family: "Noto Sans CJK SC", "Source Han Sans CN"
 }
+
 .dateLabelRed {
-    
+
     fill: rgb(167, 46, 46);
-    display:table-cell;
+    display: table-cell;
     font-size: 90pt;
     font-weight: bold;
-    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
+    font-family: "Noto Sans CJK SC", "Source Han Sans CN"
 }
 
 
@@ -56,66 +59,67 @@ input {
     fill: rgb(92, 92, 92);
     font-weight: bold;
     font-size: 55pt;
-    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
+    font-family: "Noto Sans CJK SC", "Source Han Sans CN"
 }
 
 .topLabel {
     fill: rgb(92, 92, 92);
     font-weight: bold;
     font-size: 40pt;
-    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
+    font-family: "Noto Sans CJK SC", "Source Han Sans CN"
 }
 
 .top {
     fill: rgb(92, 92, 92);
     font-weight: bold;
     font-size: 62pt;
-    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
+    font-family: "Noto Sans CJK SC", "Source Han Sans CN"
 }
 
 .value {
     fill: rgb(138, 46, 46);
     font-size: 20pt;
     font-weight: 400;
-    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
+    font-family: "Noto Sans CJK SC", "Source Han Sans CN"
 }
 
 .barInfo {
     fill: rgb(255, 255, 255);
     font-weight: 800;
     font-size: 24pt;
-    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
+    font-family: "Noto Sans CJK SC", "Source Han Sans CN"
 }
 
 .axis-label {
     fill: #635F5D;
     font-size: 32pt;
-    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
+    font-family: "Noto Sans CJK SC", "Source Han Sans CN"
 }
 
 .days {
     fill: rgb(92, 92, 92);
     font-weight: bold;
     font-size: 40pt;
-    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
+    font-family: "Noto Sans CJK SC", "Source Han Sans CN"
 }
 
 .dayslabel {
     fill: rgb(92, 92, 92);
     font-weight: bold;
     font-size: 25pt;
-    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
+    font-family: "Noto Sans CJK SC", "Source Han Sans CN"
 }
 
 .growth {
     fill: rgb(92, 92, 92);
     font-weight: bold;
     font-size: 40pt;
-    font-family:"Noto Sans CJK SC", "Source Han Sans CN"
+    font-family: "Noto Sans CJK SC", "Source Han Sans CN"
 }
+
 /* MIKU色 */
 .L {
-    fill: #39C5BB
+    fill: #39C5BB;
 }
 
 /* 龙牙绿 */
@@ -222,4 +226,3 @@ input {
 .A {
     fill: #cf9237
 }
-
