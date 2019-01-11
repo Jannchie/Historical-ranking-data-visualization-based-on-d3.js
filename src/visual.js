@@ -76,7 +76,9 @@ function draw(data) {
     // 长度小于display_barInfo的bar将不显示barInfo
     var display_barInfo = config.display_barInfo;
     // 显示类型
-    if (divide_by != 'name') {
+	if(config.use_type_info){
+		var use_type_info = config.use_type_info;
+	}else if (divide_by != 'name') {
         var use_type_info = true;
     } else {
         var use_type_info = false;
