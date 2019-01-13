@@ -579,6 +579,9 @@ function draw(data) {
         barUpdate.select(".barInfo").attr("stroke", function (d) {
             return getColor(d);
         })
+        barUpdate.select("circle").attr("stroke", function (d) {
+            return getColor(d);
+        })
 
         var barInfo = barUpdate.select(".barInfo")
             .text(
