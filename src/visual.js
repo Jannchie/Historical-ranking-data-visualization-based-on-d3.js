@@ -77,9 +77,9 @@ function draw(data) {
     // 长度小于display_barInfo的bar将不显示barInfo
     var display_barInfo = config.display_barInfo;
     // 显示类型
-	if(config.use_type_info){
-		var use_type_info = config.use_type_info;
-	}else if (divide_by != 'name') {
+    if (config.use_type_info) {
+        var use_type_info = config.use_type_info;
+    } else if (divide_by != 'name') {
         var use_type_info = true;
     } else {
         var use_type_info = false;
@@ -166,37 +166,37 @@ function draw(data) {
         .tickPadding(5)
         .tickSize(-innerWidth);
 
-    
-    var dateLabel_switch=config.dateLabel_switch;    
+
+    var dateLabel_switch = config.dateLabel_switch;
     var dateLabel_x = config.dateLabel_x;
     var dateLabel_y = config.dateLabel_y;
     //dateLabel位置
-    if(dateLabel_x == null|| dateLabel_y== null){
-        dateLabel_x=innerWidth;  //默认
-        dateLabel_y=innerHeight  //默认
-    }//是否隐藏
-    if(dateLabel_switch==false){
-        dateLabel_switch="hidden";
-    }else{
-        dateLabel_switch="visible";
+    if (dateLabel_x == null || dateLabel_y == null) {
+        dateLabel_x = innerWidth; //默认
+        dateLabel_y = innerHeight //默认
+    } //是否隐藏
+    if (dateLabel_switch == false) {
+        dateLabel_switch = "hidden";
+    } else {
+        dateLabel_switch = "visible";
     }
 
     var dateLabel = g.insert("text")
         .data(currentdate)
         .attr("class", "dateLabel")
-        .attr("style:visibility",dateLabel_switch)
+        .attr("style:visibility", dateLabel_switch)
         .attr("x", dateLabel_x)
         .attr("y", dateLabel_y).attr("text-anchor", function () {
             return 'end';
         })
-        .text(currentdate);   
-        
+        .text(currentdate);
+
 
     var topLabel = g.insert("text")
         .attr("class", "topLabel")
         .attr("x", item_x)
         .attr("y", text_y)
-    var defs = svg.append("defs")
+    var defs = g.append("defs")
 
     function dataSort() {
         if (reverse) {
@@ -237,6 +237,8 @@ function draw(data) {
     function getCurrentData(date) {
         rate = [];
         currentData = [];
+        indexList = []
+
         data.forEach(element => {
             if (element["date"] == date && parseFloat(element['value']) != 0) {
                 currentData.push(element);
@@ -439,14 +441,21 @@ function draw(data) {
                 })
         }
 
-        Object.keys(config.imgs).forEach(e => {
-            var pattern = defs.append("pattern").attr('id', e).attr('width', '100%').attr('height', '100%')
-            pattern.append('image').attr('x', "0").attr('y', '0').attr('width', '40').attr('height', '40').attr('href', config.imgs[e])
-        })
 
         if (config.use_img) {
 
+            pattern = defs.selectAll('pattern').data(currentData, function (d) {
+                return d.name;
+            })
+            pattern.enter().append('pattern').attr('id', d => d.name).attr('width', '100%').attr('height', '100%').append('image').attr('x', "0").attr('y', '0').attr('width', '40').attr('height', '40').attr('href', d => config.imgs[d.name])
+
             // 头像
+            // Object.keys(config.imgs).forEach(e => {
+            //     var pattern = defs.enter().append("pattern").attr('id', e).attr('width', '100%').attr('height', '100%')
+            //     pattern.append('image').attr('x', "0").attr('y', '0').attr('width', '40').attr('height', '40').attr('href', config.imgs[e])
+            // })
+
+
             barEnter.append("circle").attr("fill-opacity", 0).attr("cy", 63)
                 .attr('fill', d => 'url(#' + d.name + ')')
                 .attr("stroke-width", "0px")
@@ -579,15 +588,15 @@ function draw(data) {
         barUpdate.select(".barInfo").attr("stroke", function (d) {
             return getColor(d);
         })
-        
+
         if (config.use_img) {
             barUpdate.select("circle").attr("stroke", function (d) {
                 return getColor(d);
             })
         }
-        
+
         var barInfo = barUpdate.select(".barInfo")
-        .text(
+            .text(
                 function (d) {
                     if (use_type_info) {
                         return d[divide_by] + "-" + d.name;
@@ -646,7 +655,6 @@ function draw(data) {
         avg = (Number(currentData[0]["value"]) + Number(currentData[currentData.length - 1]["value"])) / 2
 
         var barExit = bar.exit().attr("fill-opacity", 1).transition().duration(2500 * interval_time)
-
         barExit.attr("transform", function (d) {
                 if (Number(d.value) > avg && allow_up) {
 
@@ -675,7 +683,7 @@ function draw(data) {
         })
         barExit.select(".label").attr("fill-opacity", 0)
         if (config.use_img) {
-            barExit.select("circle").attr("fill-opacity", 0)
+            pattern.exit().transition("1").duration(3000 * update_rate * interval_time).remove()
         }
     }
 
@@ -700,7 +708,7 @@ function draw(data) {
         }
     }
 
-    var i = 0;
+    var i = 1600;
     var p = config.wait;
     var update_rate = config.update_rate
     var inter = setInterval(function next() {
