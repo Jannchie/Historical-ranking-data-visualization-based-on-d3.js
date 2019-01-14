@@ -579,9 +579,15 @@ function draw(data) {
         barUpdate.select(".barInfo").attr("stroke", function (d) {
             return getColor(d);
         })
-
+        
+        if (config.use_img) {
+            barUpdate.select("circle").attr("stroke", function (d) {
+                return getColor(d);
+            })
+        }
+        
         var barInfo = barUpdate.select(".barInfo")
-            .text(
+        .text(
                 function (d) {
                     if (use_type_info) {
                         return d[divide_by] + "-" + d.name;
