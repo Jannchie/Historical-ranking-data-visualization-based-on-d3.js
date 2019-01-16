@@ -708,7 +708,7 @@ function draw(data) {
         }
     }
 
-    var i = 1600;
+    var i = 0;
     var p = config.wait;
     var update_rate = config.update_rate
     var inter = setInterval(function next() {
