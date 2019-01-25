@@ -12,17 +12,17 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/issues">
+    <a href="https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/issues" style="text-decoration:none">
         <img src="https://img.shields.io/github/issues/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg" alt="GitHub issues"/>
     </a>
-    <a href="https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/stargazers">
-        <img src="https://img.shields.io/github/stars/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square" alt="GitHub stars"/>
+    <a href="https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/stargazers" style="text-decoration:none" >
+        <img src="https://img.shields.io/github/stars/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg" alt="GitHub stars"/>
     </a>
-    <a href="https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/network">
-        <img src="https://img.shields.io/github/forks/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square" alt="GitHub forks"/>
+    <a href="https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/network" style="text-decoration:none" >
+        <img src="https://img.shields.io/github/forks/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg" alt="GitHub forks"/>
     </a>
-    <a href="https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/blob/master/LICENSE">
-        <img src="https://img.shields.io/github/license/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square" alt="GitHub license"/>
+    <a href="https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/blob/master/LICENSE" style="text-decoration:none" >
+        <img src="https://img.shields.io/github/license/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg" alt="GitHub license"/>
     </a>
 </p>
 
