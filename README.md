@@ -9,16 +9,21 @@
 
 <p align="center">
   <a href="readme-en.md">English</a>
-  
-  <center>
+</p>
 
-  [![GitHub issues](https://img.shields.io/github/issues/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square)](https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/issues)
-  [![GitHub stars](https://img.shields.io/github/stars/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square)](https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/stargazers)
-  [![GitHub forks](https://img.shields.io/github/forks/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square)](https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/network)
-  [![GitHub license](https://img.shields.io/github/license/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square)](https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/blob/master/LICENSE)
-
-  </center>
-
+<p align="center">
+    <a href="https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/issues">
+        <img src="https://img.shields.io/github/issues/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg" alt="GitHub issues"/>
+    </a>
+    <a href="https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/stargazers">
+        <img src="https://img.shields.io/github/stars/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square" alt="GitHub stars"/>
+    </a>
+    <a href="https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/network">
+        <img src="https://img.shields.io/github/forks/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square" alt="GitHub forks"/>
+    </a>
+    <a href="https://github.com/Jannchie/Historical-ranking-data-visualization-based-on-d3.js/blob/master/LICENSE">
+        <img src="https://img.shields.io/github/license/Jannchie/Historical-ranking-data-visualization-based-on-d3.js.svg?style=flat-square" alt="GitHub license"/>
+    </a>
 </p>
 
 这是一个数据可视化项目，基于D3.js。能够将历史数据排名转化为动态柱状图图表。
