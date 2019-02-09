@@ -34,6 +34,8 @@
 
   // 颜色绑定增长率
   changeable_color: false,
+  // 颜色渐变
+  color_range: ["#1177CC", "#113388"],
 
   // 附加信息内容。
   itemLabel: "左侧文字",

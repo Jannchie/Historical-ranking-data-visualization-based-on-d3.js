@@ -51,7 +51,7 @@ function draw(data) {
       }
     });
   var baseTime = 3000;
-  var colorRange = d3.interpolateCubehelix("##D91520", "#F74C2A");
+  var colorRange = d3.interpolateCubehelix(config.color_range[0], config.color_range[1]);
   // 选择颜色
   function getColor(d) {
     var r = 0.0;
@@ -614,7 +614,6 @@ function draw(data) {
           var self = this;
           // 初始值为d.value的0.9倍
           self.textContent = d.value * 0.9;
-          console.log(self.textContent)
           var i = d3.interpolate(self.textContent, Number(d.value)),
             prec = (Number(d.value) + "").split("."),
             round = prec.length > 1 ? Math.pow(10, prec[1].length) : 1;
