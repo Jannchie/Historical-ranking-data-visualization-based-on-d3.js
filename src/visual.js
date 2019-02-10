@@ -3,8 +3,9 @@
  * @email jannchie@gmail.com
  * @create date 2018-05-02 13:17:10
  * @modify date 2018-11-29 13:03:59
- * @desc 可视化核心代码
+ * @desc Visual core code
  */
+
 // import * as d3 from 'd3';
 // require("./stylesheet.css");
 
