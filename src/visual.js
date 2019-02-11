@@ -2,7 +2,7 @@
  * @type Jannchie
  * @email jannchie@gmail.com
  * @create date 2018-05-02 13:17:10
- * @modify date 2018-11-29 13:03:59
+ * @modify date 2019-02-11 12:49:53
  * @desc Visual core code
  */
 
@@ -725,8 +725,14 @@ function draw(data) {
         .tween("text", function (d) {
           var self = this;
 
-          var i = d3.interpolate(self.textContent.slice(0, -config.postfix.length), Number(d.value)),
-            prec = (Number(d.value) + "").split("."),
+          // if postfix is blank, do not slice.
+          if (config.postfix == "") {
+            var i = d3.interpolate(self.textContent, Number(d.value));
+          } else {
+            var i = d3.interpolate(self.textContent.slice(0, -config.postfix.length), Number(d.value));
+          }
+
+          var prec = (Number(d.value) + "").split("."),
             round = prec.length > 1 ? Math.pow(10, prec[1].length) : 1;
           // d.value = self.textContent
           return function (t) {
