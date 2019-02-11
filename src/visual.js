@@ -2,7 +2,7 @@
  * @type Jannchie
  * @email jannchie@gmail.com
  * @create date 2018-05-02 13:17:10
- * @modify date 2019-02-11 12:49:53
+ * @modify date 2019-02-11 13:00:55
  * @desc Visual core code
  */
 
@@ -427,9 +427,7 @@ function draw(data) {
               round = prec.length > 1 ? Math.pow(10, prec[1].length) : 1;
 
             return function (t) {
-              self.textContent = d3.format(format)(
-                Math.round(i(t) * round) / round
-              );
+              self.textContent = Math.round(i(t) * round) / round;
             };
           });
       } else if (use_type_info == true) {
