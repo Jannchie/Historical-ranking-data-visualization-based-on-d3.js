@@ -108,6 +108,7 @@ function draw(data) {
   var text_x = config.text_x;
   var offset = config.offset;
   var animation = config.animation;
+  var deformat = config.deformat;
   const margin = {
     left: left_margin,
     right: right_margin,
@@ -731,6 +732,8 @@ function draw(data) {
           } else {
             var i = d3.interpolate(self.textContent.slice(0, -config.postfix.length), Number(d.value));
           }
+
+          var i = d3.interpolate(deformat(self.textContent, config.postfix), Number(d.value))
 
           var prec = (Number(d.value) + "").split("."),
             round = prec.length > 1 ? Math.pow(10, prec[1].length) : 1;
