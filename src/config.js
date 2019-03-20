@@ -1,4 +1,4 @@
-const config = {
+﻿const config = {
   // 数据源的编码方式。
   // 默认为UTF-8。
   // 如果自己创建csv文件且是国内用户，保存的编码很可能是GBK的，如果出现乱码则将这里改成GBK。
@@ -54,7 +54,7 @@ const config = {
   item_x: 250,
 
   // 时间点间隔时间。
-  interval_time: 2,
+  interval_time: 1,
 
   // 上方文字水平高度。
   text_y: -50,
@@ -79,14 +79,16 @@ const config = {
   //////////////////////////////////////////////////////////////////////////////
   // 格式化数值
   // 这里控制着数值的显示位数。主要靠修改中间的数字完成，如果为1则为保留一位小数。
-  // .2f mains keep two decimals.
-  format: ",.2f",
+  // 逗号表示每隔三位数用","分割
+  // '.2f' mains keep two decimals.
+  format: ",.0f",
 
   // 后缀
   postfix: "",
 
-  // 反格式化函数
   // 如果看不懂这是在干什么的话，建议不要修改这里。
+  // 反格式化函数:
+  // 格式化操作可能会导致NaN问题。此函数将格式化后的数值反格式化为JS可以识别的数字。
   deformat: function (val, postfix) {
     return Number(val.replace(postfix, "").replace(",", ""))
   },
