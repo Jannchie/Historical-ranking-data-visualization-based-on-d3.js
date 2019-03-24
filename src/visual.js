@@ -49,11 +49,21 @@ function draw(data) {
         }
     })
 
-    var colorRange = d3.interpolateCubehelix("#003AAB", "#01ADFF")
+    // var colorRange = d3.interpolateCubehelix("#003AAB", "#01ADFF")
+	// var colorRange = d3.interpolateCubehelix("#a18cd1", "#fbc2eb")
     // 选择颜色
     function getColor(d) {
         var r = 0.00;
         if (changeable_color) {
+            if (d[divide_color_by] in config.color_range) {
+                var colorRange = d3.interpolateCubehelix(
+                    config.color_range[d[divide_color_by]][0], config.color_range[d[divide_color_by]][1]
+                )
+            }
+            else {
+                // var colorRange = d3.interpolateCubehelix("#003AAB", "#01ADFF")
+                var colorRange = d3.interpolateCubehelix("#ff7e5f", "#feb47b")
+            }
             var v = Math.abs(rate[d.name] - rate['MIN_RATE']) / (rate['MAX_RATE'] - rate['MIN_RATE'])
             if (isNaN(v) || v == -1) {
                 return colorRange(0.6)
@@ -70,6 +80,7 @@ function draw(data) {
 
     var showMessage = config.showMessage;
     var allow_up = config.allow_up;
+    var always_up = config.always_up;
     var interval_time = config.interval_time;
     var text_y = config.text_y;
     var itemLabel = config.itemLabel;
@@ -448,7 +459,7 @@ function draw(data) {
 
             // 头像
             barEnter.append("circle").attr("fill-opacity", 0).attr("cy", 63)
-                .attr('fill', d => 'url(#' + d.name + ')')
+                .attr('fill', d => "url(#" + encodeURIComponent(d.name).replace("'", "%27").replace("(", "%28").replace(")", "%29") + ")")
                 .attr("stroke-width", "0px")
                 .transition("a")
                 .delay(500 * interval_time)
@@ -481,7 +492,8 @@ function draw(data) {
             .delay(500 * interval_time).duration(2490 * interval_time).text(
                 function (d) {
                     if (use_type_info) {
-                        return d[divide_by] + "-" + d.name;
+                        // return d[divide_by] + "-" + d.name;
+                        return d.name;
                     }
                     return d.name;
                 })
@@ -584,7 +596,8 @@ function draw(data) {
             .text(
                 function (d) {
                     if (use_type_info) {
-                        return d[divide_by] + "-" + d.name;
+                        // return d[divide_by] + "-" + d.name;
+                        return d.name;
                     }
                     return d.name;
                 })
@@ -642,30 +655,33 @@ function draw(data) {
         var barExit = bar.exit().attr("fill-opacity", 1).transition().duration(2500 * interval_time)
 
         barExit.attr("transform", function (d) {
-                if (Number(d.value) > avg && allow_up) {
+                if (always_up) {
+                    return "translate(0," + "-100" + ")";
+                }
 
+                if (Number(d.value) > avg && allow_up) {
                     return "translate(0," + "-100" + ")";
                 }
                 return "translate(0," + "1000" + ")";
 
             })
             .remove().attr("fill-opacity", 0);
-        barExit.select("rect").attr("fill-opacity", 0).attr("width", xScale(currentData[currentData.length - 1]["value"]))
+        barExit.select("rect").attr("fill-opacity", 0).attr("width", () => {
+            if (always_up) return xScale(0);
+            return xScale(currentData[currentData.length - 1]["value"])
+        })
         if (!long) {
-
             barExit.select(".value").attr("fill-opacity", 0).attr("x", () => {
-                return xScale(currentData[currentData.length - 1]["value"]
-
-                )
+                if (always_up) return xScale(0);
+                return xScale(currentData[currentData.length - 1]["value"])
             })
         }
         barExit.select(".barInfo").attr("fill-opacity", 0).attr("stroke-width", function (d) {
             return "0px";
         }).attr("x", () => {
             if (long) return 10;
-            return (xScale(currentData[currentData.length - 1]["value"] - 10)
-
-            )
+            if (always_up) return xScale(0);
+            return (xScale(currentData[currentData.length - 1]["value"] - 10))
         })
         barExit.select(".label").attr("fill-opacity", 0)
         if (config.use_img) {
