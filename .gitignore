@@ -22,6 +22,6 @@ dist/data.js
 dist/data_w.js
 dist/data.csv
 
-src/color_range.js
+src/color_ranges.js
 src/imgs.js
 src/config_bak.js

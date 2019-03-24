@@ -12,7 +12,7 @@
   max_number: 20,
 
   // 控制是否显示顶部附加信息文字。
-  showMessage: false,
+  showMessage: true,
 
   // 时间自动排序。
   // !!!请确保打开此项时，使用的是标准日期格式！(即：YYYY-MM-DD HH:MM)
@@ -23,7 +23,7 @@
   timeFormat : "%Y-%m-%d",
 
   // 倒序，使得最短的条位于最上方
-  reverse: true,
+  reverse: false,
 
   // 类型根据什么字段区分？如果是name，则关闭类型显示
   divide_by: 'name',
@@ -36,18 +36,16 @@
     'Chinese': "#17C",
   },
 
-
-
-  // 颜色绑定增长率
+  // 颜色渐变：颜色绑定增长率
   changeable_color: true,
-  
-  // 附加信息内容。
-  itemLabel: "当日涨粉最多",
-  typeLabel: "",
-  // 颜色渐变
+
   // 添加功能：不同类型的增长率所用渐变色不同(暗→亮)
-  // 具体设置见src/_color_range.js，将其更名为color_range.js
-  color_range: ["#1177CC", "#113388"],
+  // 如果该项为false，那么所有条目全部按照color_range变色
+  // 如果该项为true，那么按照src/color_ranges.js中的color_ranges变色，默认色板为color_range
+  // 一个具体的设置模板见src/_color_ranges.js，将其更名为color_ranges.js再设置即可
+  divide_changeable_color_by_type: false,
+  color_range: ['#ff7e5f', '#feb47b'],
+
 
   // 附加信息内容。
   // left label
@@ -108,12 +106,14 @@
   // 是否开启时间标签。
   dateLabel_switch: true,
   // 时间标签坐标。建议x：1000 y：-50开始尝试，默认位置为x:null,y:null
-  dateLabel_x: 1500,
-  dateLabel_y: -40,
+  dateLabel_x: null,
+  dateLabel_y: null,
 
   // 允许大于平均值的条消失时上浮。
   allow_up: false,
-  always_up: true, 
+
+  // 所有条目上浮 - 用于反向排行榜等情况
+  always_up: false, 
 
   // 设置动画效果，如果为true，则新进入的条目从0开始。
   enter_from_0: true,

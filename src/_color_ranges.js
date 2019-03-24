@@ -1,4 +1,4 @@
-config.color_range = {
+config.color_ranges = {
     '3': ['#3a6073', '#3a7bd5'],
     '5': ['#11998e', '#38ef7d'],
   };
