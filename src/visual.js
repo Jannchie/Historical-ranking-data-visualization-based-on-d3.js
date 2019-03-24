@@ -52,11 +52,17 @@ function draw(data) {
       }
     });
   var baseTime = 3000;
-  var colorRange = d3.interpolateCubehelix(config.color_range[0], config.color_range[1]);
+  // var colorRange = d3.interpolateCubehelix(config.color_range[0], config.color_range[1]);
+  
   // 选择颜色
   function getColor(d) {
     var r = 0.0;
     if (changeable_color) {
+      var colorRange = d3.interpolateCubehelix('#ff7e5f', '#feb47b');
+      if (d["type"] in config.color_range) {
+        var colorRange = d3.interpolateCubehelix(config.color_range[d["type"]][0], config.color_range[d["type"]][1]);
+      }
+
       var v =
         Math.abs(rate[d.name] - rate["MIN_RATE"]) /
         (rate["MAX_RATE"] - rate["MIN_RATE"]);

@@ -140,7 +140,7 @@
   // label x轴位置
   labelx: -10,
 
-  use_img: false,
+  use_img: true,
 
   // 图片路径，本地图片或者网上图片。
   // imgs: {
