@@ -473,7 +473,7 @@ function draw(data) {
         .append("circle")
         .attr("fill-opacity", 0)
         .attr("cy", 63)
-        .attr("fill", d => "url(#" + d.name + ")")
+        .attr('fill', d => "url(#" + encodeURIComponent(d.name).replace("'", "%27").replace("(", "%28").replace(")", "%29") + ")")
         .attr("stroke-width", "0px")
         .transition("a")
         .delay(500 * interval_time)
