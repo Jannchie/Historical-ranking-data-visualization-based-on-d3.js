@@ -83,6 +83,7 @@ function draw(data) {
 
   var showMessage = config.showMessage;
   var allow_up = config.allow_up;
+  var always_up = config.always_up;
   var interval_time = config.interval_time;
   var text_y = config.text_y;
   var itemLabel = config.itemLabel;
@@ -767,6 +768,9 @@ function draw(data) {
       .duration(2500 * interval_time);
     barExit
       .attr("transform", function (d) {
+        if (always_up) {
+          return "translate(0," + "-100" + ")";
+        }
         if (Number(d.value) > avg && allow_up) {
           return "translate(0," + "-100" + ")";
         }
@@ -777,12 +781,16 @@ function draw(data) {
     barExit
       .select("rect")
       .attr("fill-opacity", 0)
-      .attr("width", xScale(currentData[currentData.length - 1]["value"]));
+      .attr("width", () => {
+        if (always_up) return xScale(0);
+        return xScale(currentData[currentData.length - 1]["value"])
+      })
     if (!long) {
       barExit
         .select(".value")
         .attr("fill-opacity", 0)
         .attr("x", () => {
+          if (always_up) return xScale(0);
           return xScale(currentData[currentData.length - 1]["value"]);
         });
     }
@@ -794,9 +802,13 @@ function draw(data) {
       })
       .attr("x", () => {
         if (long) return 10;
+        if (always_up) return xScale(0);
         return xScale(currentData[currentData.length - 1]["value"]);
       });
     barExit.select(".label").attr("fill-opacity", 0);
+    if (config.use_img) {
+      barExit.select("circle").attr("fill-opacity", 0)
+    }
   }
 
   function change() {
