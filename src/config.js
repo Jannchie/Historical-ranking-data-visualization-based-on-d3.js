@@ -144,7 +144,7 @@
 
   // 图片路径，本地图片或者网上图片。
   // imgs: {
-  //   '张三': 'http://i1.hdslb.com/bfs/face/983034448f81f45f05956d0455a86fe0639d6a36.jpg',
+  //   '条目': 'http://i1.hdslb.com/bfs/face/983034448f81f45f05956d0455a86fe0639d6a36.jpg',
   // },
   // 具体设置见_imgs.js，更名为imgs.js即可
 
