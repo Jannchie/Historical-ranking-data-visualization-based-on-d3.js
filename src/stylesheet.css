@@ -2,11 +2,16 @@
  * @author Jannchie
  * @email jannchie@gmail.com
  * @create date 2018-05-03 08:44:46
- * @modify date 2018-07-19 01:24:39
- * @desc [description]
+ * @modify date 2019-03-20 15:17:32
 */
 body {
     margin: 0px;
+}
+
+input {
+    position: absolute;
+    top: 50%;
+    left: 45%;
 }
 
 .domain {
@@ -20,31 +25,32 @@ body {
 .tick text {
     fill: #8E8883;
     font-size: 12pt;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Fira Code", "Source Han Sans CN"
 }
 
 .label {
     fill: rgb(92, 92, 92);
     font-size: 15pt;
-    font-family: "Microsoft YaHei", "宋体";
+    font-family: "Fira Code", "Source Han Sans CN";
     font-weight: bold
 }
 
 .dateLabel {
-    
+
     fill: rgb(92, 92, 92);
-    display:table-cell;
-    font-size: 90pt;
+    display: table-cell;
+    font-size: 60pt;
     font-weight: bold;
-    font-family: 'Segoe UI', 'console', Calibri, sans-serif;
+    font-family: "Fira Code", "Source Han Sans CN"
 }
+
 .dateLabelRed {
-    
+
     fill: rgb(167, 46, 46);
-    display:table-cell;
+    display: table-cell;
     font-size: 90pt;
     font-weight: bold;
-    font-family: 'Segoe UI', 'console', Calibri, sans-serif;
+    font-family: "Fira Code", "Source Han Sans CN"
 }
 
 
@@ -52,66 +58,67 @@ body {
     fill: rgb(92, 92, 92);
     font-weight: bold;
     font-size: 55pt;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Fira Code", "Source Han Sans CN"
 }
 
 .topLabel {
     fill: rgb(92, 92, 92);
     font-weight: bold;
     font-size: 40pt;
-    font-family: 'Gill Sans', 'Gill Sans MT', "Calibri", 'Trebuchet MS', sans-serif;
+    font-family: "Fira Code", "Source Han Sans CN"
 }
 
 .top {
     fill: rgb(92, 92, 92);
     font-weight: bold;
     font-size: 62pt;
-    font-family: Verdana, Geneva, Tahoma, sans-serif
+    font-family: "Fira Code", "Source Han Sans CN"
 }
 
 .value {
     fill: rgb(138, 46, 46);
     font-size: 20pt;
     font-weight: 400;
-    font-family: "Trebuchet MS";
+    font-family: "Fira Code", "Source Han Sans CN"
 }
 
 .barInfo {
     fill: rgb(255, 255, 255);
-    font-size: 22pt;
     font-weight: 800;
-    font-family: sans-serif;
+    font-size: 24pt;
+    font-family: "Fira Code", "Source Han Sans CN"
 }
 
 .axis-label {
     fill: #635F5D;
     font-size: 32pt;
-    font-family: sans-serif;
+    font-family: "Fira Code", "Source Han Sans CN"
 }
 
 .days {
     fill: rgb(92, 92, 92);
     font-weight: bold;
     font-size: 40pt;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Fira Code", "Source Han Sans CN"
 }
 
 .dayslabel {
     fill: rgb(92, 92, 92);
     font-weight: bold;
     font-size: 25pt;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Fira Code", "Source Han Sans CN"
 }
 
 .growth {
     fill: rgb(92, 92, 92);
     font-weight: bold;
     font-size: 40pt;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Fira Code", "Source Han Sans CN"
 }
+
 /* MIKU色 */
 .L {
-    fill: #39C5BB
+    fill: #39C5BB;
 }
 
 /* 龙牙绿 */
@@ -184,7 +191,7 @@ body {
 }
 
 .K {
-    fill: #07bebe
+    fill: #0775be
 }
 
 .J {
@@ -218,4 +225,3 @@ body {
 .A {
     fill: #cf9237
 }
-
