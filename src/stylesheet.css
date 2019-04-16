@@ -2,7 +2,7 @@
  * @author Jannchie
  * @email jannchie@gmail.com
  * @create date 2018-05-03 08:44:46
- * @modify date 2019-03-20 15:17:32
+ * @modify date 2019-04-15 15:43:32
 */
 body {
     margin: 0px;
@@ -29,7 +29,7 @@ input {
 }
 
 .label {
-    fill: rgb(92, 92, 92);
+    fill: #5C5C5C;
     font-size: 15pt;
     font-family: "Fira Code", "Source Han Sans CN";
     font-weight: bold
@@ -37,7 +37,7 @@ input {
 
 .dateLabel {
 
-    fill: rgb(92, 92, 92);
+    fill: #5C5C5C;
     display: table-cell;
     font-size: 60pt;
     font-weight: bold;
@@ -46,7 +46,7 @@ input {
 
 .dateLabelRed {
 
-    fill: rgb(167, 46, 46);
+    fill: #A72E2E;
     display: table-cell;
     font-size: 90pt;
     font-weight: bold;
@@ -55,35 +55,35 @@ input {
 
 
 .days {
-    fill: rgb(92, 92, 92);
+    fill: #5C5C5C;
     font-weight: bold;
     font-size: 55pt;
     font-family: "Fira Code", "Source Han Sans CN"
 }
 
 .topLabel {
-    fill: rgb(92, 92, 92);
+    fill: #5C5C5C;
     font-weight: bold;
     font-size: 40pt;
     font-family: "Fira Code", "Source Han Sans CN"
 }
 
 .top {
-    fill: rgb(92, 92, 92);
+    fill: #5C5C5C;
     font-weight: bold;
     font-size: 62pt;
     font-family: "Fira Code", "Source Han Sans CN"
 }
 
 .value {
-    fill: rgb(138, 46, 46);
+    fill: #8A2E2E;
     font-size: 20pt;
     font-weight: 400;
     font-family: "Fira Code", "Source Han Sans CN"
 }
 
 .barInfo {
-    fill: rgb(255, 255, 255);
+    fill: #FFFFFF;
     font-weight: 800;
     font-size: 24pt;
     font-family: "Fira Code", "Source Han Sans CN"
@@ -96,21 +96,21 @@ input {
 }
 
 .days {
-    fill: rgb(92, 92, 92);
+    fill: r#5C5C5C;
     font-weight: bold;
     font-size: 40pt;
     font-family: "Fira Code", "Source Han Sans CN"
 }
 
 .dayslabel {
-    fill: rgb(92, 92, 92);
+    fill: #5C5C5C;
     font-weight: bold;
     font-size: 25pt;
     font-family: "Fira Code", "Source Han Sans CN"
 }
 
 .growth {
-    fill: rgb(92, 92, 92);
+    fill: #5C5C5C;
     font-weight: bold;
     font-size: 40pt;
     font-family: "Fira Code", "Source Han Sans CN"
@@ -131,7 +131,7 @@ input {
 }
 
 .N {
-    fill: rgb(235, 0, 0)
+    fill: #EB0000
 }
 
 .O {
@@ -139,47 +139,47 @@ input {
 }
 
 .P {
-    fill: #b11111
+    fill: #B11111
 }
 
 .Q {
-    fill: #e24000
+    fill: #E24000
 }
 
 .R {
-    fill: #8605d1
+    fill: #8605D1
 }
 
 .S {
-    fill: #00a5bb
+    fill: #00A5BB
 }
 
 .T {
-    fill: #c21178
+    fill: #C21178
 }
 
 .U {
-    fill: #00a048
+    fill: #00A048
 }
 
 .W {
-    fill: #ffc012
+    fill: #FFC012
 }
 
 .V {
-    fill: #f39303
+    fill: #F39303
 }
 
 .X {
-    fill: #933dda
+    fill: #933DDA
 }
 
 .Y {
-    fill: #ee5677
+    fill: #EE5677
 }
 
 .Z {
-    fill: #c0620b
+    fill: #C0620B
 }
 
 .H {
@@ -191,11 +191,11 @@ input {
 }
 
 .K {
-    fill: #0775be
+    fill: #0775BE
 }
 
 .J {
-    fill: rgb(180, 157, 51)
+    fill: #B49D33
 }
 
 .I {
@@ -203,11 +203,11 @@ input {
 }
 
 .F {
-    fill: rgb(221, 50, 135)
+    fill: #DD3287
 }
 
 .E {
-    fill: rgb(0, 175, 137)
+    fill: #00AF89
 }
 
 .D {
@@ -219,9 +219,9 @@ input {
 }
 
 .B {
-    fill: rgb(10, 131, 230)
+    fill: #0A83E6
 }
 
 .A {
-    fill: #cf9237
+    fill: #CF9237
 }
