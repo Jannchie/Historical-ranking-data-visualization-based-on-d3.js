@@ -67,9 +67,18 @@
 
 # 更新日志
 
+## 2019-04-16
+
+- 合并了数个分支。
+- 更新了英文版README，将颜色代码统一为HEX格式。--BY [rabbitism](https://github.com/rabbitism)
+- 在渐变色模式下，添加了根据类型选择渐变色板的功能。--BY [MiracleXYZ](https://github.com/MiracleXYZ)
+- 添加always_up属性，用于反向排行榜，条目退出排行榜时都会上浮。--BY [MiracleXYZ](https://github.com/MiracleXYZ)
+- 控制配置文件篇幅，将imgs和color_ranges移动到其他的文件中，方便进行其他属性的配置。--BY [MiracleXYZ](https://github.com/MiracleXYZ)
+- 修复了图片模式下一些名字中含有特殊符号（如英文括号和引号）导致图片无法正常显示的问题。--BY [MiracleXYZ](https://github.com/MiracleXYZ)
+  
 ## 2019-03-30
 
-- 添加了修复了反格式化函数的一些错误。
+- 修复了反格式化函数的一些错误。
 
 ## 2019-03-20
 

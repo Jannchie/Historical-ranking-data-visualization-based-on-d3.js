@@ -44,6 +44,7 @@ function draw(data) {
   var divide_color_by = config.divide_color_by;
   var name_list = [];
   var changeable_color = config.changeable_color;
+  var divide_changeable_color_by_type = config.divide_changeable_color_by_type;
   data
     .sort((a, b) => Number(b.value) - Number(a.value))
     .forEach(e => {
@@ -52,11 +53,15 @@ function draw(data) {
       }
     });
   var baseTime = 3000;
-  var colorRange = d3.interpolateCubehelix(config.color_range[0], config.color_range[1]);
+
   // 选择颜色
   function getColor(d) {
     var r = 0.0;
     if (changeable_color) {
+      var colorRange = d3.interpolateCubehelix(config.color_range[0], config.color_range[1]);
+      if (divide_changeable_color_by_type && d["type"] in config.color_ranges) {
+        var colorRange = d3.interpolateCubehelix(config.color_ranges[d["type"]][0], config.color_ranges[d["type"]][1]);
+      }
       var v =
         Math.abs(rate[d.name] - rate["MIN_RATE"]) /
         (rate["MAX_RATE"] - rate["MIN_RATE"]);
@@ -77,6 +82,7 @@ function draw(data) {
 
   var showMessage = config.showMessage;
   var allow_up = config.allow_up;
+  var always_up = config.always_up;
   var interval_time = config.interval_time;
   var text_y = config.text_y;
   var itemLabel = config.itemLabel;
@@ -109,6 +115,8 @@ function draw(data) {
   var offset = config.offset;
   var animation = config.animation;
   var deformat = config.deformat;
+  config.imgs = Object.assign(config.imgs, external_imgs);
+
   const margin = {
     left: left_margin,
     right: right_margin,
@@ -467,7 +475,7 @@ function draw(data) {
         .append("circle")
         .attr("fill-opacity", 0)
         .attr("cy", 63)
-        .attr("fill", d => "url(#" + d.name + ")")
+        .attr('fill', d => "url(#" + encodeURIComponent(d.name).replace("'", "%27").replace("(", "%28").replace(")", "%29") + ")")
         .attr("stroke-width", "0px")
         .transition("a")
         .delay(500 * interval_time)
@@ -760,6 +768,9 @@ function draw(data) {
       .duration(2500 * interval_time);
     barExit
       .attr("transform", function (d) {
+        if (always_up) {
+          return "translate(0," + "-100" + ")";
+        }
         if (Number(d.value) > avg && allow_up) {
           return "translate(0," + "-100" + ")";
         }
@@ -770,12 +781,16 @@ function draw(data) {
     barExit
       .select("rect")
       .attr("fill-opacity", 0)
-      .attr("width", xScale(currentData[currentData.length - 1]["value"]));
+      .attr("width", () => {
+        if (always_up) return xScale(0);
+        return xScale(currentData[currentData.length - 1]["value"])
+      })
     if (!long) {
       barExit
         .select(".value")
         .attr("fill-opacity", 0)
         .attr("x", () => {
+          if (always_up) return xScale(0);
           return xScale(currentData[currentData.length - 1]["value"]);
         });
     }
@@ -787,9 +802,13 @@ function draw(data) {
       })
       .attr("x", () => {
         if (long) return 10;
+        if (always_up) return xScale(0);
         return xScale(currentData[currentData.length - 1]["value"]);
       });
     barExit.select(".label").attr("fill-opacity", 0);
+    if (config.use_img) {
+      barExit.select("circle").attr("fill-opacity", 0)
+    }
   }
 
   function change() {
