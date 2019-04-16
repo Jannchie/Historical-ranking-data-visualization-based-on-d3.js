@@ -3,7 +3,7 @@
   // 默认为UTF-8。
   // 如果自己创建csv文件且是国内用户，保存的编码很可能是GBK的，如果出现乱码则将这里改成GBK。
   // 不建议修改这里。而是建议将自己制作完毕的csv文件的内容复制到example.csv中。因为example.csv的编码格式是所有语言都支持的。
-  // Encoding is not recommended to modify.
+  // Encoding is not recommended to be modified.
   // Instead, it is recommended to copy the contents of the CSV file produced by yourself to example.csv.
   // The encoding format of example.csv is supported by all languages.
   encoding: "UTF-8",
@@ -19,6 +19,8 @@
   // 如果关闭，排序顺序为csv表格的时间字段自上而下的出现顺序。
   // 如果你的日期格式为标准的日期格式，则可以无视数据排序，达到自动按照日期顺序排序的效果。
   // 开启auto_sort可以实现时间的自动补间。
+  // Auto Sort by Time
+  // Please ensure using standard datetime format (YYYY-MM-DD HH:MM) when this term is enabled!!!
   auto_sort: false,
 
   // 时间格式化
@@ -35,10 +37,11 @@
 
   // 字段的值与其对应的颜色值
   color: {
-    Chinese: "#17C"
+    Chinese: "#1177CC"
   },
 
   // 颜色绑定增长率
+  // Bind color with increasing rate
   changeable_color: false,
 
   // 颜色渐变
@@ -50,7 +53,10 @@
 
   // right label
   typeLabel: "右侧文字",
+
+
   // 榜首项目信息的水平位置 。
+  // Top item information horizontal location
   item_x: 250,
 
   // 时间点间隔时间。
@@ -65,6 +71,7 @@
   offset: 350,
 
   // 长度小于display_barInfo的bar将不显示barInfo。
+  // Hide barInfo if bar is shorter than barInfo
   display_barInfo: 0,
 
   // 使用计数器
@@ -80,7 +87,7 @@
   // 格式化数值
   // 这里控制着数值的显示位数。主要靠修改中间的数字完成，如果为1则为保留一位小数。
   // 逗号表示每隔三位数用","分割
-  // '.2f' mains keep two decimals.
+  // '.2f' means keeping two decimals.
   format: ",.0f",
 
   // 后缀
@@ -144,7 +151,7 @@
   },
 
   // 全局背景颜色
-  background_color: "#FFF",
+  background_color: "#FFFFFF",
 
   // 矩形柱是否为圆角矩形
   rounded_rectangle: true,
