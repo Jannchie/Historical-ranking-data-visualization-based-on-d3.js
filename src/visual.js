@@ -11,6 +11,7 @@
 
 $("#inputfile").change(function () {
   $("#inputfile").attr("hidden", true);
+  $('#div').attr('hidden',true);
   var r = new FileReader();
   r.readAsText(this.files[0], config.encoding);
   r.onload = function () {
