@@ -9,9 +9,34 @@ body {
 }
 
 input {
-    position: absolute;
-    top: 50%;
-    left: 45%;
+    position: absolute;   
+    top: 45%;   
+    left: 45%;   
+    height: 50px;
+    width: 250px;
+    display: none;
+}
+
+#div{
+    position: absolute;   
+    top: 45%;   
+    left: 45%;   
+    height: 50px;
+    width: 250px;
+    background-color: #00CED1;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px 2px gray ;
+}
+#div:hover{
+    background-color: #66CDAA;
+    box-shadow: 2.5px 2.5px 2.5px 2.5px gray ;
+}
+p{
+    font-size: 16px;
+    font-weight: bolder;
+    font-family: '微软雅黑';
 }
 
 .domain {
