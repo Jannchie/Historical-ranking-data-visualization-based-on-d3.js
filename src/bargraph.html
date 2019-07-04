@@ -14,11 +14,21 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <title>动态排名数据可视化 ver1.7 By Jannchie</title>
+    <script type="text/javascript">
+        $(function(){
+            $("#div").click(function () {
+                $("#inputfile").click();
+            })
+        })
+    </script>
 </head>
 
 <body>
     <center>
         <input type="file" id="inputfile" name="fileContent">
+        <div id="div">
+            <p>请上传文件...</p>
+        </div>
         <svg width="1900" height="1020"></svg>
         <script src="config.js"></script>
         <script src="imgs.js"></script>
