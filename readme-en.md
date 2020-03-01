@@ -38,10 +38,10 @@ Open `src/bargraph.html` in any browser and click `choose file` button. Choose y
 
 You can load data source in `.csv` format. See format requirement below:
 
-name|type|value|date
-:--:|:--:|:--:|:--:
-Name1|Type1|Value1|Date1
-Name2|Type2|Value2|Date2
+| name  | type  | value  | date  |
+| :---: | :---: | :----: | :---: |
+| Name1 | Type1 | Value1 | Date1 |
+| Name2 | Type2 | Value2 | Date2 |
 
 
 **Names** will be displayed as categorical labels on Y-axis. **Name-Type** together will be displayed as annotations on bars.
