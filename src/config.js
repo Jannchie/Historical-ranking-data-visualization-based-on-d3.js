@@ -30,7 +30,7 @@
   reverse: false,
 
   // 类型根据什么字段区分？如果是name，则关闭类型显示
-  divide_by: "name",
+  divide_by: "type",
 
   // 颜色根据什么字段区分？
   divide_color_by: "name",
