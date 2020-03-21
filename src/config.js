@@ -30,7 +30,7 @@
   reverse: false,
 
   // 类型根据什么字段区分？如果是name，则关闭类型显示
-  divide_by: "type",
+  divide_by: "name",
 
   // 颜色根据什么字段区分？
   divide_color_by: "name",
@@ -40,6 +40,9 @@
     Chinese: "#1177CC",
     Japanese: "#667788"
   },
+
+  // 指定一组颜色值，用于自定义所有bar 的配色方案。如果为空则使用默认配置。
+  color_palette: [],
 
   // 颜色渐变：颜色绑定增长率
   changeable_color: false,
@@ -98,7 +101,7 @@
   // 如果看不懂这是在干什么的话，建议不要修改这里。
   // 反格式化函数:
   // 格式化操作可能会导致NaN问题。此函数将格式化后的数值反格式化为JS可以识别的数字。
-  deformat: function(val, postfix) {
+  deformat: function (val, postfix) {
     return Number(val.replace(postfix, "").replace(/\,/g, ""));
   },
   //////////////////////////////////////////////////////////////////////////////

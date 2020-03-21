@@ -57,6 +57,11 @@ function draw(data) {
   // 选择颜色
   function getColor(d) {
     var r = 0.0;
+    // 如果用户提供的color_palette 长度不为0 则使用它，否则使用d3.schemeCatetory10
+    var user_pallete = config.color_palette;
+    var product_palette = user_pallete.length !== 0 ? user_pallete : d3.schemeCategory10;
+    var pallete_len = product_palette.length;
+
     if (changeable_color) {
       var colorRange = d3.interpolateCubehelix(
         config.color_range[0],
@@ -80,8 +85,8 @@ function draw(data) {
     if (d[divide_color_by] in config.color)
       return config.color[d[divide_color_by]];
     else {
-      return d3.schemeCategory10[
-        Math.floor(d[divide_color_by].charCodeAt() % 10)
+      return product_palette[
+        Math.floor(d[divide_color_by].charCodeAt() % pallete_len)
       ];
     }
   }
