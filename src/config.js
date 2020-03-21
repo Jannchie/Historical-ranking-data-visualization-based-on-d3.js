@@ -36,6 +36,7 @@
   divide_color_by: "name",
 
   // 字段的值与其对应的颜色值
+  // 也可在src/colors.js 中设置
   color: {
     Chinese: "#1177CC",
     Japanese: "#667788"

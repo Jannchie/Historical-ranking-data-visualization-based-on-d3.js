@@ -126,6 +126,7 @@ function draw(data) {
   var animation = config.animation;
   var deformat = config.deformat;
   config.imgs = Object.assign(config.imgs, external_imgs);
+  config.color = Object.assign(config.color, external_colors);
 
   const margin = {
     left: left_margin,
