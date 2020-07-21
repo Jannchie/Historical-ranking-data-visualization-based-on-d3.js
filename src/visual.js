@@ -302,8 +302,10 @@ function draw(data) {
         rate["MIN_RATE"] = rate[e.name];
       }
     });
-    currentData = currentData.slice(0, max_number);
+
+    // sort and pick the top max_number data
     dataSort();
+    currentData = currentData.slice(0, max_number);
 
     d3.transition("2")
       .each(redraw)
